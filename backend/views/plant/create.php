@@ -6,14 +6,11 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Plant */
 
-$this->title = Yii::t('app', 'Create Plant');
+$this->title = Yii::t('app', 'Plant');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Plants'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="plant-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

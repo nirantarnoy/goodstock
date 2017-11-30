@@ -10,6 +10,11 @@ use yii\widgets\Pjax;
 $this->title = Yii::t('app', 'Plants');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<ol class="breadcrumb">
+  <li><a href="#">Home</a></li>
+  <li><a href="#">Library</a></li>
+  <li class="active">Data</li>
+</ol>
 <div class="plant-index">
 
     <h1><?= Html::encode($this->title) ?></h1>

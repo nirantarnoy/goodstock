@@ -35,13 +35,28 @@ class PlantController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new PlantSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $modelx = Plant::find()->one();
+        if(count($modelx)>0){
+            return $this->redirect(['update','id'=>$modelx->id]);
+        }
+        $model = new Plant();
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['update', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+                //'model_bankaccount' => $model_bankaccount,
+            ]);
+        }
+        // $searchModel = new PlantSearch();
+        // $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        // return $this->render('index', [
+        //     'searchModel' => $searchModel,
+        //     'dataProvider' => $dataProvider,
+        // ]);
+
     }
 
     /**
