@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "083f4201e2eb3067f99c27d3269a69e1",
+    "content-hash": "9f6ef0c21cfdc01c95fdf025f12dfeb7",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -114,7 +114,7 @@
             "version": "3.2.1",
             "source": {
                 "type": "git",
-                "url": "git@github.com:jquery/jquery-dist.git",
+                "url": "https://github.com/jquery/jquery-dist.git",
                 "reference": "77d2a51d0520d2ee44173afdf4e40a9201f5964e"
             },
             "dist": {
@@ -185,6 +185,25 @@
             "license": [
                 "MIT"
             ]
+        },
+        {
+            "name": "bower-asset/toastr",
+            "version": "2.1.2",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:johnpapa/toastr-bower.git",
+                "reference": "e648a870a60103bbc3986c1fe2b2de86ea4a9569"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/johnpapa/toastr-bower/zipball/e648a870a60103bbc3986c1fe2b2de86ea4a9569",
+                "reference": "e648a870a60103bbc3986c1fe2b2de86ea4a9569",
+                "shasum": null
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.6.3"
+            },
+            "type": "bower-asset"
         },
         {
             "name": "bower-asset/transitionize",
@@ -805,17 +824,63 @@
             "time": "2017-08-01T04:05:16+00:00"
         },
         {
+            "name": "lavrentiev/yii2-toastr",
+            "version": "2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lavrentiev/yii2-toastr.git",
+                "reference": "a5392f09c64285fc15d5be17bb23ae959b3b382d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lavrentiev/yii2-toastr/zipball/a5392f09c64285fc15d5be17bb23ae959b3b382d",
+                "reference": "a5392f09c64285fc15d5be17bb23ae959b3b382d",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/toastr": "^2.1",
+                "yiisoft/yii2": "~2.0"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "lavrentiev\\widgets\\toastr\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Eugene Lavrentiev (RyanTedder)",
+                    "email": "lavrentiev.e@gmail.com",
+                    "homepage": "https://github.com/lavrentiev"
+                }
+            ],
+            "description": "Simple javascript toast notifications",
+            "homepage": "https://github.com/lavrentiev/yii2-toastr",
+            "keywords": [
+                "extension",
+                "jquery",
+                "notification",
+                "toastr",
+                "yii2"
+            ],
+            "time": "2017-10-24T08:49:46+00:00"
+        },
+        {
             "name": "mpdf/mpdf",
             "version": "dev-development",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mpdf/mpdf.git",
-                "reference": "c602f6a2f511263c6be260a89330dba68d21afc7"
+                "reference": "9ac89273a7967eefe96507e537c45493a99e2859"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mpdf/mpdf/zipball/c602f6a2f511263c6be260a89330dba68d21afc7",
-                "reference": "c602f6a2f511263c6be260a89330dba68d21afc7",
+                "url": "https://api.github.com/repos/mpdf/mpdf/zipball/9ac89273a7967eefe96507e537c45493a99e2859",
+                "reference": "9ac89273a7967eefe96507e537c45493a99e2859",
                 "shasum": ""
             },
             "require": {
@@ -869,7 +934,7 @@
                 "php",
                 "utf-8"
             ],
-            "time": "2017-11-30T08:16:53+00:00"
+            "time": "2017-11-30T13:18:43+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -1224,12 +1289,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "a5e6607bfa8074ada8cef7530e55c6b45b1a1a34"
+                "reference": "6fad94afce7e1645186d2cc96a0c81328ec86516"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/a5e6607bfa8074ada8cef7530e55c6b45b1a1a34",
-                "reference": "a5e6607bfa8074ada8cef7530e55c6b45b1a1a34",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/6fad94afce7e1645186d2cc96a0c81328ec86516",
+                "reference": "6fad94afce7e1645186d2cc96a0c81328ec86516",
                 "shasum": ""
             },
             "require": {
@@ -1316,7 +1381,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2017-11-29T06:42:38+00:00"
+            "time": "2017-12-01T08:30:41+00:00"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -1790,12 +1855,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "9cda1a418ca4b2b71c9b921ebaea6c2e61e270b4"
+                "reference": "43708b0be5407c46d7316880f665246bf1d012ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/9cda1a418ca4b2b71c9b921ebaea6c2e61e270b4",
-                "reference": "9cda1a418ca4b2b71c9b921ebaea6c2e61e270b4",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/43708b0be5407c46d7316880f665246bf1d012ab",
+                "reference": "43708b0be5407c46d7316880f665246bf1d012ab",
                 "shasum": ""
             },
             "require": {
@@ -1832,7 +1897,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2017-11-13T07:51:09+00:00"
+            "time": "2017-12-01T08:54:49+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -2451,12 +2516,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "fde31a85be35412c6989b6d026986d630df73a77"
+                "reference": "a8a55d1f10ab29a793e8353fc49aaa44ba7b97ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/fde31a85be35412c6989b6d026986d630df73a77",
-                "reference": "fde31a85be35412c6989b6d026986d630df73a77",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a8a55d1f10ab29a793e8353fc49aaa44ba7b97ba",
+                "reference": "a8a55d1f10ab29a793e8353fc49aaa44ba7b97ba",
                 "shasum": ""
             },
             "require": {
@@ -2525,7 +2590,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-11-27T13:25:24+00:00"
+            "time": "2017-12-01T05:15:50+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",

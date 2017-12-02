@@ -37,18 +37,19 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
             <div class="left_col scroll-view">
 
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="/" class="site_title"><i class="fa fa-yelp"></i> <span>good stock</span></a>
+                    <a href="index.php?r=dashboard" class="site_title"><i class="fa fa-yelp"></i> <span>Good Inventory</span></a>
                 </div>
                 <div class="clearfix"></div>
 
                 <!-- menu prile quick info -->
                 <div class="profile">
                     <div class="profile_pic">
-                        <img src="http://placehold.it/128x128" alt="..." class="img-circle profile_img">
+                        <?=Html::img('@web/uploads/img/admin.jpg',['class'=>'img-circle profile_img'])?>
+                       <!--  <img src="../web/uplaods/img/admin.jpg" alt="..." class="img-circle profile_img"> -->
                     </div>
                     <div class="profile_info">
                         <span>Welcome,</span>
-                        <h2>John Doe</h2>
+                        <h2><?=!Yii::$app->user->isGuest?Yii::$app->user->identity->username:'';?></h2>
                     </div>
                 </div>
                 <!-- /menu prile quick info -->
@@ -59,21 +60,43 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
 
                     <div class="menu_section">
-                        <h3>General</h3>
+                        <h3>Menu</h3>
                         <?=
                         \yiister\gentelella\widgets\Menu::widget(
                             [
                                 "items" => [
-                                    ["label" => "Home", "url" => ["site/index"], "icon" => "home"],
+                                    ["label" => "Home", "url" => ["dashboard/index"], "icon" => "home"],
+                                    ["label" => "ตั้งค่าระบบ", "url" => ["sysconfig/index"], "icon" => "cogs"],
                                     ["label" => "ร้านค้า", "url" => ["plant/index"], "icon" => "institution"],
-                                    ["label" => "Error page", "url" => ["site/error-page"], "icon" => "close"],
                                     [
+                                        "label" => "ผู้ใช้งาน",
+                                        "icon" => "users",
+                                        "url" => "#",
+                                        "items" => [
+                                            ["label" => "กลุ่มผู้ใช้งาน", "url" => ["usergroup/index"]],
+                                            ["label" => "ผู้ใช้งาน", "url" => ["user/index"]],
+                                            ["label" => "กำหนดสินธิ์การใช้งาน", "url" => ["assignrole/index"]],
+                                        ],
+                                    ],
+                                     [
+                                        "label" => "ตั้งค่าพื้นฐาน",
+                                        "icon" => "cog",
+                                        "url" => "#",
+                                        "items" => [
+                                            ["label" => "ประเภทชำระเงิน", "url" => ["paymenttype/index"]],
+                                            ["label" => "ประเภทการส่งของ", "url" => ["deliverytype/index"]],
+                                            ["label" => "ระยะเวลาชำระเงิน", "url" => ["paymentterm/index"]],
+                                            ["label" => "ข้อตกลงซื้อขาย", "url" => ["tradeagreement/index"]],
+                                        ],
+                                    ],
+                                     [
                                         "label" => "สินค้า",
                                         "icon" => "cubes",
                                         "url" => "#",
                                         "items" => [
-                                            ["label" => "กลุ่มสินค้า", "url" => ["category/index"]],
+                                            ["label" => "กลุ่มสินค้า", "url" => ["productcat/index"]],
                                             ["label" => "สินค้า", "url" => ["product/index"]],
+                                            ["label" => "โครงสร้างสินค้า", "url" => ["productbom/index"]],
                                             ["label" => "หน่วยนับ", "url" => ["unit/index"]],
                                         ],
                                     ],
@@ -82,10 +105,11 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                         "icon" => "th",
                                         "url" => "#",
                                         "items" => [
-                                            ["label" => "คลังสินค้า", "url" => ["category/index"]],
-                                            ["label" => "location", "url" => ["product/index"]],
-                                            ["label" => "สินค้าคงเหลือ", "url" => ["unit/index"]],
-                                            ["label" => "จัดการสต๊อก", "url" => ["unit/index"]],
+                                            ["label" => "คลังสินค้า", "url" => ["warehouse/index"]],
+                                            ["label" => "location", "url" => ["location/index"]],
+                                            ["label" => "สินค้าคงเหลือ", "url" => ["stockbalance/index"]],
+                                            ["label" => "จัดการสต๊อก", "url" => ["movement/index"]],
+                                            ["label" => "นับสต๊อก", "url" => ["counting/index"]],
                                         ],
                                     ],
                                     [
@@ -93,19 +117,33 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                         "icon" => "shopping-cart",
                                         "url" => "#",
                                         "items" => [
-                                            ["label" => "กลุ่มผู้ขาย", "url" => ["category/index"]],
-                                            ["label" => "ผู้ขาย", "url" => ["product/index"]],
-                                            ["label" => "ใบสั่งซื้อ", "url" => ["unit/index"]],
+                                            ["label" => "กลุ่มผู้ขาย", "url" => ["vendorgroup/index"]],
+                                            ["label" => "ผู้ขาย", "url" => ["vendor/index"]],
+                                            ["label" => "ใบขอซื้อ", "url" => ["purchreq/index"]],
+                                            ["label" => "ใบสั่งซื้อ", "url" => ["purchaseorder/index"]],
                                         ],
                                     ],
                                     [
-                                        "label" => "ขายสินค้า",
-                                        "icon" => "th",
+                                        "label" => "ขายและการตลาด",
+                                        "icon" => "money",
                                         "url" => "#",
                                         "items" => [
-                                            ["label" => "กลุ่มลูกค้า", "url" => ["category/index"]],
-                                            ["label" => "ลูกค้า", "url" => ["product/index"]],
-                                            ["label" => "ใบขาย", "url" => ["unit/index"]],
+                                            ["label" => "กลุ่มลูกค้า", "url" => ["customergroup/index"]],
+                                            ["label" => "ลูกค้า", "url" => ["customer/index"]],
+                                            ["label" => "ใบเสนอราคา", "url" => ["quotation/index"]],
+                                            ["label" => "ใบขาย", "url" => ["saleorder/index"]],
+                                            ["label" => "Invoice", "url" => ["invoice/index"]],
+                                        ],
+                                    ],
+                                    [
+                                        "label" => "รายงาน",
+                                        "icon" => "line-chart",
+                                        "url" => "#",
+                                        "items" => [
+                                            // ["label" => "กลุ่มลูกค้า", "url" => ["customergroup/index"]],
+                                            // ["label" => "ลูกค้า", "url" => ["customer/index"]],
+                                            // ["label" => "ใบขาย", "url" => ["saleorder/index"]],
+                                            // ["label" => "Invoice", "url" => ["invoice/index"]],
                                         ],
                                     ],
                                
@@ -149,29 +187,36 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <img src="http://placehold.it/128x128" alt="">John Doe
+                                <img src="http://placehold.it/128x128" alt=""><?=!Yii::$app->user->isGuest?Yii::$app->user->identity->username:'';?>
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
                                 <li><a href="javascript:;">  Profile</a>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <a href="javascript:;">
                                         <span class="badge bg-red pull-right">50%</span>
                                         <span>Settings</span>
                                     </a>
-                                </li>
-                                <li>
+                                </li> -->
+                               <!--  <li>
                                     <a href="javascript:;">Help</a>
-                                </li>
-                                <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                </li> -->
+                                <li>
+                                    <!-- <a href="index.php?r=site/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a> -->
+                                     <?= Html::a(
+                                            "<i class='fa fa-sign-out pull-right'></i> Sign out",
+                                            ['/site/logout'],
+                                            ['data-method' => 'post']
+                                     ) ?>
+
                                 </li>
                             </ul>
                         </li>
 
                         <li role="presentation" class="dropdown">
                             <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-envelope-o"></i>
+                                <i class="fa fa-bell-o"></i>
                                 <span class="badge bg-green">6</span>
                             </a>
                             <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
@@ -276,7 +321,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
         <!-- footer content -->
         <footer>
             <div class="pull-left">
-            	Good Stock Version 0.1
+            	Good Inventory Version 0.1
                <!--  Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com" rel="nofollow" target="_blank">Colorlib</a><br />
                 Extension for Yii framework 2 by <a href="http://yiister.ru" rel="nofollow" target="_blank">Yiister</a> -->
             </div>

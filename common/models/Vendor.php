@@ -33,7 +33,7 @@ class Vendor extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['vendor_group_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['vendor_group_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by','vendor_type','payment_type','payment_term','delivery_type','lead_time'], 'integer'],
             [['name', 'description'], 'string', 'max' => 255],
         ];
     }
@@ -48,6 +48,11 @@ class Vendor extends \yii\db\ActiveRecord
             'name' => Yii::t('app', 'Name'),
             'description' => Yii::t('app', 'Description'),
             'vendor_group_id' => Yii::t('app', 'Vendor Group ID'),
+            'payment_term' => Yii::t('app', 'Payment Term'),
+            'payment_type' => Yii::t('app', 'Payment Type'),
+            'delivery_type' => Yii::t('app', 'Delivery Type'),
+            'lead_time' => Yii::t('app', 'Leadtime'),
+            'vendor_type' => Yii::t('app', 'Vendor Type'),
             'status' => Yii::t('app', 'Status'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),

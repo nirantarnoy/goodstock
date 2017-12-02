@@ -26,7 +26,9 @@
         "toxor88/yii2-widget-switchery": "*",
         "kartik-v/bootstrap-fileinput": "@dev",
         "kartik-v/yii2-mpdf": "*",
-        "yii2mod/yii2-sweet-alert": "*"
+        "yii2mod/yii2-sweet-alert": "*",
+        "kartik-v/yii2-mpdf": "*",
+        "lavrentiev/yii2-toastr": "~2.0.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

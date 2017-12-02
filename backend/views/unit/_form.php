@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use toxor88\switchery\Switchery;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Unit */
 /* @var $form yii\widgets\ActiveForm */
@@ -31,25 +31,36 @@ use yii\widgets\ActiveForm;
                   </div>
                   <div class="x_content">
                     <br />
-                            <?php $form = ActiveForm::begin(); ?>
+                               <?php $form = ActiveForm::begin(['options'=>['class'=>'form-horizontal form-label-left']]); ?>
+                               <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Unit Name <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                   <?= $form->field($model, 'name')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Description <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                   <?= $form->field($model, 'description')->textarea(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Status <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                   <?php echo $form->field($model, 'status')->widget(Switchery::className(),['options'=>['label'=>'','class'=>'form-control']])->label(false) ?>
+                                </div>
+                              </div>
+                          
 
-                            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
-                            <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
-
-                            <?= $form->field($model, 'status')->textInput() ?>
-
-                            <?= $form->field($model, 'created_at')->textInput() ?>
-
-                            <?= $form->field($model, 'updated_at')->textInput() ?>
-
-                            <?= $form->field($model, 'created_by')->textInput() ?>
-
-                            <?= $form->field($model, 'updated_by')->textInput() ?>
-
-                            <div class="form-group">
-                                <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
-                            </div>
+                             <div class="ln_solid"></div>
+                        <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                  <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+                                </div>
+                        </div>
 
                             <?php ActiveForm::end(); ?>
                         </div>

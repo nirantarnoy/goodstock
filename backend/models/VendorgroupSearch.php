@@ -12,6 +12,7 @@ use backend\models\Vendorgroup;
  */
 class VendorgroupSearch extends Vendorgroup
 {
+     public $globalSearch;
     /**
      * @inheritdoc
      */
@@ -20,6 +21,7 @@ class VendorgroupSearch extends Vendorgroup
         return [
             [['id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name', 'description'], 'safe'],
+             [['globalSearch'],'string'],
         ];
     }
 
@@ -67,8 +69,10 @@ class VendorgroupSearch extends Vendorgroup
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description]);
+       if($this->globalSearch != ''){
+            $query->orFilterWhere(['like','name',$this->globalSearch])
+                  ->orFilterWhere(['like','description',$this->globalSearch]);
+        }
 
         return $dataProvider;
     }

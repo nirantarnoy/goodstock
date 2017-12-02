@@ -14,6 +14,7 @@ use yii\filters\VerbFilter;
  */
 class UsergroupController extends Controller
 {
+    public $enableCsrfValidation = false;
     /**
      * @inheritdoc
      */
@@ -35,12 +36,15 @@ class UsergroupController extends Controller
      */
     public function actionIndex()
     {
+        $pageSize = \Yii::$app->request->post("perpage");
         $searchModel = new UsergroupSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination->pageSize = $pageSize;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'perpage' => $pageSize,
         ]);
     }
 
@@ -66,6 +70,8 @@ class UsergroupController extends Controller
         $model = new Usergroup();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $session = Yii::$app->session;
+            $session->setFlash('msg','บันทึกรายการเรียบร้อย');
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

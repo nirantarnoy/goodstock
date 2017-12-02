@@ -12,6 +12,7 @@ use backend\models\Warehouse;
  */
 class WarehouseSearch extends Warehouse
 {
+    public $globalSearch;
     /**
      * @inheritdoc
      */
@@ -20,6 +21,7 @@ class WarehouseSearch extends Warehouse
         return [
             [['id', 'is_primary', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name', 'description'], 'safe'],
+             [['globalSearch'],'string'],
         ];
     }
 
@@ -68,8 +70,10 @@ class WarehouseSearch extends Warehouse
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description]);
+        if($this->globalSearch != ''){
+            $query->orFilterWhere(['like','user',$this->globalSearch])
+                  ->orFilterWhere(['like','email',$this->globalSearch]);
+        }
 
         return $dataProvider;
     }
