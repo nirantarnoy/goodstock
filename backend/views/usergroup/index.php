@@ -5,6 +5,7 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\Url;
 use lavrentiev\widgets\toastr\Notification;
+use yii2mod\alert\Alert;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\UsergroupSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -29,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 "debug" => false,
                 "newestOnTop" => false,
                 "progressBar" => false,
-                "positionClass" => "toast-top-right",
+                "positionClass" => "toast-top-center",
                 "preventDuplicates" => false,
                 "onclick" => null,
                 "showDuration" => "300",
@@ -160,6 +161,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     //'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
                                                     //'data-method' => 'post',
                                                     //'data-pjax' => '0',
+                                                    'data-url' => $url,
                                                     'onclick'=>'recDelete($(this));'
                                                   ]);
                                           return Html::a('<span class="glyphicon glyphicon-trash btn btn-default"></span>', 'javascript:void(0)', $options);
@@ -174,6 +176,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php Pjax::end(); ?>
 </div>
 <?php 
+  $this->registerJsFile( '@web/js/sweetalert.min.js',['depends' => [\yii\web\JqueryAsset::className()]],static::POS_END);
+  $this->registerCssFile( '@web/css/sweetalert.css');
   //$url_to_delete =  Url::to(['product/bulkdelete'],true);
   $this->registerJs('
     $(function(){
@@ -185,17 +189,16 @@ $this->params['breadcrumbs'][] = $this->title;
    function recDelete(e){
         //e.preventDefault();
         var url = e.attr("data-url");
-        //alert(url);
         swal({
               title: "ต้องการลบรายการนี้ใช่หรือไม่",
               text: "",
-              type: "warning",
+              type: "error",
               showCancelButton: true,
               closeOnConfirm: false,
               showLoaderOnConfirm: true
             }, function () {
               e.attr("href",url); 
-              e.toggle("click");        
+              e.trigger("click");        
         });
     }
 

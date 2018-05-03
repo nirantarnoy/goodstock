@@ -38,6 +38,17 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+            'assetManager' => [
+            'bundles' => [
+                'yii2mod\alert\AlertAsset' => [
+                    'css' => [
+                        'dist/sweetalert.css',
+                        'themes/twitter/twitter.css',
+                    ]
+                ],
+            ],
+        ],
+
         /*
         'urlManager' => [
             'enablePrettyUrl' => true,

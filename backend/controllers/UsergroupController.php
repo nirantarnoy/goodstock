@@ -24,7 +24,7 @@ class UsergroupController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['POST','GET'],
                 ],
             ],
         ];
@@ -72,7 +72,7 @@ class UsergroupController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $session = Yii::$app->session;
             $session->setFlash('msg','บันทึกรายการเรียบร้อย');
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('create', [
@@ -91,7 +91,9 @@ class UsergroupController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+             $session = Yii::$app->session;
+            $session->setFlash('msg','บันทึกรายการเรียบร้อย');
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
@@ -108,7 +110,8 @@ class UsergroupController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
+        $session = Yii::$app->session;
+        $session->setFlash('msg','บันทึกรายการเรียบร้อย');
         return $this->redirect(['index']);
     }
 
