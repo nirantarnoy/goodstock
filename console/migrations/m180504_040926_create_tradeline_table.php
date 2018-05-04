@@ -20,6 +20,7 @@ class m180504_040926_create_tradeline_table extends Migration
             'from_qty' => $this->float(),
             'to_qty' => $this->float(),
             'price' => $this->float(),
+            'discount' => $this->float(),
             'form_date' => $this->integer(),
             'to_data' => $this->integer(),
             'note' => $this->string(),
