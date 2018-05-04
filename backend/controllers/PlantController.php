@@ -8,7 +8,7 @@ use backend\models\PlantSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\filters\AccessControl;
 /**
  * PlantController implements the CRUD actions for Plant model.
  */
@@ -26,6 +26,21 @@ class PlantController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access'=>[
+                'class'=> AccessControl::className(),
+                'rules'=>[
+                    [
+                        'allow'=>true,
+                        'actions'=>['index','create','view','update','delete'],
+                        'roles'=>['SystemAdmin']
+                    ],
+                    [
+                        'allow'=>true,
+                        'actions'=>['index'],
+                        'roles'=>['ManageInventory']
+                    ]
+                ]
+            ]
         ];
     }
 

@@ -69,8 +69,11 @@ class UserController extends Controller
     {
         $model = new User();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->save()){
+                 $model->assignment();
+                 return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('create', [
@@ -87,9 +90,14 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->getRoleByUser();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->save()){
+                $model->assignment();
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+          
         }
 
         return $this->render('update', [

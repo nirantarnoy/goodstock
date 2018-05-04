@@ -67,21 +67,21 @@ use lavrentiev\widgets\toastr\Notification;
                                <?php $form = ActiveForm::begin(['options'=>['class'=>'form-horizontal form-label-left']]); ?>
                              
                               <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Use Currency Rate <span class="required"></span>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"><?=Yii::t('app','ใช้งานอัตราแลกเปลี่ยน')?> <span class="required"></span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                    <?php echo $form->field($model, 'is_currency_rate')->widget(Switchery::className(),['options'=>['label'=>'','class'=>'form-control']])->label(false) ?>
                                 </div>
                               </div>
                               <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Use Negative Inventory <span class="required"></span>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"><?=Yii::t('app','ยอมให้สินค้าติดลบในคลัง')?> <span class="required"></span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                    <?php echo $form->field($model, 'is_negative_stock')->widget(Switchery::className(),['options'=>['label'=>'','class'=>'form-control']])->label(false) ?>
                                 </div>
                               </div>
                                <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Use Auto Backup <span class="required"></span>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"><?=Yii::t('app','ใช้งานสำรองข้อมูลอัตโนมัติ')?> <span class="required"></span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                    <?php echo $form->field($model, 'is_auto_backup')->widget(Switchery::className(),['options'=>['label'=>'','class'=>'form-control']])->label(false) ?>

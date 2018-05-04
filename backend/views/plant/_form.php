@@ -35,63 +35,63 @@ use yii\widgets\ActiveForm;
                     <br />
                         <?php $form = ActiveForm::begin(['options'=>['class'=>'form-horizontal form-label-left']]); ?>
                               <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">First Name <span class="required">*</span>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"><?=Yii::t('app','ชื่อร้าน')?> <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                    <?= $form->field($model, 'name')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
                                 </div>
                               </div>
                                <div class="form-group" style="margin-top: -10px">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Short Name 
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"><?=Yii::t('app','ชื่อย่อ')?> 
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                    <?= $form->field($model, 'short_name')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
                                 </div>
                               </div>
                                <div class="form-group" style="margin-top: -10px">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">English Name 
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"><?=Yii::t('app','ชื่อภาษาอังกฤษ')?> 
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                    <?= $form->field($model, 'eng_name')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
                                 </div>
                               </div>
                                <div class="form-group" style="margin-top: -10px">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Description 
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"><?=Yii::t('app','รายละเอียด')?> 
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                    <?= $form->field($model, 'description')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
                                 </div>
                               </div>
                              <div class="form-group" style="margin-top: -10px">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tax ID 
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"><?=Yii::t('app','เลขประจำตัวผู้เสียภาษี')?> 
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                    <?= $form->field($model, 'tax_id')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
                                 </div>
                               </div>
                                 <div class="form-group" style="margin-top: -10px">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Email
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"><?=Yii::t('app','อีเมล์')?>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                    <?= $form->field($model, 'email')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
                                 </div>
                               </div>
                                 <div class="form-group" style="margin-top: -10px">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Mobile 
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"><?=Yii::t('app','มือถือ')?>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                    <?= $form->field($model, 'mobile')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
                                 </div>
                               </div>
                                 <div class="form-group" style="margin-top: -10px">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Phone 
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"><?=Yii::t('app','โทร')?> 
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                    <?= $form->field($model, 'phone')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
                                 </div>
                               </div>
                                <div class="form-group" style="margin-top: -10px">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Website 
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"><?=Yii::t('app','เว็บไซต์')?> 
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                    <?= $form->field($model, 'website')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
@@ -99,21 +99,21 @@ use yii\widgets\ActiveForm;
                               </div>
          
                                 <div class="form-group" style="margin-top: -10px">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Facebook 
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"><?=Yii::t('app','Facebook')?> 
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                    <?= $form->field($model, 'facebook')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
                                 </div>
                               </div>
                                 <div class="form-group" style="margin-top: -10px">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Line 
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"><?=Yii::t('app','Line')?> 
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                    <?= $form->field($model, 'line')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
                                 </div>
                               </div>
                                 <div class="form-group" style="margin-top: -10px">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Logo 
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"><?=Yii::t('app','โลโก้')?> 
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                    <?= $form->field($model, 'logo')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>

@@ -8,6 +8,8 @@ use backend\models\WarehouseSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use yii\web\ForbiddenHttpException;
 
 /**
  * WarehouseController implements the CRUD actions for Warehouse model.
@@ -27,6 +29,33 @@ class WarehouseController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access'=>[
+                    
+                'class'=>AccessControl::className(),
+                'rules'=>[
+                        [
+                            'allow'=>true,
+                            'actions'=>['delete'],
+                            'roles'=>['SystemAdmin']
+                        ],
+                        [
+                            'allow'=>true,
+                            'actions'=>['index','view'],
+                            'roles'=>['ManageInventory']
+                        ],
+                        [
+                            'allow'=>true,
+                            'actions'=>['update'],
+                            'roles'=>['ManageInventory'],
+                            'matchCallback'=> function($rule,$action){
+                                $model = $this->findModel(Yii::$app->request->get('id'));
+                                if(\Yii::$app->user->can('UpdateOwner',['model'=>$model])){
+                                    return true;
+                                }
+                            }
+                        ]
+                    ]
+                ]
         ];
     }
 
@@ -92,9 +121,9 @@ class WarehouseController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        return $this->render('update', ['model' => $model,]);
+       
+  
     }
 
     /**
