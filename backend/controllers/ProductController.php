@@ -44,7 +44,8 @@ class ProductController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-             'perpage' => $pageSize,
+            'perpage' => $pageSize,
+            'viewtype' => 'list',
         ]);
     }
 

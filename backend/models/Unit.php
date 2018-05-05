@@ -47,4 +47,9 @@ class Unit extends \common\models\Unit
 		    ];
 		 }
 
+		 public function findUnitname($id){
+		 	$model = Unit::find()->where(['id'=>$id])->one();
+		 	return count($model)>0?$model->name:'';
+		 }
+
 }

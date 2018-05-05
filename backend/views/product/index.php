@@ -4,12 +4,25 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\Url;
+use backend\assets\ICheckAsset;
+use lavrentiev\widgets\toastr\Notification;
+
+ICheckAsset::register($this);
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'รหัสสินค้า');
 $this->params['breadcrumbs'][] = $this->title;
+
+$view_type = $viewtype;
+
+$this->registerJsFile(
+    '@web/js/stockbalancejs.js?V=001',
+    ['depends' => [\yii\web\JqueryAsset::className()]],
+    static::POS_END
+);
+
 ?>
 <div class="product-index">
    <?php Pjax::begin(); ?>
@@ -20,11 +33,11 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="btn-group pull-right">
               <div class="btn btn-default"><i class="fa fa-upload"></i> นำเข้า</div>
               <div class="btn btn-default"><i class="fa fa-download"></i> นำออก</div>
-              <div class="btn btn-default"><i class="fa fa-trash"></i> ลบ</div>
+              <div class="btn btn-default btn-bulk-remove"><i class="fa fa-trash"></i><span class="remove_item"></span> ลบ</div>
               <div class="btn btn-default"><i class="fa fa-print"></i> พิมพ์</div>
               <div class="btn btn-default"><i class="fa fa-barcode"></i> พิมพ์บาร์โค้ด</div>
-              <div class="btn btn-default"><i class="fa fa-list"></i></div>
-              <div class="btn btn-default"><i class="fa fa-th"></i></div>
+              <div class="btn btn-default view-list"><i class="fa fa-list"></i></div>
+              <div class="btn btn-default view-grid"><i class="fa fa-th"></i></div>
             </div>
       </div>
      </div>
@@ -53,13 +66,13 @@ $this->params['breadcrumbs'][] = $this->title;
                           <div class="col-lg-10">
                             <form id="form-perpage" class="form-inline" action="<?=Url::to(['product/index'],true)?>" method="post">
                               <div class="form-group">
-                               <label>Show</label>
+                               <label>แสดง </label>
                                 <select class="form-control" name="perpage" id="perpage">
                                    <option value="20" <?=$perpage=='20'?'selected':''?>>20</option>
                                    <option value="50" <?=$perpage=='50'?'selected':''?> >50</option>
                                    <option value="100" <?=$perpage=='100'?'selected':''?>>100</option>
                                 </select>
-                                <label>Per page</label>
+                                <label> รายการ</label>
                             </div>
                             </form>
                           </div>
@@ -70,30 +83,47 @@ $this->params['breadcrumbs'][] = $this->title;
                           </div>
                         </div>
                         <div class="table-responsive">
-
+                   <div class="table-grid">
+                     
                     <?= GridView::widget([
                         'dataProvider' => $dataProvider,
                         //'filterModel' => $searchModel,
+                        'emptyCell'=>'-',
                         'layout'=>'{items}{summary}{pager}',
+                        'summary' => "แสดง {begin} - {end} ของทั้งหมด {totalCount} รายการ",
+                        'showOnEmpty'=>false,
+                        'tableOptions' => ['class' => 'table table-hover'],
+                        'emptyText' => '<div style="color: red;align: center;"> <b>ไม่พบรายการไดๆ</b></div>',
                         'columns' => [
-                            ['class' => 'yii\grid\SerialColumn','contentOptions' => ['style' => 'vertical-align: middle']],
+                            ['class' => 'yii\grid\CheckboxColumn','headerOptions' => ['style' => 'text-align: center'],'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;']],
+                          //  ['class' => 'yii\grid\SerialColumn','contentOptions' => ['style' => 'vertical-align: middle']],
 
                          //   'id',
                              [
                                   'attribute'=>'product_code',
+                                  'headerOptions' => ['style' => 'text-align: left'],
                                   'contentOptions' => ['style' => 'vertical-align: middle'],  
                              ],
                              [
                                   'attribute'=>'name',
+                                  'headerOptions' => ['style' => 'text-align: left'],
                                   'contentOptions' => ['style' => 'vertical-align: middle'],  
                              ],
                              [
                                   'attribute'=>'unit_id',
-                                  'contentOptions' => ['style' => 'vertical-align: middle'],  
+                                  'headerOptions' => ['style' => 'text-align: left'],
+                                  'contentOptions' => ['style' => 'vertical-align: middle'],
+                                  'value'=> function($data){
+                                    return \backend\models\Unit::findUnitname($data->unit_id);
+                                  }  
                              ],
                              [
                                   'attribute'=>'category_id',
-                                  'contentOptions' => ['style' => 'vertical-align: middle'],  
+                                  'headerOptions' => ['style' => 'text-align: left'],
+                                  'contentOptions' => ['style' => 'vertical-align: middle'], 
+                                   'value'=> function($data){
+                                    return \backend\models\Productcat::findGroupname($data->category_id);
+                                  }   
                               ],
                             //'photo',
                             //'category_id',
@@ -106,9 +136,34 @@ $this->params['breadcrumbs'][] = $this->title;
                             //'bom_type',
                             //'cost',
                             //'price',
+                              [
+                                'label'=>'สถานะสินค้า',
+                                'format'=>'html',
+                                'headerOptions' => ['style' => 'text-align: center'],
+                                'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;'],  
+                                'value'=>function($data){
+                                    if($data->all_qty >0 && $data->all_qty > $data->min_stock){
+                                      return '<div class="label label-success">มีสินค้า</div>';
+                                    }else if($data->all_qty >0 && $data->all_qty < $data->min_stock){
+                                      return '<div class="label label-warning">สินค่าต่ำกว่ากำหนด</div>';
+                                    }else{
+                                      return '<div class="label label-danger">ไม่มีสินค้า</div>';
+                                    }
+                                   
+                                }
+                              ],
+                               [
+                                  'attribute'=>'all_qty',
+                                  'headerOptions' => ['style' => 'text-align: right'],
+                                  'contentOptions' => ['style' => 'vertical-align: middle;text-align: right'],  
+                                  'value'=> function($data){
+                                     return $data->all_qty > 0?number_format($data->all_qty,0):0;
+                                  }
+                              ],
                            [
                                                        'attribute'=>'status',
-                                                       'contentOptions' => ['style' => 'vertical-align: middle'],
+                                                       'headerOptions' => ['style' => 'text-align: center'],
+                                                       'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;'],
                                                        'format' => 'html',
                                                        'value'=>function($data){
                                                          return $data->status === 1 ? '<div class="label label-success">Active</div>':'<div class="label label-default">Inactive</div>';
@@ -162,15 +217,30 @@ $this->params['breadcrumbs'][] = $this->title;
                                                           ],
                         ],
                     ]); ?>
+                    </div>
                 </div>
             </div>
         </div>
     <?php Pjax::end(); ?>
 </div>
 <?php 
+  $this->registerJsFile( '@web/js/sweetalert.min.js',['depends' => [\yii\web\JqueryAsset::className()]],static::POS_END);
+  $this->registerCssFile( '@web/css/sweetalert.css');
   //$url_to_delete =  Url::to(['product/bulkdelete'],true);
   $this->registerJs('
+
     $(function(){
+
+        $(".btn-bulk-remove").attr("disabled",true);
+
+        var viewtype = "'.$view_type.'";
+        if(viewtype == "list"){
+          $(".view-list").addClass("active");
+          $(".view-grid").removeClass("active");
+        }else{
+          $(".view-grid").addClass("active");
+          $(".view-list").removeClass("active");
+        }
         $("#perpage").change(function(){
             $("#form-perpage").submit();
         });

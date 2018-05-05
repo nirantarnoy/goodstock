@@ -46,5 +46,9 @@ class Productcat extends \common\models\ProductCategory
 		        ],
 		    ];
 		 }
+		 public function findGroupname($id){
+		 	$model = Productcat::find()->where(['id'=>$id])->one();
+		 	return count($model)>0?$model->name:'';
+		 }
 
 }
