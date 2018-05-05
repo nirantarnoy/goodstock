@@ -71,8 +71,8 @@ class WarehouseSearch extends Warehouse
         ]);
 
         if($this->globalSearch != ''){
-            $query->orFilterWhere(['like','user',$this->globalSearch])
-                  ->orFilterWhere(['like','email',$this->globalSearch]);
+            $query->orFilterWhere(['like','name',$this->globalSearch])
+                  ->orFilterWhere(['like','description',$this->globalSearch]);
         }
 
         return $dataProvider;

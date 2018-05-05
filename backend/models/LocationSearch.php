@@ -19,6 +19,7 @@ class LocationSearch extends Location
     public function rules()
     {
         return [
+          [['name','warehouse_id'],'required'],
             [['id', 'warehouse_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name', 'description'], 'safe'],
             [['globalSearch'],'string'],

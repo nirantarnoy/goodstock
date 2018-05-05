@@ -28,7 +28,8 @@
         "kartik-v/yii2-mpdf": "*",
         "yii2mod/yii2-sweet-alert": "*",
         "kartik-v/yii2-mpdf": "*",
-        "lavrentiev/yii2-toastr": "~2.0.0"
+        "lavrentiev/yii2-toastr": "~2.0.0",
+        "2amigos/yii2-multi-select-widget" : "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

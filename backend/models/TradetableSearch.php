@@ -12,6 +12,7 @@ use backend\models\Tradetable;
  */
 class TradetableSearch extends Tradetable
 {
+     public $globalSearch;
     /**
      * {@inheritdoc}
      */
@@ -20,6 +21,7 @@ class TradetableSearch extends Tradetable
         return [
             [['id', 'journaltype', 'transdate', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['journalid', 'note'], 'safe'],
+            [['globalSearch'],'string'],
         ];
     }
 
@@ -69,8 +71,10 @@ class TradetableSearch extends Tradetable
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'journalid', $this->journalid])
-            ->andFilterWhere(['like', 'note', $this->note]);
+        if($this->globalSearch != ''){
+            $query->orFilterWhere(['like','journalid',$this->globalSearch])
+                  ->orFilterWhere(['like','note',$this->globalSearch]);
+        }
 
         return $dataProvider;
     }

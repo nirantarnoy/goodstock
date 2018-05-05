@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model backend\models\Tradetable */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Tradetables'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ข้อตกลงซื้อขาย'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tradetable-view">

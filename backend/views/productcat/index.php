@@ -8,7 +8,7 @@ use yii\helpers\Url;
 /* @var $searchModel backend\models\ProductcatSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Product Category');
+$this->title = Yii::t('app', 'กลุ่มสินค้า');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="productcat-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Productcat'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างกลุ่มสินค้า'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <div class="x_panel">
                   <div class="x_title">
@@ -40,22 +40,22 @@ $this->params['breadcrumbs'][] = $this->title;
                   <div class="x_content">
                         <div class="row">
                           <div class="col-lg-10">
+                            <div class="form-inline">
+                            <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
+                            </div>
+                          </div>
+                          <div class="col-lg-2">
                             <form id="form-perpage" class="form-inline" action="<?=Url::to(['productcat/index'],true)?>" method="post">
                               <div class="form-group">
-                               <label>Show</label>
+                               <label>แสดง </label>
                                 <select class="form-control" name="perpage" id="perpage">
                                    <option value="20" <?=$perpage=='20'?'selected':''?>>20</option>
                                    <option value="50" <?=$perpage=='50'?'selected':''?> >50</option>
                                    <option value="100" <?=$perpage=='100'?'selected':''?>>100</option>
                                 </select>
-                                <label>Per page</label>
+                                <label> รายการ</label>
                             </div>
                             </form>
-                          </div>
-                          <div class="col-lg-2">
-                            <div class="form-inline pull-right">
-                            <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
-                            </div>
                           </div>
                         </div>
                         <div class="table-responsive">
@@ -64,15 +64,27 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?= GridView::widget([
                                 'dataProvider' => $dataProvider,
                                 //'filterModel' => $searchModel,
+                                'emptyCell'=>'-',
                                 'layout'=>'{items}{summary}{pager}',
+                                'summary' => "แสดง {begin} - {end} ของทั้งหมด {totalCount} รายการ",
+                                'showOnEmpty'=>false,
+                                'tableOptions' => ['class' => 'table table-hover'],
+                                'emptyText' => '<div style="color: red;align: center;"> <b>ไม่พบรายการไดๆ</b></div>',
                                 'columns' => [
-                                    ['class' => 'yii\grid\SerialColumn'],
+                                    ['class' => 'yii\grid\SerialColumn','contentOptions' => ['style' => 'vertical-align: middle;text-align: center;']],
 
                                  //   'id',
-                                    'name',
-                                    'description',
+                                   [
+                                   'attribute'=>'name',
+                                   'contentOptions' => ['style' => 'vertical-align: middle'],
+                                 ],
+                                 [
+                                   'attribute'=>'description',
+                                   'contentOptions' => ['style' => 'vertical-align: middle'],                                 
+                                 ],
                                     [
                                                'attribute'=>'status',
+                                               'contentOptions' => ['style' => 'vertical-align: middle;text-align: left;'],
                                                'format' => 'html',
                                                'value'=>function($data){
                                                  return $data->status === 1 ? '<div class="label label-success">Active</div>':'<div class="label label-default">Inactive</div>';

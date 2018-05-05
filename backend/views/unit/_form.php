@@ -11,7 +11,7 @@ use toxor88\switchery\Switchery;
 <div class="unit-form">
    <div class="x_panel">
                   <div class="x_title">
-                    <h3><i class="fa fa-institution"></i> <?=$this->title?> <small></small></h3>
+                    <h3><i class="fa fa-hourglass"></i> <?=$this->title?> <small></small></h3>
                     <!-- <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>

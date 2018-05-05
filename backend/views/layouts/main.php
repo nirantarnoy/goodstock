@@ -85,7 +85,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                         "items" => [
                                             ["label" => "ประเภทชำระเงิน", "url" => ["paymenttype/index"]],
                                             ["label" => "ประเภทการส่งของ", "url" => ["deliverytype/index"]],
-                                            ["label" => "ระยะเวลาชำระเงิน", "url" => ["paymentterm/index"]],
+                                           
                                             ["label" => "ข้อตกลงซื้อขาย", "url" => ["tradetable/index"]],
                                         ],
                                     ],
@@ -106,7 +106,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                         "url" => "#",
                                         "items" => [
                                             ["label" => "คลังสินค้า", "url" => ["warehouse/index"]],
-                                            ["label" => "location", "url" => ["location/index"]],
+                                            ["label" => "ล๊อกจัดเก็บ", "url" => ["location/index"]],
                                             ["label" => "สินค้าคงเหลือ", "url" => ["stockbalance/index"]],
                                             ["label" => "จัดการสต๊อก", "url" => ["movement/index"]],
                                             ["label" => "นับสต๊อก", "url" => ["counting/index"]],

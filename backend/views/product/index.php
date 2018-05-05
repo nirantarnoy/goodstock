@@ -6,6 +6,8 @@ use yii\widgets\Pjax;
 use yii\helpers\Url;
 use backend\assets\ICheckAsset;
 use lavrentiev\widgets\toastr\Notification;
+use dosamigos\multiselect\MultiSelect;
+use yii\helpers\ArrayHelper;
 
 ICheckAsset::register($this);
 /* @var $this yii\web\View */
@@ -16,6 +18,11 @@ $this->title = Yii::t('app', 'รหัสสินค้า');
 $this->params['breadcrumbs'][] = $this->title;
 
 $view_type = $viewtype;
+$group = '';
+$stockstatus = '';
+
+$groupall = \backend\models\Productcat::find()->where(['!=','name',''])->orderby(['name'=>SORT_ASC])->all();
+$stock_status = [['id'=>1,'name'=>'มีสินค้า'],['id'=>2,'name'=>'สินค่าต่ำกว่ากำหนด'],['id'=>3,'name'=>'ไม่มีสินค้า']];
 
 $this->registerJsFile(
     '@web/js/stockbalancejs.js?V=001',
@@ -29,7 +36,7 @@ $this->registerJsFile(
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
      <div class="row">
       <div class="col-lg-12">
-            <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างรหัสสินค้าใหม่'), ['create'], ['class' => 'btn btn-success']) ?>
+            <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างรหัสสินค้า'), ['create'], ['class' => 'btn btn-success']) ?>
             <div class="btn-group pull-right">
               <div class="btn btn-default"><i class="fa fa-upload"></i> นำเข้า</div>
               <div class="btn btn-default"><i class="fa fa-download"></i> นำออก</div>
@@ -64,24 +71,76 @@ $this->registerJsFile(
                   <div class="x_content">
                         <div class="row">
                           <div class="col-lg-10">
-                            <form id="form-perpage" class="form-inline" action="<?=Url::to(['product/index'],true)?>" method="post">
-                              <div class="form-group">
-                               <label>แสดง </label>
-                                <select class="form-control" name="perpage" id="perpage">
-                                   <option value="20" <?=$perpage=='20'?'selected':''?>>20</option>
-                                   <option value="50" <?=$perpage=='50'?'selected':''?> >50</option>
-                                   <option value="100" <?=$perpage=='100'?'selected':''?>>100</option>
-                                </select>
-                                <label> รายการ</label>
+                            <form id="search-form" action="<?=Url::to(['product/index'],true)?>" method="post">
+                            <div class="form-inline">
+                              
+                                <input type="text" class="form-control" name="search_all" value="" placeholder="ค้นหารหัส,ชื่อ">
+                                <?php      
+                                      echo MultiSelect::widget([
+                                              'id'=>"product_group",
+                                              'name'=>'product_group[]',
+                                              //'model'=>null,
+                                              "options" => ['multiple'=>"multiple",
+                                                              'onchange'=>''], // for the actual multiselect
+                                              'data' => count($groupall)==0?['ไม่มีข้อมูล']:ArrayHelper::map($groupall,'id','name'), // data as array
+                                              'value' => $group, // if preselected
+                                              "clientOptions" => 
+                                                  [
+                                                      "includeSelectAllOption" => true,
+                                                      'numberDisplayed' => 5,
+                                                      'nonSelectedText'=>'กลุ่มสินค้า',
+                                                      'enableFiltering' => true,
+                                                      'enableCaseInsensitiveFiltering'=>true,
+                                                  ], 
+                                  ]); ?>
+                                  <?php      
+                                      echo MultiSelect::widget([
+                                              'id'=>"stock_status",
+                                              'name'=>'stock_status[]',
+                                              //'model'=>null,
+                                              "options" => ['multiple'=>"multiple",
+                                                              'onchange'=>''], // for the actual multiselect
+                                              'data' => count($stock_status)==0?['ไม่มีข้อมูล']:ArrayHelper::map($stock_status,'id','name'), // data as array
+                                              'value' => $stockstatus, // if preselected
+                                              "clientOptions" => 
+                                                  [
+                                                      "includeSelectAllOption" => true,
+                                                      'numberDisplayed' => 5,
+                                                      'nonSelectedText'=>'ประเภทสต๊อก',
+                                                      'enableFiltering' => true,
+                                                      'enableCaseInsensitiveFiltering'=>true,
+                                                  ], 
+                                  ]); ?>
+                                   <div class="btn-group">
+                                         <div class="btn btn-info btn-search"> ค้นหา</div>
+                                  <div class="btn btn-default btn-reset"> รีเซ็ต</div>
+                                   </div>
+                              
+                              
                             </div>
                             </form>
                           </div>
                           <div class="col-lg-2">
-                            <div class="form-inline pull-right">
-                            <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
+                           
+                            <div class="pull-right"> 
+                              <div class="form-inline">
+                                <form id="form-perpage" class="form-inline" action="<?=Url::to(['product/index'],true)?>" method="post">
+                                <div class="form-group">
+                                 <label>แสดง </label>
+                                  <select class="form-control" name="perpage" id="perpage">
+                                     <option value="20" <?=$perpage=='20'?'selected':''?>>20</option>
+                                     <option value="50" <?=$perpage=='50'?'selected':''?> >50</option>
+                                     <option value="100" <?=$perpage=='100'?'selected':''?>>100</option>
+                                  </select>
+                                  <label> รายการ</label>
+                              </div>
+                              </form>
                             </div>
                           </div>
                         </div>
+                        </div><br />
+                         <div class="row">
+                          <div class="col-lg-12">
                         <div class="table-responsive">
                    <div class="table-grid">
                      
@@ -218,7 +277,9 @@ $this->registerJsFile(
                         ],
                     ]); ?>
                     </div>
+                  </div>
                 </div>
+              </div>
             </div>
         </div>
     <?php Pjax::end(); ?>

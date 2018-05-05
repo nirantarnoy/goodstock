@@ -48,6 +48,13 @@ use toxor88\switchery\Switchery;
                                 </div>
                               </div>
                               <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Logo <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                   <?php echo $form->field($model, 'logo')->fileinput(['class'=>'form-control'])->label(false) ?>
+                                </div>
+                              </div>
+                              <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Status <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">

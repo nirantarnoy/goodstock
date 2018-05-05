@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model backend\models\Paymenttype */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Paymenttypes'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ประเภทชำระเงิน'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="paymenttype-view">

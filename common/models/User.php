@@ -59,6 +59,14 @@ class User extends ActiveRecord implements IdentityInterface
 
         ];
     }
+    public function attributeLabels(){
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'group_id' => Yii::t('app', 'กลุ่มผู้ใช้'),
+            'username' => Yii::t('app', 'รหัสชื่อผู้ใช้'),
+            'status'=> Yii::t('app','สถานะ'),
+        ];
+    }
 
     /**
      * @inheritdoc

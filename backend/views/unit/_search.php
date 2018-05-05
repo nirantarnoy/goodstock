@@ -20,7 +20,7 @@ use yii\widgets\ActiveForm;
 
       <div class="input-group">
     <!--         <span class="input-group-addon" id="basic-addon1"><i class="fa fa-search"></i></span>-->
-     <?= $form->field($model, 'globalSearch')->textInput(['placeholder'=>'Search','class'=>'form-control','aria-describedby'=>'basic-addon1'])->label(false) ?>
+     <?= $form->field($model, 'globalSearch')->textInput(['placeholder'=>'ค้นหา','class'=>'form-control','aria-describedby'=>'basic-addon1'])->label(false) ?>
     </div>
 
 
