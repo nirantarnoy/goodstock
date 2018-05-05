@@ -78,7 +78,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                             ["label" => "กำหนดสินธิ์การใช้งาน", "url" => ["assignrole/index"]],
                                         ],
                                     ],
-                                     [
+                                    [
                                         "label" => "ตั้งค่าพื้นฐาน",
                                         "icon" => "cog",
                                         "url" => "#",
@@ -86,10 +86,10 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                             ["label" => "ประเภทชำระเงิน", "url" => ["paymenttype/index"]],
                                             ["label" => "ประเภทการส่งของ", "url" => ["deliverytype/index"]],
                                             ["label" => "ระยะเวลาชำระเงิน", "url" => ["paymentterm/index"]],
-                                            ["label" => "ข้อตกลงซื้อขาย", "url" => ["tradeagreement/index"]],
+                                            ["label" => "ข้อตกลงซื้อขาย", "url" => ["tradetable/index"]],
                                         ],
                                     ],
-                                     [
+                                    [
                                         "label" => "สินค้า",
                                         "icon" => "cubes",
                                         "url" => "#",

@@ -11,11 +11,10 @@ use kartik\select2\Select2;
 ?>
 
 <div class="product-form">
-
-      <?php $form = ActiveForm::begin(['options'=>['class'=>'form-horizontal form-label-left']]); ?>
+<?php $form = ActiveForm::begin(['options'=>['class'=>'form-horizontal form-label-left']]); ?>
     <div class="x_panel">
                   <div class="x_title">
-                    <h3><i class="fa fa-institution"></i> <?=$this->title?> <small></small></h3>
+                    <h3><i class="fa fa-cube"></i> <?=$this->title?> <small></small></h3>
                     <ul class="nav navbar-right panel_toolbox" style="margin-top: -40px;">
                       <li><?php echo $form->field($model, 'is_hold')->widget(Switchery::className(),['options'=>['label'=>'','class'=>'form-control']])->label() ?>
                       </li>
@@ -23,18 +22,19 @@ use kartik\select2\Select2;
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                    <br />
 
                          <div class="" role="tabpanel" data-example-id="togglable-tabs">
                       <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Product Infomation</a>
+                        <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">ข้อมูลสินค้า</a>
                         </li>
-                        <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Product Variants</a>
+                        <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">สินค้าที่เกี่ยวข้อง</a>
                         </li>
-                       <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Product Structure</a>
+                       <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">โครงสร้างสินค้า</a>
                         </li>
-                        <li role="presentation" class=""><a href="#tab_content5" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Movement Transaction</a>
+                        <li role="presentation" class=""><a href="#tab_content4" role="tab" id="profile-tab4" data-toggle="tab" aria-expanded="false">สินค้าคงคลัง</a>
                             </li>
+                        <li role="presentation" class=""><a href="#tab_content5" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">ความเคลื่นไหว</a>
+                        </li>
                         </ul>
                       <div id="myTabContent" class="tab-content">
                         <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
@@ -233,6 +233,33 @@ use kartik\select2\Select2;
                         <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
                           <p>xxFood truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo
                             booth letterpress, commodo enim craft beer mlkshk </p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
+                           <div class="row">
+                             <div class="col-lg-6">
+                               <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">สินค้าทั้งหมด <span class="required"></span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <?= $form->field($model, 'all_qty')->textInput(['maxlength' => true,'class'=>'form-control','disabled'=>'disabled'])->label(false) ?>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">สินค้าจอง <span class="required"></span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <?= $form->field($model, 'reserved_qty')->textInput(['maxlength' => true,'class'=>'form-control','disabled'=>'disabled'])->label(false) ?>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">สินค้าที่ใช้ได้ <span class="required"></span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <?= $form->field($model, 'available_qty')->textInput(['maxlength' => true,'class'=>'form-control','disabled'=>'disabled'])->label(false) ?>
+                                    </div>
+                                </div>
+                             </div>
+                           </div>
                         </div>
                       </div>
                     </div>

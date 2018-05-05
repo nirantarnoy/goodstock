@@ -64,11 +64,21 @@ $this->params['breadcrumbs'][] = $this->title;
                    // 'filterModel' => $searchModel,
                      'layout'=>"{items}{summary}{pager}",
                     'columns' => [
-                        ['class' => 'yii\grid\SerialColumn'],
+                        [
+                          'class' => 'yii\grid\SerialColumn',
+                          'contentOptions' => ['style' => 'vertical-align: middle','text-align:center'],                        ],
 
                        // 'id',
-                        'username',
-                        'group_id',
+                        //'username',
+                          [
+                            'attribute'=>'username',
+                            'contentOptions' => ['style' => 'vertical-align: middle'],
+                          ],
+                                                    [
+                            'attribute'=>'group_id',
+                            'contentOptions' => ['style' => 'vertical-align: middle'],
+                          ],
+                        //'group_id',
                         //'auth_key',
                         //'password_hash',
                         //'password_reset_token',
@@ -80,6 +90,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                        [
                                    'attribute'=>'status',
+                                   'contentOptions' => ['style' => 'vertical-align: middle'],
                                    'format' => 'html',
                                    'value'=>function($data){
                                      return $data->status === 1 ? '<div class="label label-success">Active</div>':'<div class="label label-default">Inactive</div>';

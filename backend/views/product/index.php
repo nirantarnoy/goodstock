@@ -8,19 +8,30 @@ use yii\helpers\Url;
 /* @var $searchModel backend\models\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Products');
+$this->title = Yii::t('app', 'รหัสสินค้า');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="product-index">
    <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Product'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+     <div class="row">
+      <div class="col-lg-12">
+            <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างรหัสสินค้าใหม่'), ['create'], ['class' => 'btn btn-success']) ?>
+            <div class="btn-group pull-right">
+              <div class="btn btn-default"><i class="fa fa-upload"></i> นำเข้า</div>
+              <div class="btn btn-default"><i class="fa fa-download"></i> นำออก</div>
+              <div class="btn btn-default"><i class="fa fa-trash"></i> ลบ</div>
+              <div class="btn btn-default"><i class="fa fa-print"></i> พิมพ์</div>
+              <div class="btn btn-default"><i class="fa fa-barcode"></i> พิมพ์บาร์โค้ด</div>
+              <div class="btn btn-default"><i class="fa fa-list"></i></div>
+              <div class="btn btn-default"><i class="fa fa-th"></i></div>
+            </div>
+      </div>
+     </div>
+   
     <div class="x_panel">
                   <div class="x_title">
-                    <h4><i class="fa fa-cube"></i> <?=$this->title?> <small></small></h4>
+                    <h4><i class="fa fa-cubes"></i> <?=$this->title?> <small></small></h4>
                     <!-- <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                       <li class="dropdown">
@@ -65,13 +76,25 @@ $this->params['breadcrumbs'][] = $this->title;
                         //'filterModel' => $searchModel,
                         'layout'=>'{items}{summary}{pager}',
                         'columns' => [
-                            ['class' => 'yii\grid\SerialColumn'],
+                            ['class' => 'yii\grid\SerialColumn','contentOptions' => ['style' => 'vertical-align: middle']],
 
                          //   'id',
-                            'product_code',
-                            'name',
-                            'description',
-                            'barcode',
+                             [
+                                  'attribute'=>'product_code',
+                                  'contentOptions' => ['style' => 'vertical-align: middle'],  
+                             ],
+                             [
+                                  'attribute'=>'name',
+                                  'contentOptions' => ['style' => 'vertical-align: middle'],  
+                             ],
+                             [
+                                  'attribute'=>'unit_id',
+                                  'contentOptions' => ['style' => 'vertical-align: middle'],  
+                             ],
+                             [
+                                  'attribute'=>'category_id',
+                                  'contentOptions' => ['style' => 'vertical-align: middle'],  
+                              ],
                             //'photo',
                             //'category_id',
                             //'product_type_id',
@@ -85,6 +108,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             //'price',
                            [
                                                        'attribute'=>'status',
+                                                       'contentOptions' => ['style' => 'vertical-align: middle'],
                                                        'format' => 'html',
                                                        'value'=>function($data){
                                                          return $data->status === 1 ? '<div class="label label-success">Active</div>':'<div class="label label-default">Inactive</div>';
