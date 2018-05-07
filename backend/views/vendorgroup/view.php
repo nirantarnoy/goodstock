@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model backend\models\Vendorgroup */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Vendorgroups'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'กลุ่มผู้ขาย'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="vendorgroup-view">

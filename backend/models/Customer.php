@@ -46,5 +46,8 @@ class Customer extends \common\models\Customer
 		        ],
 		    ];
 		 }
-
+		  public function findCustname($id){
+		 	$model = Customer::find()->where(['id'=>$id])->one();
+		 	return count($model)>0?$model->name:'';
+		 }
 }

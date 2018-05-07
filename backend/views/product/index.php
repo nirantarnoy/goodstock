@@ -70,7 +70,7 @@ $this->registerJsFile(
                   </div>
                   <div class="x_content">
                         <div class="row">
-                          <div class="col-lg-10">
+                          <div class="col-lg-9">
                             <form id="search-form" action="<?=Url::to(['product/index'],true)?>" method="post">
                             <div class="form-inline">
                               
@@ -120,7 +120,7 @@ $this->registerJsFile(
                             </div>
                             </form>
                           </div>
-                          <div class="col-lg-2">
+                          <div class="col-lg-3">
                            
                             <div class="pull-right"> 
                               <div class="form-inline">

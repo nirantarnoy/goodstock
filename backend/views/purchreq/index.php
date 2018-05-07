@@ -8,54 +8,51 @@ use yii\helpers\Url;
 /* @var $searchModel backend\models\PurchreqSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Purchreqs');
+$this->title = Yii::t('app', 'ใบขอซื้อ');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="purchreq-index">
 
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Purchreq'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <div class="row">
+      <div class="col-lg-12">
+            <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างใบขอซื้อ'), ['create'], ['class' => 'btn btn-success']) ?>
+            <div class="btn-group pull-right">
+              <div class="btn btn-default"><i class="fa fa-download"></i> อนุมัติใบขอซื้อ</div>
+              <div class="btn btn-default"><i class="fa fa-ban"></i> ยกเลิก</div>
+              
+              <div class="btn btn-default btn-bulk-remove"><i class="fa fa-trash"></i><span class="remove_item"></span> ลบ</div>
+              <div class="btn btn-default"><i class="fa fa-download"></i> นำออก</div>
+              <div class="btn btn-default"><i class="fa fa-print"></i> พิมพ์</div>
+            </div>
+      </div>
+     </div>
     <div class="x_panel">
                   <div class="x_title">
                     <h4><i class="fa fa-file-o"></i> <?=$this->title?> <small></small></h4>
-                    <!-- <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul> -->
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                        <div class="row">
-                          <div class="col-lg-10">
-                            <form id="form-perpage" class="form-inline" action="<?=Url::to(['purchreq/index'],true)?>" method="post">
+                         <div class="row">
+                          <div class="col-lg-9">
+                            <div class="form-inline">
+                            <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
+                            </div>
+                          </div>
+                          <div class="col-lg-3">
+                            <div class="pull-right">
+                            <form id="form-perpage" class="form-inline" action="<?=Url::to(['location/index'],true)?>" method="post">
                               <div class="form-group">
-                               <label>Show</label>
+                               <label>แสดง </label>
                                 <select class="form-control" name="perpage" id="perpage">
                                    <option value="20" <?=$perpage=='20'?'selected':''?>>20</option>
                                    <option value="50" <?=$perpage=='50'?'selected':''?> >50</option>
                                    <option value="100" <?=$perpage=='100'?'selected':''?>>100</option>
                                 </select>
-                                <label>Per page</label>
+                                <label> รายการ</label>
                             </div>
                             </form>
-                          </div>
-                          <div class="col-lg-2">
-                            <div class="form-inline pull-right">
-                            <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
                             </div>
                           </div>
                         </div>
@@ -64,15 +61,40 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?= GridView::widget([
                                 'dataProvider' => $dataProvider,
                                // 'filterModel' => $searchModel,
-                                 'layout'=>'{items}{summary}{pager}',
+                                'emptyCell'=>'-',
+                                'layout'=>'{items}{summary}{pager}',
+                                'summary' => "แสดง {begin} - {end} ของทั้งหมด {totalCount} รายการ",
+                                'showOnEmpty'=>false,
+                                'tableOptions' => ['class' => 'table table-hover'],
+                                'emptyText' => '<div style="color: red;align: center;"> <b>ไม่พบรายการไดๆ</b></div>',
                                 'columns' => [
-                                    ['class' => 'yii\grid\SerialColumn'],
+                                    ['class' => 'yii\grid\SerialColumn','contentOptions' => ['style' => 'vertical-align: middle','text-align:center'],],
 
                                    // 'id',
-                                    'purchreq_no',
-                                    'require_date',
-                                    'request_by',
-                                    'reason',
+                                    [
+                                      'attribute'=>'purchreq_no',
+                                      'contentOptions' => ['style' => 'vertical-align: middle'],  
+                                    ],
+                                     [
+                                      'attribute'=>'require_date',
+                                      'contentOptions' => ['style' => 'vertical-align: middle'],  
+                                    ],
+                                     [
+                                      'attribute'=>'request_by',
+                                      'contentOptions' => ['style' => 'vertical-align: middle'],  
+                                    ],
+                                     [
+                                      'attribute'=>'reason',
+                                      'contentOptions' => ['style' => 'vertical-align: middle'],  
+                                    ],
+                                     [
+                                      'attribute'=>'total_amount',
+                                      'contentOptions' => ['style' => 'vertical-align: middle'],  
+                                    ],
+                                     [
+                                      'attribute'=>'approve_status',
+                                      'contentOptions' => ['style' => 'vertical-align: middle'],  
+                                    ],
                                     //'approve_status',
                                     //'approve_by',
                                     //'approve_date',
@@ -80,6 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     //'note',
                                     [
                                                'attribute'=>'status',
+                                               'contentOptions' => ['style' => 'vertical-align: middle','text-align:center'],
                                                'format' => 'html',
                                                'value'=>function($data){
                                                  return $data->status === 1 ? '<div class="label label-success">Active</div>':'<div class="label label-default">Inactive</div>';

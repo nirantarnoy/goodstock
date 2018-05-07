@@ -14,10 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="paymenttype-index">
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
         <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างประเภทชำระเงิน'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
     <div class="x_panel">
                   <div class="x_title">
                     <h4><i class="fa fa-users"></i> <?=$this->title?> <small></small></h4>

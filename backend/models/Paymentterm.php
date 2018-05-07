@@ -46,5 +46,9 @@ class Paymentterm extends \common\models\PaymentTerm
 		        ],
 		    ];
 		 }
+		 public function findTermname($id){
+		 	$model = Paymentterm::find()->where(['id'=>$id])->one();
+		 	return count($model)>0?$model->name:'';
+		 }
 
 }

@@ -14,10 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="paymentterm-index">
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
         <?= Html::a(Yii::t('app', 'Create Paymentterm'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
     <div class="x_panel">
                   <div class="x_title">
                     <h4><i class="fa fa-clock-o"></i> <?=$this->title?> <small></small></h4>

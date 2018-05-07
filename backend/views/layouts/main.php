@@ -83,10 +83,11 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                         "icon" => "cog",
                                         "url" => "#",
                                         "items" => [
+                                            ["label" => "ลำดับเอกสาร", "url" => ["sequence/index"]],
                                             ["label" => "ประเภทชำระเงิน", "url" => ["paymenttype/index"]],
                                             ["label" => "ประเภทการส่งของ", "url" => ["deliverytype/index"]],
-                                           
                                             ["label" => "ข้อตกลงซื้อขาย", "url" => ["tradetable/index"]],
+                                            ["label" => "ธนาคาร", "url" => ["bank/index"]],
                                         ],
                                     ],
                                     [
@@ -120,7 +121,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                             ["label" => "กลุ่มผู้ขาย", "url" => ["vendorgroup/index"]],
                                             ["label" => "ผู้ขาย", "url" => ["vendor/index"]],
                                             ["label" => "ใบขอซื้อ", "url" => ["purchreq/index"]],
-                                            ["label" => "ใบสั่งซื้อ", "url" => ["purchaseorder/index"]],
+                                            ["label" => "ใบสั่งซื้อ", "url" => ["purchtable/index"]],
                                         ],
                                     ],
                                     [

@@ -33,6 +33,7 @@ class Vendor extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['name','vendor_group_id'],'required'],
             [['vendor_group_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by','vendor_type','payment_type','payment_term','delivery_type','lead_time'], 'integer'],
             [['name', 'description'], 'string', 'max' => 255],
         ];
@@ -45,19 +46,19 @@ class Vendor extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
-            'description' => Yii::t('app', 'Description'),
-            'vendor_group_id' => Yii::t('app', 'Vendor Group ID'),
-            'payment_term' => Yii::t('app', 'Payment Term'),
+            'name' => Yii::t('app', 'ชื่อ'),
+            'description' => Yii::t('app', 'รายละเอียด'),
+            'vendor_group_id' => Yii::t('app', 'กลุ่มผู้ขาย'),
+            'payment_term' => Yii::t('app', 'วิธีการชำระเงิน'),
             'payment_type' => Yii::t('app', 'Payment Type'),
-            'delivery_type' => Yii::t('app', 'Delivery Type'),
-            'lead_time' => Yii::t('app', 'Leadtime'),
-            'vendor_type' => Yii::t('app', 'Vendor Type'),
-            'status' => Yii::t('app', 'Status'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'created_by' => Yii::t('app', 'Created By'),
-            'updated_by' => Yii::t('app', 'Updated By'),
+            'delivery_type' => Yii::t('app', 'วิธีส่งมอบสินค้า'),
+            'lead_time' => Yii::t('app', 'ระยะเวลาส่งมอบ'),
+            'vendor_type' => Yii::t('app', 'ประเภทผู้ขาย'),
+            'status' => Yii::t('app', 'สถานะ'),
+            'created_at' => Yii::t('app', 'สร้างเมื่อ'),
+            'updated_at' => Yii::t('app', 'แก้ไขเมื่อ'),
+            'created_by' => Yii::t('app', 'สร้างโดย'),
+            'updated_by' => Yii::t('app', 'แก้ไขโดย'),
         ];
     }
 }

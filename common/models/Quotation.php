@@ -39,6 +39,7 @@ class Quotation extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['quotation_no'],'required'],
             [['require_date', 'customer_id', 'approve_status', 'approve_by', 'approve_date', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['total_amount'], 'number'],
             [['quotation_no', 'customer_ref', 'note'], 'string', 'max' => 255],
@@ -52,20 +53,20 @@ class Quotation extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'quotation_no' => Yii::t('app', 'Quotation No'),
-            'require_date' => Yii::t('app', 'Require Date'),
-            'customer_id' => Yii::t('app', 'Customer ID'),
-            'customer_ref' => Yii::t('app', 'Customer Ref'),
-            'approve_status' => Yii::t('app', 'Approve Status'),
-            'approve_by' => Yii::t('app', 'Approve By'),
-            'approve_date' => Yii::t('app', 'Approve Date'),
-            'total_amount' => Yii::t('app', 'Total Amount'),
-            'note' => Yii::t('app', 'Note'),
-            'status' => Yii::t('app', 'Status'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'created_by' => Yii::t('app', 'Created By'),
-            'updated_by' => Yii::t('app', 'Updated By'),
+            'quotation_no' => Yii::t('app', 'เลขที่ใบเสนอราคา'),
+            'require_date' => Yii::t('app', 'วันที่ต้องการ'),
+            'customer_id' => Yii::t('app', 'รหัสลูกค้า'),
+            'customer_ref' => Yii::t('app', 'รหัสอ้างอิงลูกค้า'),
+            'approve_status' => Yii::t('app', 'สถานะอนุมัติ'),
+            'approve_by' => Yii::t('app', 'ผู้อนุมัติ'),
+            'approve_date' => Yii::t('app', 'วันที่อนุมัติ'),
+            'total_amount' => Yii::t('app', 'ราคารวม'),
+            'note' => Yii::t('app', 'บันทึก'),
+            'status' => Yii::t('app', 'สถานะ'),
+            'created_at' => Yii::t('app', 'สร้างเมื่อ'),
+            'updated_at' => Yii::t('app', 'แก้ไขเมื่อ'),
+            'created_by' => Yii::t('app', 'สร้างโดย'),
+            'updated_by' => Yii::t('app', 'แก้ไขโดย'),
         ];
     }
 }

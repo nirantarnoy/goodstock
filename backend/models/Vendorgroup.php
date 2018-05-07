@@ -47,4 +47,9 @@ class Vendorgroup extends \common\models\Vendorgroup
 		    ];
 		 }
 
+		  public function findVendorgroupname($id){
+		 	$model = Vendorgroup::find()->where(['id'=>$id])->one();
+		 	return count($model)>0?$model->name:'';
+		 }
+
 }

@@ -8,16 +8,13 @@ use yii\helpers\Url;
 /* @var $searchModel backend\models\CustomergroupSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Customergroups');
+$this->title = Yii::t('app', 'กลุ่มลูกค้า');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="customergroup-index">
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Customergroup'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+        <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างกลุ่มสินค้า'), ['create'], ['class' => 'btn btn-success']) ?>
     <div class="x_panel">
                   <div class="x_title">
                     <h4><i class="fa fa-institution"></i> <?=$this->title?> <small></small></h4>
@@ -39,22 +36,24 @@ $this->params['breadcrumbs'][] = $this->title;
                   </div>
                   <div class="x_content">
                         <div class="row">
-                          <div class="col-lg-10">
-                            <form id="form-perpage" class="form-inline" action="<?=Url::to(['customergroup/index'],true)?>" method="post">
+                          <div class="col-lg-9">
+                            <div class="form-inline">
+                            <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
+                            </div>
+                          </div>
+                          <div class="col-lg-3">
+                            <div class="pull-right">
+                            <form id="form-perpage" class="form-inline" action="<?=Url::to(['location/index'],true)?>" method="post">
                               <div class="form-group">
-                               <label>Show</label>
+                               <label>แสดง </label>
                                 <select class="form-control" name="perpage" id="perpage">
                                    <option value="20" <?=$perpage=='20'?'selected':''?>>20</option>
                                    <option value="50" <?=$perpage=='50'?'selected':''?> >50</option>
                                    <option value="100" <?=$perpage=='100'?'selected':''?>>100</option>
                                 </select>
-                                <label>Per page</label>
+                                <label> รายการ</label>
                             </div>
                             </form>
-                          </div>
-                          <div class="col-lg-2">
-                            <div class="form-inline pull-right">
-                            <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
                             </div>
                           </div>
                         </div>
@@ -64,7 +63,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= GridView::widget([
                         'dataProvider' => $dataProvider,
                         //'filterModel' => $searchModel,
+                        'emptyCell'=>'-',
                         'layout'=>'{items}{summary}{pager}',
+                        'summary' => "แสดง {begin} - {end} ของทั้งหมด {totalCount} รายการ",
+                        'showOnEmpty'=>false,
+                        'tableOptions' => ['class' => 'table table-hover'],
+                        'emptyText' => '<div style="color: red;align: center;"> <b>ไม่พบรายการไดๆ</b></div>',
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn','contentOptions' => ['style' => 'vertical-align: middle','text-align:center'],  ],
 

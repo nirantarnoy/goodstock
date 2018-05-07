@@ -15,9 +15,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
+    
         <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างกลุ่มสินค้า'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    
     <div class="x_panel">
                   <div class="x_title">
                     <h4><i class="fa fa-cubes"></i> <?=$this->title?> <small></small></h4>
@@ -39,12 +39,13 @@ $this->params['breadcrumbs'][] = $this->title;
                   </div>
                   <div class="x_content">
                         <div class="row">
-                          <div class="col-lg-10">
+                          <div class="col-lg-9">
                             <div class="form-inline">
                             <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
                             </div>
                           </div>
-                          <div class="col-lg-2">
+                          <div class="col-lg-3">
+                            <div class="pull-right">
                             <form id="form-perpage" class="form-inline" action="<?=Url::to(['productcat/index'],true)?>" method="post">
                               <div class="form-group">
                                <label>แสดง </label>
@@ -56,6 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <label> รายการ</label>
                             </div>
                             </form>
+                          </div>
                           </div>
                         </div>
                         <div class="table-responsive">

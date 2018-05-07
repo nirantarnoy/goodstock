@@ -8,16 +8,26 @@ use yii\helpers\Url;
 /* @var $searchModel backend\models\QuotationSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Quotations');
+$this->title = Yii::t('app', 'ใบเสนอราคา');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="quotation-index">
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Quotation'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <div class="row">
+      <div class="col-lg-12">
+            <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างใบเสนอราคา'), ['create'], ['class' => 'btn btn-success']) ?>
+            <div class="btn-group pull-right">
+              <div class="btn btn-default"><i class="fa fa-download"></i> อนุมัติใบเสนอราคา</div>
+              <div class="btn btn-default"><i class="fa fa-ban"></i> ยกเลิก</div>
+              
+              <div class="btn btn-default btn-bulk-remove"><i class="fa fa-trash"></i><span class="remove_item"></span> ลบ</div>
+              <div class="btn btn-default"><i class="fa fa-download"></i> นำออก</div>
+              <div class="btn btn-default"><i class="fa fa-print"></i> พิมพ์</div>
+            </div>
+      </div>
+     </div>
     <div class="x_panel">
                   <div class="x_title">
                     <h4><i class="fa fa-money"></i> <?=$this->title?> <small></small></h4>
@@ -39,22 +49,24 @@ $this->params['breadcrumbs'][] = $this->title;
                   </div>
                   <div class="x_content">
                         <div class="row">
-                          <div class="col-lg-10">
-                            <form id="form-perpage" class="form-inline" action="<?=Url::to(['quotation/index'],true)?>" method="post">
+                          <div class="col-lg-9">
+                            <div class="form-inline">
+                            <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
+                            </div>
+                          </div>
+                          <div class="col-lg-3">
+                            <div class="pull-right">
+                            <form id="form-perpage" class="form-inline" action="<?=Url::to(['location/index'],true)?>" method="post">
                               <div class="form-group">
-                               <label>Show</label>
+                               <label>แสดง </label>
                                 <select class="form-control" name="perpage" id="perpage">
                                    <option value="20" <?=$perpage=='20'?'selected':''?>>20</option>
                                    <option value="50" <?=$perpage=='50'?'selected':''?> >50</option>
                                    <option value="100" <?=$perpage=='100'?'selected':''?>>100</option>
                                 </select>
-                                <label>Per page</label>
+                                <label> รายการ</label>
                             </div>
                             </form>
-                          </div>
-                          <div class="col-lg-2">
-                            <div class="form-inline pull-right">
-                            <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
                             </div>
                           </div>
                         </div>
@@ -63,15 +75,48 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                  //   'filterModel' => $searchModel,
+                    'emptyCell'=>'-',
                     'layout'=>'{items}{summary}{pager}',
+                    'summary' => "แสดง {begin} - {end} ของทั้งหมด {totalCount} รายการ",
+                    'showOnEmpty'=>false,
+                    'tableOptions' => ['class' => 'table table-hover'],
+                    'emptyText' => '<div style="color: red;align: center;"> <b>ไม่พบรายการไดๆ</b></div>',
                     'columns' => [
-                        ['class' => 'yii\grid\SerialColumn'],
+                        ['class' => 'yii\grid\SerialColumn','contentOptions' => ['style' => 'vertical-align: middle','text-align:center'],],
 
                      //   'id',
-                        'quotation_no',
-                        'require_date',
-                        'customer_id',
-                        'customer_ref',
+                        [
+                            'attribute'=>'quotation_no',
+                            'contentOptions' => ['style' => 'vertical-align: middle'],  
+                        ],
+                        [
+                            'attribute'=>'require_date',
+                            'contentOptions' => ['style' => 'vertical-align: middle'],  
+                        ],
+                        [
+                            'attribute'=>'customer_id',
+                            'contentOptions' => ['style' => 'vertical-align: middle'],  
+                            'value' => function($data){
+                              return \backend\models\Customer::findCustname($data->customer_id);
+                            }
+                        ],
+                        [
+                            'attribute'=>'customer_ref',
+                            'contentOptions' => ['style' => 'vertical-align: middle'],  
+                        ],
+                        [
+                            'attribute'=>'total_amount',
+                            'headerOptions'=>['style'=>'text-align: right'],
+                            'contentOptions' => ['style' => 'vertical-align: middle;text-align: right'],  
+                            'value'=>function($data){
+                              return number_format($data->total_amount,0);
+                            }
+                        ],
+                        [
+                            'attribute'=>'approve_status',
+                            'headerOptions'=>['style'=>'text-align: center'],
+                            'contentOptions' => ['style' => 'vertical-align: middle;text-align: center'],  
+                        ],
                         //'approve_status',
                         //'approve_by',
                         //'approve_date',
@@ -79,6 +124,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         //'note',
                         [
                                                'attribute'=>'status',
+                                               'contentOptions' => ['style' => 'vertical-align: middle','text-align:center'],
                                                'format' => 'html',
                                                'value'=>function($data){
                                                  return $data->status === 1 ? '<div class="label label-success">Active</div>':'<div class="label label-default">Inactive</div>';

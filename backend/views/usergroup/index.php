@@ -46,10 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php endif; ?>
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
         <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างกลุ่มผู้ใช้'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
 
     <div class="x_panel">
                   <div class="x_title">
