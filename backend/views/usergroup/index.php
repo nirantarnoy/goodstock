@@ -69,14 +69,14 @@ $this->params['breadcrumbs'][] = $this->title;
                   </div>
                   <div class="x_content">
                         <div class="row">
-                          <div class="col-lg-10">
+                          <div class="col-lg-9">
                             <div class="form-inline">
                             <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
                             </div>
                           </div>
-                          <div class="col-lg-2">
-                            
-                            <form id="form-perpage" class="form-inline" action="<?=Url::to(['usergroup/index'],true)?>" method="post">
+                          <div class="col-lg-3">
+                            <div class="pull-right">
+                            <form id="form-perpage" class="form-inline" action="<?=Url::to(['location/index'],true)?>" method="post">
                               <div class="form-group">
                                <label>แสดง </label>
                                 <select class="form-control" name="perpage" id="perpage">
@@ -87,6 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <label> รายการ</label>
                             </div>
                             </form>
+                            </div>
                           </div>
                         </div>
                         <div class="table-responsive">

@@ -8,6 +8,7 @@ use backend\models\DeliverytypeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * DeliverytypeController implements the CRUD actions for Deliverytype model.
@@ -69,8 +70,18 @@ class DeliverytypeController extends Controller
     {
         $model = new Deliverytype();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $uploaded = UploadedFile::getInstance($model, 'logo');
+            if(!empty($uploaded)){
+                $upfiles = time() . "." . $uploaded->getExtension();
+                 //if ($uploaded->saveAs('../uploads/products/' . $upfiles)) {
+                if ($uploaded->saveAs('../web/uploads/logo/' . $upfiles)) {
+                    $model->logo = $upfiles;
+                }
+            }
+            if($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('create', [
@@ -88,8 +99,22 @@ class DeliverytypeController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+             $oldlogo = Yii::$app->request->post('old_logo');
+                        $uploaded = UploadedFile::getInstance($model, 'logo');
+                        if(!empty($uploaded)){
+                              $upfiles = time() . "." . $uploaded->getExtension();
+
+                                //if ($uploaded->saveAs('../uploads/products/' . $upfiles)) {
+                                if ($uploaded->saveAs('../web/uploads/logo/' . $upfiles)) {
+                                   $model->logo = $upfiles;
+                                }
+                        }else{
+                             $model->logo = $oldlogo;
+                        }
+            if($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [

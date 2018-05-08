@@ -25,21 +25,6 @@ $dist = District::find()->all();
     <div class="x_panel">
                   <div class="x_title">
                     <h3><i class="fa fa-institution"></i> <?=$this->title?> <small></small></h3>
-                    <!-- <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul> -->
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
@@ -228,6 +213,17 @@ $dist = District::find()->all();
                           </div>
                         </div>
                            <div class="ln_solid"></div>
+                                <div class="row">
+                                   <div class="col-lg-12">
+                                      <div class="form-group" style="margin-top: -10px">
+                                        
+                                        <div class="control-label col-md-3 col-sm-3 col-xs-12 btn-addbank"><i class="fa fa-plus"></i> เพิ่มบัญชี</div>
+                                         <div class="col-md-6 col-sm-6 col-xs-12">
+                                        </div>
+                                      </div>
+                                   </div>
+                                </div>
+                            <div class="ln_solid"></div>
                         <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                                   <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
@@ -239,3 +235,37 @@ $dist = District::find()->all();
     </div>
 
 </div>
+
+<div id="bankModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><i class="fa fa-shopping-cart"></i> เพิ่มบัญชีธนาคาร <small id="items"> </small></h4>
+      </div>
+      <div class="modal-body">
+        
+        <div class="row">
+          <div class="col-lg-12">
+             
+          </div>
+        </div>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div> -->
+    </div>
+
+  </div>
+</div>
+
+<?php
+  $this->registerJs('
+        $(function(){
+            $(".btn-addbank").click(function(){
+              $("#bankModal").modal("show");
+            });
+        });
+    ',static::POS_END);
+ ?>

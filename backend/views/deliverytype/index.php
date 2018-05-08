@@ -36,14 +36,14 @@ $this->params['breadcrumbs'][] = $this->title;
                   </div>
                   <div class="x_content">
                    <div class="row">
-                          <div class="col-lg-10">
+                          <div class="col-lg-9">
                             <div class="form-inline">
                             <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
                             </div>
                           </div>
-                          <div class="col-lg-2">
-                            
-                            <form id="form-perpage" class="form-inline" action="<?=Url::to(['deliverytype/index'],true)?>" method="post">
+                          <div class="col-lg-3">
+                            <div class="pull-right">
+                            <form id="form-perpage" class="form-inline" action="<?=Url::to(['location/index'],true)?>" method="post">
                               <div class="form-group">
                                <label>แสดง </label>
                                 <select class="form-control" name="perpage" id="perpage">
@@ -54,6 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <label> รายการ</label>
                             </div>
                             </form>
+                            </div>
                           </div>
                         </div>
 
@@ -72,8 +73,19 @@ $this->params['breadcrumbs'][] = $this->title;
                   //  'id',
                     [
                       'attribute'=>'name',
+                      'format' => 'raw',
+
                       'contentOptions' => ['style' => 'vertical-align: middle'],  
+                      'value'=> function($data){
+                            return $data->logo!=''? Html::img('@web/uploads/logo/'.$data->logo,['style'=>'width:7%;']).'    '.$data->name:'';
+                       }
                     ],
+                    //  [
+                    //   'attribute'=>'name',
+                    //   'format' => 'raw',
+                    //   'contentOptions' => ['style' => 'vertical-align: middle'],  
+                     
+                    // ],
                     [
                       'attribute'=>'description',
                       'contentOptions' => ['style' => 'vertical-align: middle'],  
@@ -89,6 +101,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                [
 
                                   'header' => '',
+                                   'contentOptions' => ['style' => 'vertical-align: middle'], 
                                   'headerOptions' => ['style' => 'width: 160px;text-align:center;','class' => 'activity-view-link',],
                                   'class' => 'yii\grid\ActionColumn',
                                   'contentOptions' => ['style' => 'text-align: center'],

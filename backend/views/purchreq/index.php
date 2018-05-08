@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
       <div class="col-lg-12">
             <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างใบขอซื้อ'), ['create'], ['class' => 'btn btn-success']) ?>
             <div class="btn-group pull-right">
-              <div class="btn btn-default"><i class="fa fa-download"></i> อนุมัติใบขอซื้อ</div>
+              <div class="btn btn-default"><i class="fa fa-thumbs-up"></i> อนุมัติใบขอซื้อ</div>
               <div class="btn btn-default"><i class="fa fa-ban"></i> ยกเลิก</div>
               
               <div class="btn btn-default btn-bulk-remove"><i class="fa fa-trash"></i><span class="remove_item"></span> ลบ</div>

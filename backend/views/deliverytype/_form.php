@@ -32,7 +32,7 @@ use toxor88\switchery\Switchery;
                   </div>
                   <div class="x_content">
                     <br />
-                               <?php $form = ActiveForm::begin(['options'=>['class'=>'form-horizontal form-label-left']]); ?>
+                               <?php $form = ActiveForm::begin(['options'=>['enctype' => 'multipart/form-data','class'=>'form-horizontal form-label-left']]); ?>
                                <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Delivery Type <span class="required">*</span>
                                 </label>
@@ -47,6 +47,7 @@ use toxor88\switchery\Switchery;
                                    <?= $form->field($model, 'description')->textarea(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
                                 </div>
                               </div>
+                              <input type="hidden" name="old_logo" value="<?=$model->logo?>" />
                               <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Logo <span class="required">*</span>
                                 </label>

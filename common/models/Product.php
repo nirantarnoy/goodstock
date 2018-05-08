@@ -78,10 +78,10 @@ class Product extends \yii\db\ActiveRecord
             'all_qty' => Yii::t('app', 'จำนวนทั้งหมด'),
             'reserved_qty' => Yii::t('app', 'จำนวนจอง'),
             'available_qty' => Yii::t('app', 'จำนวนใช้ได้'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'created_by' => Yii::t('app', 'Created By'),
-            'updated_by' => Yii::t('app', 'Updated By'),
+            'created_at' => Yii::t('app', 'สร้างเมื่อ'),
+            'updated_at' => Yii::t('app', 'แก้ไขเมื่อ'),
+            'created_by' => Yii::t('app', 'สร้างโดย'),
+            'updated_by' => Yii::t('app', 'แก้ไขโดย'),
         ];
     }
 }

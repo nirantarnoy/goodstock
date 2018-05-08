@@ -63,11 +63,11 @@ class Sequence extends \yii\db\ActiveRecord
             'minimum' => Yii::t('app', 'Minimum'),
             'maximum' => Yii::t('app', 'Maximum'),
             'currentnum' => Yii::t('app', 'Currentnum'),
-            'status' => Yii::t('app', 'Status'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'created_by' => Yii::t('app', 'Created By'),
-            'updated_by' => Yii::t('app', 'Updated By'),
+            'status' => Yii::t('app', 'สถานะ'),
+            'created_at' => Yii::t('app', 'สร้างเมื่อ'),
+            'updated_at' => Yii::t('app', 'แก้ไขเมื่อ'),
+            'created_by' => Yii::t('app', 'สร้างโดย'),
+            'updated_by' => Yii::t('app', 'แก้ไขโดย'),
         ];
     }
 }
