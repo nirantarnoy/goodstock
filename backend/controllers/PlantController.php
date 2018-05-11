@@ -10,7 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
-use \common\models\AddressBook;
+use \common\models\Addressbook;
 /**
  * PlantController implements the CRUD actions for Plant model.
  */

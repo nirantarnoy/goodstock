@@ -3,7 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Deliverytype;
+use backend\models\DeliveryType;
 use backend\models\DeliverytypeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
