@@ -51,5 +51,17 @@ class Bank extends \common\models\Bank
 		 	$model = Bank::find()->where(['id'=>$id])->one();
 		 	return count($model)>0?$model:null;
 		 }
+		 public function getLogo($id){
+		    $model = Bank::find()->where(['id'=>$id])->one();
+		    return count($model)>0?$model->logo:'';
+		 }
+		  public function getBankname($id){
+		    $model = Bank::find()->where(['id'=>$id])->one();
+		    return count($model)>0?$model->name:'';
+		 }
+		 public function getBankshortname($id){
+		    $model = Bank::find()->where(['id'=>$id])->one();
+		    return count($model)>0?$model->short_name:'';
+		 }
 
 }

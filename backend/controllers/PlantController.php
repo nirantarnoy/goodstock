@@ -34,7 +34,7 @@ class PlantController extends Controller
                 'rules'=>[
                     [
                         'allow'=>true,
-                        'actions'=>['index','create','view','update','delete','showcity','showdistrict','showzipcode'],
+                        'actions'=>['index','create','view','update','delete','showcity','showdistrict','showzipcode','addbank'],
                         'roles'=>['SystemAdmin']
                     ],
                     [
@@ -124,12 +124,35 @@ class PlantController extends Controller
         $model = $this->findModel($id);
         $model_address = new AddressBook();
         $model_address_plant = AddressBook::find()->where(['party_id'=>$id,'party_type_id'=>1])->one();
+        $model_bankdata = \backend\models\BankAccount::find()->where(['party_id'=>$id])->all();
 
         if ($model->load(Yii::$app->request->post()) && $model_address->load(Yii::$app->request->post())) {
+            
+             $bankid = Yii::$app->request->post('bank_id');
+             $typeid = Yii::$app->request->post('account_type');
+             $bankname = Yii::$app->request->post('bank_name');
+             $accountno = Yii::$app->request->post('account_no');
+             $accountname = Yii::$app->request->post('account_name');
+             $oldlogo = Yii::$app->request->post('old_logo');
+             $brance = Yii::$app->request->post('brance');
 
               
             //print_r($model_address);return;
             if($model->save()){
+               
+               if(count($bankid)>0){
+                for($i=0;$i<=count($bankid)-1;$i++){
+                   $model_account = new \backend\models\BankAccount();
+                   $model_account->party_id = $id;
+                   $model_account->account_type_id = $typeid[$i];
+                   $model_account->account_name = $accountname[$i];
+                   $model_account->account_no = $accountno[$i];
+                   $model_account->bank_id = $bankid[$i];
+                   $model_account->save(false);
+                }
+                 
+               }
+
                if(count($model_address_plant) > 0){
                     $model_address_plant->load(Yii::$app->request->post());
                     $model_address_plant->save();
@@ -147,6 +170,7 @@ class PlantController extends Controller
             'model' => $model,
             'model_address' => $model_address,
             'model_address_plant' => $model_address_plant,
+            'model_bankdata' => $model_bankdata,
         ]);
     }
 
@@ -212,5 +236,34 @@ class PlantController extends Controller
       } else {
           echo "";
       }
+    }
+    public function actionAddbank(){
+        if(Yii::$app->request->isAjax){
+            $id = Yii::$app->request->post('id');
+            $bank_name = Yii::$app->request->post('txt');
+            $account_no = Yii::$app->request->post('account');
+            $account_name = Yii::$app->request->post('account_name');
+            $brance = Yii::$app->request->post('brance');
+            $account_type = Yii::$app->request->post('account_type');
+            $desc = Yii::$app->request->post('desc');
+            //return $id;
+            if($id){
+               // return $desc;
+                $data = [];
+                $data['id'] = $id;
+                $data['bank_name'] = $bank_name;
+                $data['account_no'] = $account_no;
+                $data['account_name'] = $account_name;
+                $data['brance'] = $brance;
+                $data['account_type'] = $account_type;
+                $data['description'] = $desc;
+
+                return $this->renderPartial("_addbank",['data'=>$data]);
+            }else{
+                return;
+            }
+        }
+       // $data = Yii::$app->request->post("data");
+        
     }
 }
