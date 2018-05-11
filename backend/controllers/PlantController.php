@@ -99,7 +99,8 @@ class PlantController extends Controller
     public function actionCreate()
     {
         $model = new Plant();
-
+        $model_address_plant = AddressBook::find()->where(['party_type_id'=>-1])->one();
+        $model_address = new AddressBook();
         if ($model->load(Yii::$app->request->post())&& $model_address->load(Yii::$app->request->post())) {
             if($model->save()){
                 $model_address->save(false);
@@ -110,6 +111,7 @@ class PlantController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'model_address' => $model_address,
             'model_address_plant' => null,
         ]);
     }
