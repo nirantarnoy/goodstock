@@ -112,7 +112,7 @@ class PlantController extends Controller
         return $this->render('create', [
             'model' => $model,
             'model_address' => $model_address,
-            'model_address_plant' => null,
+            'model_address_plant' => $model_address_plant,
         ]);
     }
 
