@@ -45,7 +45,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
             <div class="left_col scroll-view">
 
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="index.php?r=dashboard" class="site_title"><i class="fa fa-yelp"></i> <span>Good Inventory</span></a>
+                    <a href="index.php?r=dashboard" class="site_title"><i class="fa fa-cubes"></i> <span>Good Inventory</span></a>
                 </div>
                 <div class="clearfix"></div>
 
@@ -200,7 +200,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                <li><a href="javascript:;">  Profile</a>
+                                <li><a href="javascript:;">  ข้อมูลผู้ใช้</a>
                                 </li>
                                 <!-- <li>
                                     <a href="javascript:;">
@@ -214,7 +214,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                 <li>
                                     <!-- <a href="index.php?r=site/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a> -->
                                      <?= Html::a(
-                                            "<i class='fa fa-sign-out pull-right'></i> Sign out",
+                                            "<i class='fa fa-sign-out pull-right'></i> ออกจากระบบ",
                                             ['/site/logout'],
                                             ['data-method' => 'post']
                                      ) ?>

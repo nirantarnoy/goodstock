@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Usergroup */
 
-$this->title = Yii::t('app', 'Update Usergroup: {nameAttribute}', [
+$this->title = Yii::t('app', 'แก้ไขกลุ่มผู้ใช้: {nameAttribute}', [
     'nameAttribute' => $model->name,
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Usergroups'), 'url' => ['index']];
