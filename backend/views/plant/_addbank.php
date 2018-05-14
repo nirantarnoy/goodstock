@@ -17,15 +17,14 @@ use yii\helpers\Html;
     <input type="hidden" class="account_no" id="account_no" name="account_no[]" value="<?= $data["account_no"];?>"/>
   </td>
   <td style="vertical-align: middle;">
+    <?= $data["account_name"];?>
+    <input type="hidden" class="account_name" id="account_name" name="account_name[]" value="<?= $data["account_name"];?>"/>
+  </td>
+  <td style="vertical-align: middle;">
     <?= \backend\helpers\AccountType::getTypeById($data["account_type"]);?>
     <input type="hidden" class="account_no" id="account_no" name="account_no[]" value="<?= $data["account_no"];?>"/>
-   <input type="hidden" class="account_type" id="account_type" name="account_type[]" value="<?= $data["account_type"];?>"/>
-  <input type="hidden" class="account_name" id="account_name" name="account_name[]" value="<?= $data["account_name"];?>"/>
-  </td>
-   <td style="vertical-align: middle;">
-    <?= $data["brance"];?>
-    <input type="hidden" class="brance" name="brance[]" value="<?= $data["brance"];?>"/>
-     <input type="hidden" class="description" name="description[]" value="<?= $data["description"];?>"/>
+    <input type="hidden" class="account_type" id="account_type" name="account_type[]" value="<?= $data["account_type"];?>"/>
+    <input type="hidden" class="description" name="description[]" value="<?= $data["description"];?>"/>
   </td>
     
   <td class="action">

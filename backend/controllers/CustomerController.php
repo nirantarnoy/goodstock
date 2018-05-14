@@ -8,6 +8,7 @@ use backend\models\CustomerSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use \common\models\Addressbook;
 
 /**
  * CustomerController implements the CRUD actions for Customer model.
@@ -68,13 +69,15 @@ class CustomerController extends Controller
     public function actionCreate()
     {
         $model = new Customer();
-
+         $model_address = new AddressBook();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
             'model' => $model,
+            'model_address' => $model_address,
+            'model_address_plant' => null,
         ]);
     }
 

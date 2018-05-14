@@ -33,6 +33,8 @@ $bank = Bank::find()->all();
                   <div class="x_content">
                     <br />
                         <?php $form = ActiveForm::begin(['options'=>['class'=>'form-horizontal form-label-left']]); ?>
+                           <input type="hidden" class="has_edit" name="has_edit" value="">
+                           <input type="hidden" class="has_remove" name="has_remove[]" value="">
                               <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"><?=Yii::t('app','ชื่อร้าน')?> <span class="required">*</span>
                                 </label>
@@ -160,12 +162,12 @@ $bank = Bank::find()->all();
                                      'data'=> ArrayHelper::map($amp,'AMPHUR_ID','AMPHUR_NAME'),
                                     'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'city','disabled'=>'disabled',
                                           'onchange'=>'
-                                          $.post("index.php?r=plant/showdistrict&id=' . '"+$(this).val(),function(data){
+                                          $.post("'.Url::to(['plant/showdistrict/'],true).'"+"/"+$(this).val(),function(data){
                                           $("select#district").html(data);
                                           $("select#district").prop("disabled","");
 
                                         });
-                                           $.post("index.php?r=plant/showzipcode&id=' . '"+$(this).val(),function(data){
+                                           $.post("'.Url::to(['plant/showzipcode/'],true).'"+"/"+$(this).val(),function(data){
                                                 $("#zipcode").val(data);
                                               });
                                        '
@@ -188,7 +190,7 @@ $bank = Bank::find()->all();
                                      'data'=> ArrayHelper::map($prov,'PROVINCE_ID','PROVINCE_NAME'),
                                      'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'province',
                                        'onchange'=>'
-                                          $.post("index.php?r=plant/showcity&id=' . '"+$(this).val(),function(data){
+                                          $.post("'.Url::to(['plant/showcity/'],true).'"+"/"+$(this).val(),function(data){
                                           $("select#city").html(data);
                                           $("select#city").prop("disabled","");
 
@@ -240,6 +242,7 @@ $bank = Bank::find()->all();
                                       <td style="vertical-align: middle;">
                                         <?= Html::img('@web/uploads/logo/'.\backend\models\Bank::getLogo($value->bank_id),['style'=>'width: 15%;']);?>
                                         <input type="hidden" class="bank_id" name="bank_id[]" value="<?= $value->bank_id;?>"/>
+                                        <input type="hidden" class="rec_id" name="rec_id[]" value="<?= $value->id;?>"/>
                                       </td>
                                       <td style="vertical-align: middle;"><?= \backend\models\Bank::getBankName($value->bank_id);?></td>
                                       
@@ -253,7 +256,7 @@ $bank = Bank::find()->all();
                                     </td>
                                      <td style="vertical-align: middle;">
                                       <?= \backend\helpers\AccountType::getTypeById($value->account_type_id);?>
-                                      <input type="hidden" class="account_type_id" name="account_type_id[]" value="<?= $value->account_type_id;?>"/>
+                                      <input type="hidden" class="account_type" name="account_type[]" value="<?= $value->account_type_id;?>"/>
                                     </td>
                                       
                                     <td class="action" style="vertical-align: middle;">
@@ -359,6 +362,8 @@ $bank = Bank::find()->all();
 <?php
   $this->registerJs('
         $(function(){
+            var rem_id = [];
+
             $(".btn-addbank").click(function(){
               $("#bankModal").modal("show");
             });
@@ -367,15 +372,15 @@ $bank = Bank::find()->all();
                   var account_no = $("#select-account-no").val();
                   var account_name = $("#select-account-name").val();
                   var brances = $("#brance").val();
-                  var act_type = $("#select-account-type").val();
+                  var act_type = $("#select-account-type option:selected").val();
                   var bank_text = $("#select-bank option:selected").text();
                   var bank_desc = $("#select-description").val();
-                 //alert(account_no);return;
+                 //alert(account_name);return;
                     $.ajax({
                            type: "POST",
                            dataType: "html",
                           url: "'.Url::toRoute(['/plant/addbank'], true).'",
-                          data: { txt: bank_text,id: type,account: account_no,brance: brances,account_type: act_type,desc: bank_desc,account_name: account_name },
+                          data: { txt: bank_text,id: type,account: account_no,brance: brances,account_type: act_type,desc: bank_desc,account_name: account_name},
                           success: function(data){
                             //alert(data);
                                   $(".banklist").append(data);
@@ -386,7 +391,9 @@ $bank = Bank::find()->all();
         });
         function bankRemove(e){
               if(confirm("ต้องการลบรายการนี้ใช่หรือไม่")){
+                  var bid = e.closest("tr").find(".bank_id").val();
                   e.parents("tr").remove();
+                  $(".has_edit").val(1);
               }
         }
         function bankEdit(e){
@@ -401,6 +408,8 @@ $bank = Bank::find()->all();
             $("#select-account-no").val(actno);
             $("#select-bank").val(bankid).change();
             $("#select-account-type").val(acttype).change();
+
+            $(".has_edit").val(1);
         }
     ',static::POS_END);
  ?>

@@ -127,7 +127,7 @@ class PlantController extends Controller
         $model = $this->findModel($id);
         $model_address = new AddressBook();
         $model_address_plant = AddressBook::find()->where(['party_id'=>$id,'party_type_id'=>1])->one();
-        $model_bankdata = \backend\models\BankAccount::find()->where(['party_id'=>$id])->all();
+        $model_bankdata = \backend\models\BankAccount::find()->where(['party_id'=>$id,'party_type_id'=>1])->all();
 
         if ($model->load(Yii::$app->request->post()) && $model_address->load(Yii::$app->request->post())) {
             
@@ -139,20 +139,37 @@ class PlantController extends Controller
              $oldlogo = Yii::$app->request->post('old_logo');
              $brance = Yii::$app->request->post('brance');
 
+             //$has_edit = Yii::$app->request->post('has_edit');
+
               
-            //print_r($model_address);return;
+            //print_r($);return;
             if($model->save()){
                
                if(count($bankid)>0){
                 for($i=0;$i<=count($bankid)-1;$i++){
-                   $model_account = new \backend\models\BankAccount();
-                   $model_account->party_id = $id;
-                   $model_account->account_type_id = $typeid[$i];
-                   $model_account->account_name = $accountname[$i];
-                   $model_account->account_no = $accountno[$i];
-                   $model_account->bank_id = $bankid[$i];
-                   $model_account->save(false);
+                   
+                   $modelcheck = \backend\models\BankAccount::find()->where(['party_id'=>$id,'party_type_id'=>1,'account_no'=>$accountno[$i]])->one();
+                   if($modelcheck){
+
+                        $modelcheck->account_name = $accountname[$i];
+                        $modelcheck->account_no = $accountno[$i];
+                        $modelcheck->bank_id = $bankid[$i];
+                        $modelcheck->save(false);
+                               
+                   }else{
+                        $model_account = new \backend\models\BankAccount();
+                        $model_account->party_id = $id;
+                        $model_account->party_type_id = $id;
+                        $model_account->account_type_id = $typeid[$i];
+                        $model_account->account_name = $accountname[$i];
+                        $model_account->account_no = $accountno[$i];
+                        $model_account->bank_id = $bankid[$i];
+                        $model_account->save(false);
+                   }
+
                 }
+
+                //\backend\models\BankAccount::deleteAll(['AND',['party_id'=>$id,'party_type_id'=>1],['!=','account_no',$accountno]]);
                  
                }
 
