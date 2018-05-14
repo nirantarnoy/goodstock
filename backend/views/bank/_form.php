@@ -26,14 +26,14 @@ use toxor88\switchery\Switchery;
                                 </div>
                               </div>
                               <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">ชื่อย่อ <span class="required">*</span>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">ชื่อย่อ 
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                    <?= $form->field($model, 'short_name')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
                                 </div>
                               </div>
                               <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">รายละเอียด <span class="required">*</span>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">รายละเอียด 
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                    <?= $form->field($model, 'description')->textarea(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
@@ -41,14 +41,14 @@ use toxor88\switchery\Switchery;
                               </div>
                               <input type="hidden" name="old_logo" value="<?=$model->logo?>" />
                               <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">โลโก้ <span class="required">*</span>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">โลโก้ 
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                    <?= $form->field($model, 'logo')->fileInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
                                 </div>
                               </div>
                               <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">สถานะ <span class="required">*</span>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">สถานะ 
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                    <?php echo $form->field($model, 'status')->widget(Switchery::className(),['options'=>['label'=>'','class'=>'form-control']])->label(false) ?>
@@ -59,7 +59,7 @@ use toxor88\switchery\Switchery;
                              <div class="ln_solid"></div>
                         <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                  <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+                                  <?= Html::submitButton(Yii::t('app', 'บันทึก'), ['class' => 'btn btn-success']) ?>
                                 </div>
                         </div>
 

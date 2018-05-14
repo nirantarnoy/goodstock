@@ -45,7 +45,7 @@ class PaymentType extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'ชื่อกลุ่ม'),
+            'name' => Yii::t('app', 'วิธีชำระเงิน'),
             'description' => Yii::t('app', 'รายละเอียด'),
             'status' => Yii::t('app', 'สถานะ'),
             'created_at' => Yii::t('app', 'สร้างเมื่อ'),

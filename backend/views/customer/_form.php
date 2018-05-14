@@ -36,21 +36,28 @@ use kartik\select2\Select2;
                     <br />
                                <?php $form = ActiveForm::begin(['options'=>['class'=>'form-horizontal form-label-left']]); ?>
                                <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Customer Name <span class="required">*</span>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">รหัสลูกค้า <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                   <?= $form->field($model, 'customer_code')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
+                                </div>
+                              </div>
+                                <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">ชื่อลูกค้า <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                    <?= $form->field($model, 'name')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
                                 </div>
                               </div>
                               <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Description <span class="required">*</span>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">รายละเอียด 
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                    <?= $form->field($model, 'description')->textarea(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
                                 </div>
                               </div>
                               <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Customer Group <span class="required">*</span>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">กลุ่มลูกค้า <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <?= $form->field($model, 'customer_group_id')->widget(Select2::className(),[
@@ -60,7 +67,7 @@ use kartik\select2\Select2;
                                 </div>
                               </div>
                               <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Payment Type <span class="required">*</span>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">วิธีชำระเงิน 
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <?= $form->field($model, 'payment_type')->widget(Select2::className(),[
@@ -69,18 +76,9 @@ use kartik\select2\Select2;
                                    ])->label(false) ?>
                                 </div>
                               </div>
+                              
                               <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Payment Term <span class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <?= $form->field($model, 'payment_term')->widget(Select2::className(),[
-                                      'data' => ArrayHelper::map(backend\models\Paymentterm::find()->all(),'id','name'),
-                                      'options' => ['placeholder'=>'เลือกระยะเวลาชำระเงิน']
-                                   ])->label(false) ?>
-                                </div>
-                              </div>
-                              <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Saleman <span class="required">*</span>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">พนักงานขาย 
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                    <?= $form->field($model, 'sale_id')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
@@ -88,7 +86,7 @@ use kartik\select2\Select2;
                               </div>
                           
                               <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Status <span class="required">*</span>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">สถานะ 
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                    <?php echo $form->field($model, 'status')->widget(Switchery::className(),['options'=>['label'=>'','class'=>'form-control']])->label(false) ?>
@@ -99,7 +97,7 @@ use kartik\select2\Select2;
                              <div class="ln_solid"></div>
                         <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                  <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+                                  <?= Html::submitButton(Yii::t('app', 'บันทึก'), ['class' => 'btn btn-success']) ?>
                                 </div>
                         </div>
 

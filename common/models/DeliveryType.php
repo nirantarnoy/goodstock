@@ -33,7 +33,7 @@ class DeliveryType extends \yii\db\ActiveRecord
     {
         return [
             [['name'],'required'],
-            [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['status', 'created_at', 'updated_at', 'created_by', 'updated_by','delivery_type_id'], 'integer'],
             [['name', 'description'], 'string', 'max' => 255],
         ];
     }
@@ -46,6 +46,7 @@ class DeliveryType extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
            'name' => Yii::t('app', 'ชื่อกลุ่ม'),
+           'delivery_type_id' => Yii::t('app', 'ประเภทการจัดส่ง'),
             'description' => Yii::t('app', 'รายละเอียด'),
             'status' => Yii::t('app', 'สถานะ'),
             'created_at' => Yii::t('app', 'สร้างเมื่อ'),

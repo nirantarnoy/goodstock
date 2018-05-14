@@ -83,7 +83,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                         "items" => [
                                             ["label" => "กลุ่มผู้ใช้งาน", "url" => ["usergroup/index"]],
                                             ["label" => "ผู้ใช้งาน", "url" => ["user/index"]],
-                                            ["label" => "กำหนดสินธิ์การใช้งาน", "url" => ["assignrole/index"]],
+                                            ["label" => "สินธิ์การใช้งาน", "url" => ["assignrole/index"]],
                                         ],
                                     ],
                                     [
