@@ -239,18 +239,18 @@ $bank = Bank::find()->all();
                               <?php if(!$model->isNewRecord):?>
                                   <?php foreach($model_bankdata as $value):?>
                                     <tr id="shop-bank-id">
-                                      <td style="vertical-align: middle;">
-                                        <?= Html::img('@web/uploads/logo/'.\backend\models\Bank::getLogo($value->bank_id),['style'=>'width: 15%;']);?>
+                                      <td class="txt-bank-id" style="vertical-align: middle;">
+                                        <?= Html::img('@web/uploads/logo/'.\backend\models\Bank::getLogo($value->bank_id),['style'=>'width: 20%;']);?>
                                         <input type="hidden" class="bank_id" name="bank_id[]" value="<?= $value->bank_id;?>"/>
                                         <input type="hidden" class="rec_id" name="rec_id[]" value="<?= $value->id;?>"/>
                                       </td>
                                       <td style="vertical-align: middle;"><?= \backend\models\Bank::getBankName($value->bank_id);?></td>
                                       
-                                     <td style="vertical-align: middle;">
+                                     <td class="txt-acc-no" style="vertical-align: middle;">
                                       <?= $value->account_no;?>
                                       <input type="hidden" class="account_no" id="account_no" name="account_no[]" value="<?= $value->account_no;?>"/>
                                     </td>
-                                    <td style="vertical-align: middle;">
+                                    <td class="txt-acc-name" style="vertical-align: middle;">
                                       <?= $value->account_name;?>
                                       <input type="hidden" class="account_name" id="account_name" name="account_name[]" value="<?= $value->account_name;?>"/>
                                     </td>
@@ -273,7 +273,7 @@ $bank = Bank::find()->all();
                       </div>
                         <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                  <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+                                  <?= Html::submitButton(Yii::t('app', 'บันทึก'), ['class' => 'btn btn-success']) ?>
                                 </div>
                         </div>
   
@@ -305,7 +305,7 @@ $bank = Bank::find()->all();
                      'data'=> ArrayHelper::map($bank,'id',function($data){
                         return $data->short_name.' '.$data->name;
                      }),
-                     'options'=>['placeholder'=>'เลือกธนาคาร','id'=>'select-bank']
+                     'options'=>['placeholder'=>'เลือกธนาคาร','id'=>'select-bank','style'=>'text-align: left;']
 
                   ]); 
                   ?>
@@ -316,6 +316,7 @@ $bank = Bank::find()->all();
                 <td style="padding: 15px 0px 0px 25px;"><b>ชื่อบัญชี</b></td>
                 <td style="padding: 15px 0px 0px 15px;">
                   <input type="text" class="form-control" id="select-account-name" name="name" value="">
+                  <input type="hidden" class="form-control" id="select-edit" name="name" value="">
                 </td>
               </tr>
               <tr >
@@ -362,7 +363,6 @@ $bank = Bank::find()->all();
 <?php
   $this->registerJs('
         $(function(){
-            var rem_id = [];
 
             $(".btn-addbank").click(function(){
               $("#bankModal").modal("show");
@@ -375,18 +375,48 @@ $bank = Bank::find()->all();
                   var act_type = $("#select-account-type option:selected").val();
                   var bank_text = $("#select-bank option:selected").text();
                   var bank_desc = $("#select-description").val();
+
+                  var has_edit = $("#select-edit").val();
                  //alert(account_name);return;
-                    $.ajax({
+                
+                  if(has_edit == ""){
+                      $.ajax({
                            type: "POST",
                            dataType: "html",
-                          url: "'.Url::toRoute(['/plant/addbank'], true).'",
-                          data: { txt: bank_text,id: type,account: account_no,brance: brances,account_type: act_type,desc: bank_desc,account_name: account_name},
-                          success: function(data){
-                            //alert(data);
+                           url: "'.Url::toRoute(['/plant/addbank'], true).'",
+                           data: { txt: bank_text,id: type,account: account_no,brance: brances,account_type: act_type,desc: bank_desc,account_name: account_name},
+                           success: function(data){
+                                  //alert(data);
                                   $(".banklist").append(data);
                                 }
                       });
+                  }else{
+                      // var clonedRow = $(".table-bank tbody tr:first").clone();
+                      // clonedRow.find("input").val("");
+                      // $(".table-bank tbody").append(clonedRow);
+
+                      $(".table-bank tbody tr").each(function(){
+                          var recid = $(this).closest("tr").find(".rec_id").val();
+                          alert(recid);
+                          alert(has_edit);
+                          if(recid == has_edit){
+
+                              $(".txt-acc-no").text(account_no);
+                              $(".txt-acc-name").text(account_name);
+                              $(".txt-bank-id").text(bank_text);
+
+
+                              $(".account_name").val(account_name);
+                              $(".account_no").val(account_no);
+                              $(".account_type").val(act_type);
+                          }
+                      });
+
+                  }
+
+                  $("#select-description").val(0);
                   $("#bankModal").modal("hide");
+
             });
         });
         function bankRemove(e){
@@ -397,13 +427,17 @@ $bank = Bank::find()->all();
               }
         }
         function bankEdit(e){
+            
+            
             $("#bankModal").modal("show");
+            
 
             var bankid = e.closest("tr").find(".bank_id").val();
-            var acttype = e.closest("tr").find(".account_type_id").val();
+            var acttype = e.closest("tr").find(".account_type").val();
             var actno = e.closest("tr").find(".account_no").val();
             var actname = e.closest("tr").find(".account_name").val();
             
+            $("#select-edit").val(e.closest("tr").find(".rec_id").val());
             $("#select-account-name").val(actname);
             $("#select-account-no").val(actno);
             $("#select-bank").val(bankid).change();

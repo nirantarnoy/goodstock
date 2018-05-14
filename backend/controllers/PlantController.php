@@ -169,7 +169,12 @@ class PlantController extends Controller
 
                 }
 
-                //\backend\models\BankAccount::deleteAll(['AND',['party_id'=>$id,'party_type_id'=>1],['!=','account_no',$accountno]]);
+               // print_r($accountno);
+
+                \backend\models\BankAccount::deleteAll(['AND',['party_id'=>$id,'party_type_id'=>1],['NOT IN','account_no',$accountno]]);
+                // $x = \backend\models\BankAccount::find()->where(['AND',['party_id'=>$id,'party_type_id'=>1],['NOT IN','account_no',$accountno]])->count();
+
+                // return $x;
                  
                }
 

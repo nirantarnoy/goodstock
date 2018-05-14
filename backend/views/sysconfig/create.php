@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Sysconfig */
 
-$this->title = Yii::t('app', 'Initial System Configurations');
+$this->title = Yii::t('app', 'ตั้งค่าคอนฟิกระบบ');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Sysconfigs'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
