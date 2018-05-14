@@ -45,14 +45,14 @@ class WarehouseController extends Controller
                         ],
                         [
                             'allow'=>true,
-                            'actions'=>['update'],
+                            'actions'=>['create','update'],
                             'roles'=>['ManageInventory'],
-                            'matchCallback'=> function($rule,$action){
-                                $model = $this->findModel(Yii::$app->request->get('id'));
-                                if(\Yii::$app->user->can('UpdateOwner',['model'=>$model])){
-                                    return true;
-                                }
-                            }
+                            // 'matchCallback'=> function($rule,$action){
+                            //     $model = $this->findModel(Yii::$app->request->get('id'));
+                            //     if(\Yii::$app->user->can('UpdateOwner',['model'=>$model])){
+                            //         return true;
+                            //     }
+                            // }
                         ]
                     ]
                 ]
@@ -117,8 +117,11 @@ class WarehouseController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->save()){
+                $this->setDefault($id);
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', ['model' => $model,]);
@@ -153,5 +156,19 @@ class WarehouseController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+    public function setDefault($id){
+        $model = Warehouse::find()->all();
+        if($model){
+            foreach($model as $data){
+                $modelupdate = Warehouse::find()->where(['id'=>$data->id])->one();
+                $modelupdate->is_primary = 0;
+                $modelupdate->save(false);
+            }
+            $modelupdate = Warehouse::find()->where(['id'=>$id])->one();
+            $modelupdate->is_primary = 1;
+            $modelupdate->save(false);
+        }
+        return true;
     }
 }
