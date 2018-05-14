@@ -80,7 +80,8 @@ class SiteController extends Controller
         } else {
 
             $model->password = '';
-            return $this->render('login', [
+            $this->layout = false;
+            return $this->render('//layouts/login.php', [
                 'model' => $model,
             ]);
         }
@@ -96,8 +97,13 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         //return $this->goHome();
-         $model = new LoginForm();
-         return $this->render('login', [
+        $model = new LoginForm();
+         // return $this->render('//layouts/login', [
+         //        'model' => $model,
+         //    ]);
+        $model->password = '';
+            $this->layout = false;
+            return $this->render('//layouts/login.php', [
                 'model' => $model,
             ]);
     }

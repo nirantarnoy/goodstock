@@ -3,6 +3,25 @@ body {
     height: 100%;
 }
 
+@font-face{
+    font-family: 'Ekkamai';
+    src: url('../fonts/EkkamaiStandard-Light.ttf') format('truetype');
+   /* src: url('../fonts/thsarabunnew-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/thsarabunnew-webfont.woff') format('woff'),
+         url('../fonts/EkkamaiStandard-Light.ttf') format('truetype');*/
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face{
+    font-family: 'Bangna';
+    src: url('../fonts/bangna-new.ttf') format('truetype');
+   /* src: url('../fonts/thsarabunnew-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/thsarabunnew-webfont.woff') format('woff'),
+         url('../fonts/EkkamaiStandard-Light.ttf') format('truetype');*/
+    font-weight: normal;
+    font-style: normal;
+}
+
 .wrap {
     min-height: 100%;
     height: auto;
