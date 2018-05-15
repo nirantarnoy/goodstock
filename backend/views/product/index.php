@@ -287,7 +287,7 @@ $this->registerJsFile(
 
 
                                                           'class' => 'yii\grid\ActionColumn',
-                                                          'contentOptions' => ['style' => 'text-align: center','class'=>'btn-group'],
+                                                          'contentOptions' => ['style' => 'text-align: center;'],
                                                           'buttons' => [
                                                               'view' => function($url, $data, $index) {
                                                                   $options = [
