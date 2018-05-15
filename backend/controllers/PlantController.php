@@ -105,7 +105,9 @@ class PlantController extends Controller
         if ($model->load(Yii::$app->request->post())&& $model_address->load(Yii::$app->request->post())) {
             if($model->save()){
                 $model_address->save(false);
-                return $this->redirect(['view', 'id' => $model->id]);
+                  $session = Yii::$app->session;
+                  $session->setFlash('msg','บันทึกรายการเรียบร้อย');
+                return $this->redirect(['index']);
             }
             
         }
@@ -187,7 +189,9 @@ class PlantController extends Controller
                     $model_address->party_id = $id;
                     $model_address->save(false);
                }
-               return $this->redirect(['view', 'id' => $model->id]); 
+                 $session = Yii::$app->session;
+                 $session->setFlash('msg','บันทึกรายการเรียบร้อย');
+               return $this->redirect(['index']); 
             }
             
         }

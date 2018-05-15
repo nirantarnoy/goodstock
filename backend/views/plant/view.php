@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model backend\models\Plant */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Plants'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ร้านค้า/หน่วยงาน'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="plant-view">
