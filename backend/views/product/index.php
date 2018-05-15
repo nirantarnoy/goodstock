@@ -259,6 +259,14 @@ $this->registerJsFile(
                                      return $data->all_qty > 0?number_format($data->all_qty,0):0;
                                   }
                               ],
+                              [
+                                  'attribute'=>'price',
+                                  'headerOptions' => ['style' => 'text-align: right'],
+                                  'contentOptions' => ['style' => 'vertical-align: middle;text-align: right;font-weight: bold;'],  
+                                  'value'=> function($data){
+                                     return $data->price > 0?number_format($data->price,0):0;
+                                  }
+                              ],
                            [
                                                        'attribute'=>'status',
                                                        'headerOptions' => ['style' => 'text-align: center'],
