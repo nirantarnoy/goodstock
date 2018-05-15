@@ -15,10 +15,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-        <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างข้อตกลงซื้อขาย'), ['create'], ['class' => 'btn btn-success']) ?>
+        
     <div class="x_panel">
                   <div class="x_title">
-                    <h4><i class="fa fa-hourglass"></i> <?=$this->title?> <small></small></h4>
+                    <div class="btn-group">
+                      <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างข้อตกลงซื้อขาย'), ['create'], ['class' => 'btn btn-success']) ?>
+                    </div>
+                    <h4 class="pull-right"><?=$this->title?> <i class="fa fa-hourglass"></i><small></small></h4>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">

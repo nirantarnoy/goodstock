@@ -14,18 +14,17 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="user-index">
 
     <?php Pjax::begin(); ?>
-    <div class="row">
-      <div class="col-lg-12">
-            <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างผู้ใช้งาน'), ['create'], ['class' => 'btn btn-success']) ?>
-            <div class="btn-group pull-right">
-              <div class="btn btn-default"><i class="fa fa-exclamation-triangle text-danger"></i> ปิดใช้งานชั่วคราว</div>
-              <div class="btn btn-default"><i class="fa fa-play text-success"></i> เปิดใช้งาน</div>
-            </div>
-      </div>
-     </div>
+
     <div class="x_panel">
                   <div class="x_title">
-                    <h4><i class="fa fa-user"></i> <?=$this->title?> <small></small></h4>
+                     <div class="btn-group">
+                      <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างผู้ใช้งาน'), ['create'], ['class' => 'btn btn-success']) ?>
+                    </div>
+                      <div class="btn-group">
+                        <div class="btn btn-default"><i class="fa fa-exclamation-triangle text-danger"></i> ปิดใช้งานชั่วคราว</div>
+                        <div class="btn btn-default"><i class="fa fa-play text-success"></i> เปิดใช้งาน</div>
+                      </div>
+                    <h4 class="pull-right"><?=$this->title?> <i class="fa fa-user"></i><small></small></h4>
                     <!-- <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                       <li class="dropdown">
