@@ -27,49 +27,55 @@ use kartik\select2\Select2;
                       <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
                         <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">ข้อมูลสินค้า</a>
                         </li>
-                        <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">สินค้าที่เกี่ยวข้อง</a>
-                        </li>
-                       <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">โครงสร้างสินค้า</a>
-                        </li>
-                        <li role="presentation" class=""><a href="#tab_content4" role="tab" id="profile-tab4" data-toggle="tab" aria-expanded="false">สินค้าคงคลัง</a>
-                            </li>
+                
                         <li role="presentation" class=""><a href="#tab_content5" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">ความเคลื่นไหว</a>
                         </li>
                         </ul>
                       <div id="myTabContent" class="tab-content">
                         <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
                             <div class="row">
-                                <div class="col-lg-7">
+                                <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Product Code <span class="required"></span>
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">รหัสสินค้า <span class="required"></span>
                                             </label>
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <div class="col-md-8 col-sm-8 col-xs-12">
                                                <?= $form->field($model, 'product_code')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
                                             </div>
                                           </div>
                                           <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Product Name <span class="required"></span>
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">ชื่อสินค้า <span class="required"></span>
                                             </label>
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                               <?= $form->field($model, 'name')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
+                                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                               <?= $form->field($model, 'name')->textarea(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
                                             </div>
                                           </div>
                                            <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Description <span class="required"></span>
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">รายละเอียด <span class="required"></span>
                                             </label>
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <div class="col-md-8 col-sm-8 col-xs-12">
                                                <?= $form->field($model, 'description')->textarea(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
                                             </div>
                                           </div>
                                           <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Barcode <span class="required"></span>
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">บาร์โค้ด <span class="required"></span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
                                                <?= $form->field($model, 'barcode')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
                                             </div>
                                           </div>
+                                          
                                            <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Gategory <span class="required"></span>
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">ประเภท <span class="required"></span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                               <?= $form->field($model, 'product_type_id')->widget(Select2::className(),[
+                                                      'data' => ArrayHelper::map(backend\helpers\ProductType::asArrayObject(),'id','name'),
+                                                      'options' => ['placeholder'=>'เลือกประเภท']
+                                                   ])->label(false) ?>
+                                            </div>
+                                          </div>
+                                           <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">หมวดสินค้า <span class="required"></span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
                                                <?= $form->field($model, 'category_id')->widget(Select2::className(),[
@@ -79,17 +85,7 @@ use kartik\select2\Select2;
                                             </div>
                                           </div>
                                            <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Product Type <span class="required"></span>
-                                            </label>
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                               <?= $form->field($model, 'product_type_id')->widget(Select2::className(),[
-                                                      'data' => ArrayHelper::map(backend\models\Productcat::find()->all(),'id','name'),
-                                                      'options' => ['placeholder'=>'เลือกกลุ่มสินค้า']
-                                                   ])->label(false) ?>
-                                            </div>
-                                          </div>
-                                           <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Unit <span class="required"></span>
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">หน่วยนับ <span class="required"></span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
                                                <?= $form->field($model, 'unit_id')->widget(Select2::className(),[
@@ -98,16 +94,20 @@ use kartik\select2\Select2;
                                                    ])->label(false) ?>
                                             </div>
                                           </div>
-                                          <hr />
-                                           <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Minimum Stock <span class="required"></span>
+                                        
+                                           
+
+                                </div>
+                                 <div class="col-lg-6">
+                                  <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">จัดเก็บขั้นต่ำ <span class="required"></span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
                                                <?= $form->field($model, 'min_stock')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
                                             </div>
                                           </div>
                                           <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Maximum Stock <span class="required"></span>
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">จัดเก็บสูงสุด <span class="required"></span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
                                                <?= $form->field($model, 'max_stock')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
@@ -115,7 +115,7 @@ use kartik\select2\Select2;
                                           </div>
                                      
                                           <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Bom Type <span class="required"></span>
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">ลักษณะสินค้า <span class="required"></span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
                                                <?= $form->field($model, 'bom_type')->widget(Select2::className(),[
@@ -125,118 +125,79 @@ use kartik\select2\Select2;
                                             </div>
                                           </div>
                                            <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Cost <span class="required"></span>
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">ต้นทุน <span class="required"></span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
                                                <?= $form->field($model, 'cost')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
                                             </div>
                                           </div>
                                            <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Price <span class="required"></span>
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">ราคา <span class="required"></span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
                                                <?= $form->field($model, 'price')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
                                             </div>
                                           </div>
                                            <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Status <span class="required"></span>
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">วันที่ราคา <span class="required"></span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                               <?= $form->field($model, 'date_price')->textInput(['maxlength' => true,'class'=>'form-control','disabled'=>'disabled'])->label(false) ?>
+                                            </div>
+                                          </div>
+                                          <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">อายุการใช้ <span class="required"></span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                               <?= $form->field($model, 'shelf_life')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
+                                            </div>
+                                          </div>
+                                           <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">ตรวจสอบผู้ขาย <span class="required"></span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                               <?= $form->field($model, 'check_avl')->widget(Select2::className(),[
+                                                  'data'=>ArrayHelper::map(\backend\helpers\CheckAvl::asArrayObject(),'id','name')
+                                                ])->label(false) ?>
+                                            </div>
+                                          </div>
+
+                                           <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">สถานะ <span class="required"></span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
                                                <?= $form->field($model, 'status')->widget(Switchery::className(),['options'=>['label'=>'','class'=>'form-control']])->label(false) ?>
                                             </div>
                                           </div>
-
-                                </div>
-                                 <div class="col-lg-5">
-                                     <div class="row">
-
-                                      <p>Photo</p>
-
-                                      <div class="col-lg-12">
-                                        <div class="thumbnail">
-                                          <div class="image view view-first">
-                                           <!--  <img style="width: 100%; display: block;" src="../../web/uploads/img/civic.jpg" alt="image" /> -->
-                                            <?=Html::img('@web/uploads/img/civic.jpg',['style'=>'width: 50% ;display: block;'])?>
-                                          </div>
-                                    
-                                        </div>
-                                      </div>
-                                  </div>
-                                     <?= $form->field($model, 'photo')->textInput(['maxlength' => true]) ?>
-                                      <div class="row">
-
-                                      <p>Additional photo</p>
-
-                                      <div class="col-sm-4">
-                                        <div class="thumbnail">
-                                          <div class="image view view-first">
-                                            <img style="width: 100%; display: block;" src="images/media.jpg" alt="image" />
-                                            <div class="mask">
-                                              <p>Your Text</p>
-                                              <div class="tools tools-bottom">
-                                                <a href="#"><i class="fa fa-eye"></i></a>
-                                                <a href="#"><i class="fa fa-pencil"></i></a>
-                                                <a href="#"><i class="fa fa-times"></i></a>
-                                              </div>
-                                            </div>
-                                          </div>
-                                          <div class="caption">
-                                            <p>Snow and Ice Incoming for the South</p>
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <div class="col-sm-4">
-                                        <div class="thumbnail">
-                                          <div class="image view view-first">
-                                            <img style="width: 100%; display: block;" src="images/media.jpg" alt="image" />
-                                            <div class="mask">
-                                              <p>Your Text</p>
-                                              <div class="tools tools-bottom">
-                                                <a href="#"><i class="fa fa-link"></i></a>
-                                                <a href="#"><i class="fa fa-pencil"></i></a>
-                                                <a href="#"><i class="fa fa-times"></i></a>
-                                              </div>
-                                            </div>
-                                          </div>
-                                          <div class="caption">
-                                            <p>Snow and Ice Incoming for the South</p>
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <div class="col-sm-4">
-                                        <div class="thumbnail">
-                                          <div class="image view view-first">
-                                            <img style="width: 100%; display: block;" src="images/media.jpg" alt="image" />
-                                            <div class="mask">
-                                              <p>Your Text</p>
-                                              <div class="tools tools-bottom">
-                                                <a href="#"><i class="fa fa-link"></i></a>
-                                                <a href="#"><i class="fa fa-pencil"></i></a>
-                                                <a href="#"><i class="fa fa-times"></i></a>
-                                              </div>
-                                            </div>
-                                          </div>
-                                          <div class="caption">
-                                            <p>Snow and Ice Incoming for the South</p>
-                                          </div>
-                                        </div>
-                                      </div>
-                                  </div>
-                                </div>
+                                 </div>
+                                
                             </div>
-                            
-                        </div>
-                        <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
-                          <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo
-                            booth letterpress, commodo enim craft beer mlkshk aliquip</p>
-                        </div>
-                        <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
-                          <p>xxFood truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo
-                            booth letterpress, commodo enim craft beer mlkshk </p>
-                        </div>
-                        <div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
-                           <div class="row">
-                             <div class="col-lg-6">
+                              <hr />
+                               <div class="row">
+                                   <div class="col-lg-6">
+                                     <div class="form-group">
+                                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">น้ำหนักสินค้า <span class="required"></span>
+                                          </label>
+                                          <div class="col-md-6 col-sm-6 col-xs-12">
+                                              <?= $form->field($model, 'netweight')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
+                                          </div>
+                                      </div>
+                                      <div class="form-group">
+                                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">น้ำหนักบรรจุภัณฑ์ <span class="required"></span>
+                                          </label>
+                                          <div class="col-md-6 col-sm-6 col-xs-12">
+                                              <?= $form->field($model, 'tareweight')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
+                                          </div>
+                                      </div>
+                                      <div class="form-group">
+                                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">น้ำหนักรวม <span class="required"></span>
+                                          </label>
+                                          <div class="col-md-6 col-sm-6 col-xs-12">
+                                              <?= $form->field($model, 'grossweight')->textInput(['maxlength' => true,'class'=>'form-control','disabled'=>'disabled'])->label(false) ?>
+                                          </div>
+                                      </div>
+                                   </div>
+                                   <div class="col-lg-6">
                                <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">สินค้าทั้งหมด <span class="required"></span>
                                     </label>
@@ -260,14 +221,17 @@ use kartik\select2\Select2;
                                 </div>
                              </div>
                            </div>
+                           <hr />
+                            
                         </div>
+                     
                       </div>
                     </div>
 
                         
 
                         <div class="form-group">
-                            <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+                            <?= Html::submitButton(Yii::t('app', 'บันทึก'), ['class' => 'btn btn-success']) ?>
                         </div>
                     </div>
                 </div>

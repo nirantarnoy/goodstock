@@ -41,6 +41,7 @@ class Sequence extends \yii\db\ActiveRecord
     {
         return [
             [['prefix','module_id'],'required'],
+            [['prefix','module_id'],'unique'],
             [['plant_id', 'module_id', 'use_year', 'use_month', 'use_day', 'minimum', 'maximum', 'currentnum', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['prefix', 'symbol'], 'string', 'max' => 255],
             [['maximum'], 'compare', 'compareAttribute' => 'minimum', 'operator' => '>'],

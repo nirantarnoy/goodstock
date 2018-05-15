@@ -8,7 +8,6 @@ use kartik\select2\Select2;
 use toxor88\switchery\Switchery;
 use kartik\checkbox\CheckboxX;
 
-$hasrunno = \backend\models\Sequence::find()->all();
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Sequence */
