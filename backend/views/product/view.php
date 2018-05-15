@@ -6,6 +6,13 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Product */
 
+$this->registerCss('
+  .borderless td, .borderless th {
+    border: none;
+    padding: 5px;15px;5px;35px;
+  }
+');
+
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'สินค้า'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -23,10 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
             </div>
-            <div class="btn-group pull-right">
-              <div class="btn btn-default"><i class="fa fa-exclamation-triangle text-danger"></i> ปิดใช้งานชั่วคราว</div>
-              <div class="btn btn-default"><i class="fa fa-play text-success"></i> เปิดใช้งาน</div>
-            </div>
+            
       </div>
      </div><br/>
  <div class="x_panel">
@@ -37,18 +41,23 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="x_content">
            
            <div class="row">
-               <div class="col-lg-6">
+               <div class="col-lg-4">
                    <?= DetailView::widget([
                         'model' => $model,
-                       // 'options'=>['class'=>'table table-striped'],
+                        'options'=>['class'=>'borderless'],
                         'attributes' => [
                          //   'id',
                             'product_code',
                             'name',
                             'description',
                             'barcode',
-                            'photo',
-                            'product_type_id',
+                           
+                           [
+                                'attribute'=>'product_type_id',
+                                'value'=>function($data){
+                                    return \backend\helpers\ProductType::getTypeById($data->product_type_id);
+                                }
+                            ],
                             [
                                           'attribute'=>'unit_id',
                                           'headerOptions' => ['style' => 'text-align: left'],
@@ -74,10 +83,35 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return $data->is_hold === 1 ? '<div class="label label-warning">ระงับการใช้งานชั่วคราว</div>':'<div class="label label-success">ใช้งานอยู่</div>';
                                 }
                             ],
+                            
+                        ],
+                    ]) ?>
+               </div>
+               <div class="col-lg-6">
+                   <?= DetailView::widget([
+                        'model' => $model,
+                        'options'=>['class'=>'borderless'],
+                        'attributes' => [
+                         
                             'has_variant',
-                            'bom_type',
-                            'cost',
-                            'price',
+                            [
+                                'attribute'=>'bom_type',
+                                'value'=>function($data){
+                                    return \backend\helpers\Bomtype::getTypeById($data->bom_type);
+                                }
+                            ],
+                            [
+                                'attribute'=>'cost',
+                                'value'=>function($data){
+                                    return $data->cost!=''?number_format($data->cost,0):0;
+                                }
+                            ],
+                            [
+                                'attribute'=>'price',
+                                'value'=>function($data){
+                                    return $data->price!=''?number_format($data->price,0):0;
+                                }
+                            ],
                             [
                                 'attribute'=>'status',
                                 'format' => 'html',
@@ -88,27 +122,29 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'attribute'=>'created_at',
                                 'value'=>function($data){
-                                    return date('d-m-Y',$data->created_at);
+                                    return date('d-m-Y H:i',$data->created_at);
                                 }
                             ],
                             [
                                 'attribute'=>'updated_at',
                                 'value'=>function($data){
-                                    return date('d-m-Y',$data->created_at);
+                                    return date('d-m-Y H:i',$data->created_at);
                                 }
                             ],
-                            'created_by',
-                            'updated_by',
+                            [
+                                'attribute'=>'created_by',
+                                'value'=>function($data){
+                                    return \backend\models\User::getUserinfo($data->created_by)->username;
+                                }
+                            ],
+                            [
+                                'attribute'=>'updated_by',
+                                'value'=>function($data){
+                                     return \backend\models\User::getUserinfo($data->updated_by)->username;
+                                }
+                            ],
                         ],
                     ]) ?>
-               </div>
-                <div class="col-lg-6">
-                    <table class="table table-striped">
-                        <tr>
-                            <td><?=$model->product_code;?></td>
-                            <td></td>
-                        </tr>
-                    </table>
                </div>
            </div>
 

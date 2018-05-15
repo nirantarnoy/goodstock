@@ -40,6 +40,11 @@ class User extends \common\models\User
   	return ArrayHelper::map($auth->getRoles(),'name','name');
 
   }
+  public function getUserinfo($id){
+  	$model = User::find()->where(['id'=>$id])->one();
+  	return count($model)>0?$model:null;
+
+  }
   public function getRoleByUser(){
 	  $auth = Yii::$app->authManager;
 	  $rolesUser = $auth->getRolesByUser($this->id);
