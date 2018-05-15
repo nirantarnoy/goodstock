@@ -48,7 +48,13 @@ $this->params['breadcrumbs'][] = $this->title;
         
      <div class="x_panel">
                   <div class="x_title">
-                    <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างลำดับเอกสาร'), ['create'], ['class' => 'btn btn-success']) ?>
+                    <div class="btn-group">
+                       <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างลำดับเอกสาร'), ['create'], ['class' => 'btn btn-success']) ?>
+                     </div>
+                     <div class="btn-group">
+                        <?= Html::a(Yii::t('app', '<i class="fa fa-adn"></i> สร้างลำดับเอกสารอัตโนมัติ'), ['create'], ['class' => 'btn btn-primary']) ?>
+                    </div>
+                   
                     <h4 class="pull-right"><?=$this->title?> <i class="fa fa-institution"></i> <small></small></h4>
                     <!-- <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
@@ -134,6 +140,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute'=>'currentnum',
                 'headerOptions'=>['style'=>'text-align: right;'],
                 'contentOptions' => ['style' => 'vertical-align: middle;text-align: right;'],  
+            ],
+             [
+                'label'=>'รูปแบบ',
+                'headerOptions'=>['style'=>'text-align: left;'],
+                'contentOptions' => ['style' => 'vertical-align: middle;'], 
+                'value'=> function($data){
+                   $full = "";
+                   for($i=0;$i<=strlen($data->maximum)-1;$i++){
+                    $full.="0";
+                   }
+                   return $data->prefix.$data->symbol.$full;
+                } 
             ],
             //'status',
             //'created_at',

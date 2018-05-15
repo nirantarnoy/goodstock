@@ -253,7 +253,7 @@ $this->registerJsFile(
                                [
                                   'attribute'=>'all_qty',
                                   'headerOptions' => ['style' => 'text-align: right'],
-                                  'contentOptions' => ['style' => 'vertical-align: middle;text-align: right'],  
+                                  'contentOptions' => ['style' => 'vertical-align: middle;text-align: right;font-weight: bold;'],  
                                   'value'=> function($data){
                                      return $data->all_qty > 0?number_format($data->all_qty,0):0;
                                   }
@@ -271,8 +271,10 @@ $this->registerJsFile(
 
                                                           'header' => '',
                                                           'headerOptions' => ['style' => 'width: 160px;text-align:center;','class' => 'activity-view-link',],
+
+
                                                           'class' => 'yii\grid\ActionColumn',
-                                                          'contentOptions' => ['style' => 'text-align: center'],
+                                                          'contentOptions' => ['style' => 'text-align: center','class'=>'btn-group'],
                                                           'buttons' => [
                                                               'view' => function($url, $data, $index) {
                                                                   $options = [
