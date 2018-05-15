@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\UploadedFile;
 
 use \common\models\Addressbook;
 /**
@@ -103,11 +104,19 @@ class PlantController extends Controller
         $model_address_plant = AddressBook::find()->where(['party_type_id'=>-1])->one();
         $model_address = new AddressBook();
         if ($model->load(Yii::$app->request->post())&& $model_address->load(Yii::$app->request->post())) {
+            $uploaded = UploadedFile::getInstance($model, 'logo');
+            if(!empty($uploaded)){
+                $upfiles = time() . "." . $uploaded->getExtension();
+                 //if ($uploaded->saveAs('../uploads/products/' . $upfiles)) {
+                if ($uploaded->saveAs('../web/uploads/logo/' . $upfiles)) {
+                    $model->logo = $upfiles;
+                }
+            }
             if($model->save()){
                 $model_address->save(false);
                   $session = Yii::$app->session;
                   $session->setFlash('msg','บันทึกรายการเรียบร้อย');
-                return $this->redirect(['index']);
+                return $this->redirect(['update','id'=>$model->id]);
             }
             
         }
@@ -143,6 +152,17 @@ class PlantController extends Controller
              $brance = Yii::$app->request->post('brance');
 
              //$has_edit = Yii::$app->request->post('has_edit');
+
+             $oldlogo = Yii::$app->request->post('old_logo');
+                $uploaded = UploadedFile::getInstance($model, 'logo');
+                    if(!empty($uploaded)){
+                        $upfiles = time() . "." . $uploaded->getExtension();
+                        if ($uploaded->saveAs('../web/uploads/logo/' . $upfiles)) {
+                                   $model->logo = $upfiles;
+                        }
+                    }else{
+                        $model->logo = $oldlogo;
+                    }
 
               
             //print_r($accountno);return;
@@ -191,7 +211,7 @@ class PlantController extends Controller
                }
                  $session = Yii::$app->session;
                  $session->setFlash('msg','บันทึกรายการเรียบร้อย');
-               return $this->redirect(['index']); 
+               return $this->redirect(['update','id'=>$id]); 
             }
             
         }

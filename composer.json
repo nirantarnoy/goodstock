@@ -29,7 +29,8 @@
         "yii2mod/yii2-sweet-alert": "*",
         "lavrentiev/yii2-toastr": "~2.0.0",
         "2amigos/yii2-multi-select-widget" : "*",
-        "yiisoft/yii2-maskedinput": "~1.0.0"
+        "yiisoft/yii2-jquery": "~1.0.0",
+        "yiisoft/yii2-maskedinput": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

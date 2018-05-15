@@ -73,7 +73,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                         \yiister\gentelella\widgets\Menu::widget(
                             [
                                 "items" => [
-                                    ["label" => "Home", "url" => ["dashboard/index"], "icon" => "home"],
+                                    ["label" => "แดซบอร์ด", "url" => ["dashboard/index"], "icon" => "dashboard"],
                                     ["label" => "ตั้งค่าระบบ", "url" => ["sysconfig/index"], "icon" => "cogs"],
                                     ["label" => "ร้านค้า", "url" => ["plant/index"], "icon" => "institution"],
                                     [

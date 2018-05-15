@@ -44,7 +44,9 @@ class Plant extends \yii\db\ActiveRecord
         return [
             [['name'],'required'],
             [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['name', 'short_name', 'eng_name', 'description', 'tax_id', 'email', 'mobile', 'phone', 'website', 'facebook', 'line', 'logo'], 'string', 'max' => 255],
+            [['name', 'short_name', 'eng_name', 'description', 'tax_id', 'phone', 'website', 'facebook', 'line', 'logo'], 'string', 'max' => 255],
+            [['mobile'],'string','length'=>10],
+            [['email'],'email'],
         ];
     }
 

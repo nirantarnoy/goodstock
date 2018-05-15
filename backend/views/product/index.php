@@ -36,22 +36,29 @@ $this->registerJsFile(
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
      <div class="row">
       <div class="col-lg-12">
-            <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างรหัสสินค้า'), ['create'], ['class' => 'btn btn-success']) ?>
-            <div class="btn-group pull-right">
-              <div class="btn btn-default"><i class="fa fa-upload"></i> นำเข้า</div>
-              <div class="btn btn-default"><i class="fa fa-download"></i> นำออก</div>
-              <div class="btn btn-default btn-bulk-remove"><i class="fa fa-trash"></i><span class="remove_item"></span> ลบ</div>
-              <div class="btn btn-default"><i class="fa fa-print"></i> พิมพ์</div>
-              <div class="btn btn-default"><i class="fa fa-barcode"></i> พิมพ์บาร์โค้ด</div>
-              <div class="btn btn-default view-list"><i class="fa fa-list"></i></div>
-              <div class="btn btn-default view-grid"><i class="fa fa-th"></i></div>
-            </div>
+           
+           
       </div>
      </div>
+    
    
+
     <div class="x_panel">
                   <div class="x_title">
-                    <h4><i class="fa fa-cubes"></i> <?=$this->title?> <small></small></h4>
+                    
+                      <div class="btn-group">
+                         <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างรหัสสินค้า'), ['create'], ['class' => 'btn btn-success']) ?>
+                       </div>
+                       <div class="btn-group">
+                          <div class="btn btn-default"><i class="fa fa-upload"></i> นำเข้า</div>
+                          <div class="btn btn-default"><i class="fa fa-download"></i> นำออก</div>
+                          <div class="btn btn-default btn-bulk-remove"><i class="fa fa-trash"></i><span class="remove_item"></span> ลบ</div>
+                          <div class="btn btn-default"><i class="fa fa-print"></i> พิมพ์</div>
+                          <div class="btn btn-default"><i class="fa fa-barcode"></i> พิมพ์บาร์โค้ด</div>
+                          <div class="btn btn-default view-list"><i class="fa fa-list"></i></div>
+                          <div class="btn btn-default view-grid"><i class="fa fa-th"></i></div>
+                      </div>
+                    <h4 class="pull-right"><?=$this->title?> <i class="fa fa-cubes"></i><small></small></h4>
                     <!-- <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                       <li class="dropdown">
@@ -66,7 +73,7 @@ $this->registerJsFile(
                       <li><a class="close-link"><i class="fa fa-close"></i></a>
                       </li>
                     </ul> -->
-                    <div class="clearfix"></div>
+                    
                   </div>
                   <div class="x_content">
                         <div class="row">

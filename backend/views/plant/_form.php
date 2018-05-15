@@ -10,6 +10,8 @@ use common\models\Amphur;
 use common\models\District;
 use common\models\Bank;
 use yii\helpers\Url;
+use lavrentiev\widgets\toastr\Notification;
+use yii2mod\alert\Alert;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Plant */
@@ -25,6 +27,36 @@ $bank = Bank::find()->all();
 
 
 <div class="plant-form">
+  <?php $session = Yii::$app->session;
+      if ($session->getFlash('msg')): ?>
+       <!-- <div class="alert alert-success alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <?php //echo $session->getFlash('msg'); ?>
+      </div> -->
+        <?php echo Notification::widget([
+            'type' => 'success',
+            'title' => 'แจ้งผลการทำงาน',
+            'message' => $session->getFlash('msg'),
+          //  'message' => 'Hello',
+            'options' => [
+                "closeButton" => false,
+                "debug" => false,
+                "newestOnTop" => false,
+                "progressBar" => false,
+                "positionClass" => "toast-top-center",
+                "preventDuplicates" => false,
+                "onclick" => null,
+                "showDuration" => "300",
+                "hideDuration" => "1000",
+                "timeOut" => "6000",
+                "extendedTimeOut" => "1000",
+                "showEasing" => "swing",
+                "hideEasing" => "linear",
+                "showMethod" => "fadeIn",
+                "hideMethod" => "fadeOut"
+            ]
+        ]); ?> 
+        <?php endif; ?>
     <div class="x_panel">
                   <div class="x_title">
                     <h3><i class="fa fa-institution"></i> <?=$this->title?> <small></small></h3>
@@ -32,7 +64,7 @@ $bank = Bank::find()->all();
                   </div>
                   <div class="x_content">
                     <br />
-                        <?php $form = ActiveForm::begin(['options'=>['class'=>'form-horizontal form-label-left']]); ?>
+                        <?php $form = ActiveForm::begin(['options'=>['enctype' => 'multipart/form-data','class'=>'form-horizontal form-label-left']]); ?>
                            <input type="hidden" class="has_edit" name="has_edit" value="">
                            <input type="hidden" class="has_remove" name="has_remove[]" value="">
                               <div class="form-group">
@@ -60,7 +92,7 @@ $bank = Bank::find()->all();
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"><?=Yii::t('app','รายละเอียด')?> 
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                   <?= $form->field($model, 'description')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
+                                   <?= $form->field($model, 'description')->textarea(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
                                 </div>
                               </div>
                              <div class="form-group" style="margin-top: -10px">
@@ -81,14 +113,14 @@ $bank = Bank::find()->all();
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"><?=Yii::t('app','มือถือ')?>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                   <?= $form->field($model, 'mobile')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
+                                   <?= $form->field($model, 'mobile')->textInput(['maxlength' => 10,'class'=>'form-control'])->label(false) ?>
                                 </div>
                               </div>
                                 <div class="form-group" style="margin-top: -10px">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"><?=Yii::t('app','โทร')?> 
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                   <?= $form->field($model, 'phone')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
+                                   <?= $form->field($model, 'phone')->textInput(['maxlength' => 10,'class'=>'form-control'])->label(false) ?>
                                 </div>
                               </div>
                                <div class="form-group" style="margin-top: -10px">
@@ -116,8 +148,16 @@ $bank = Bank::find()->all();
                                 <div class="form-group" style="margin-top: -10px">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"><?=Yii::t('app','โลโก้')?> 
                                 </label>
+                                <input type="hidden" name="old_logo" value="<?=$model->logo?>">
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                   <?= $form->field($model, 'logo')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
+                                   <?= $form->field($model, 'logo')->fileInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
+                                </div>
+                              </div>
+                              <div class="form-group" style="margin-top: -10px">
+                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"><?=Yii::t('app','')?> 
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                   <?= Html::img('@web/uploads/logo/'.$model->logo,['style'=>'width: 20%;']);?>
                                 </div>
                               </div>
                                 
@@ -252,7 +292,7 @@ $bank = Bank::find()->all();
                                     </td>
                                     <td class="txt-acc-name" style="vertical-align: middle;">
                                       <?= $value->account_name;?>
-                                      <input type="text" class="account_name" id="account_name" name="account_name[]" value="<?= $value->account_name;?>"/>
+                                      <input type="hidden" class="account_name" id="account_name" name="account_name[]" value="<?= $value->account_name;?>"/>
                                     </td>
                                      <td style="vertical-align: middle;">
                                       <?= \backend\helpers\AccountType::getTypeById($value->account_type_id);?>

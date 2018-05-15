@@ -14,10 +14,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="sequence-index">
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-        <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างลำดับเอกสาร'), ['create'], ['class' => 'btn btn-success']) ?>
+        
      <div class="x_panel">
                   <div class="x_title">
-                    <h4><i class="fa fa-institution"></i> <?=$this->title?> <small></small></h4>
+                    <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างลำดับเอกสาร'), ['create'], ['class' => 'btn btn-success']) ?>
+                    <h4 class="pull-right"><?=$this->title?> <i class="fa fa-institution"></i> <small></small></h4>
                     <!-- <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                       <li class="dropdown">
@@ -36,12 +37,12 @@ $this->params['breadcrumbs'][] = $this->title;
                   </div>
                   <div class="x_content">
                         <div class="row">
-                          <div class="col-lg-9">
+                          <div class="col-lg-10">
                             <div class="form-inline">
                             <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
                             </div>
                           </div>
-                          <div class="col-lg-3">
+                          <div class="col-lg-2">
                             <form id="form-perpage" class="form-inline" action="<?=Url::to(['customergroup/index'],true)?>" method="post">
                               <div class="form-group">
                                <label>แสดง </label>
@@ -66,19 +67,43 @@ $this->params['breadcrumbs'][] = $this->title;
         'tableOptions' => ['class' => 'table table-hover'],
         'emptyText' => '<div style="color: red;align: center;"> <b>ไม่พบรายการไดๆ</b></div>',
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            ['class' => 'yii\grid\SerialColumn','contentOptions' => ['style' => 'vertical-align: middle']],
 
             //'id',
-            'plant_id',
-            'module_id',
-            'prefix',
-            'symbol',
+            //'plant_id',
+            [
+                'attribute'=>'module_id',
+                'contentOptions' => ['style' => 'vertical-align: middle'], 
+                'value'=>function($data){
+                   return \backend\helpers\RunnoTitle::getTypeById($data->module_id);
+                } 
+            ],
+            [
+                'attribute'=>'prefix',
+                'contentOptions' => ['style' => 'vertical-align: middle'],  
+            ],
+            [
+                'attribute'=>'symbol',
+                'contentOptions' => ['style' => 'vertical-align: middle;'],  
+            ],
             //'use_year',
             //'use_month',
             //'use_day',
-            //'minimum',
-            //'maximum',
-            //'currentnum',
+            [
+                'attribute'=>'minimum',
+                'headerOptions'=>['style'=>'text-align: right;'],
+                'contentOptions' => ['style' => 'vertical-align: middle;text-align: right;'],  
+            ],
+            [
+                'attribute'=>'maximum',
+                'headerOptions'=>['style'=>'text-align: right;'],
+                'contentOptions' => ['style' => 'vertical-align: middle;text-align: right;'],  
+            ],
+            [
+                'attribute'=>'currentnum',
+                'headerOptions'=>['style'=>'text-align: right;'],
+                'contentOptions' => ['style' => 'vertical-align: middle;text-align: right;'],  
+            ],
             //'status',
             //'created_at',
             //'updated_at',
