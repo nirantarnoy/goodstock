@@ -72,7 +72,9 @@ class UserController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             if($model->save()){
                  $model->assignment();
-                 return $this->redirect(['view', 'id' => $model->id]);
+                  $session = Yii::$app->session;
+                  $session->setFlash('msg','บันทึกรายการเรียบร้อย');
+                 return $this->redirect(['index']);
             }
         }
 
@@ -95,7 +97,9 @@ class UserController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             if($model->save()){
                 $model->assignment();
-                return $this->redirect(['view', 'id' => $model->id]);
+                $session = Yii::$app->session;
+                $session->setFlash('msg','บันทึกรายการเรียบร้อย');
+                return $this->redirect(['index']);
             }
           
         }

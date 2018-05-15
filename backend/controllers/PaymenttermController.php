@@ -70,7 +70,9 @@ class PaymenttermController extends Controller
         $model = new Paymentterm();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+                  $session = Yii::$app->session;
+                  $session->setFlash('msg','บันทึกรายการเรียบร้อย');
+                 return $this->redirect(['index']);
         }
 
         return $this->render('create', [

@@ -80,7 +80,9 @@ class BankController extends Controller
                 }
             }
             if($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
+                 $session = Yii::$app->session;
+                 $session->setFlash('msg','บันทึกรายการเรียบร้อย');
+                return $this->redirect(['index']);
             }
         }
 
@@ -115,7 +117,9 @@ class BankController extends Controller
                              $model->logo = $oldlogo;
                         }
             if($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
+                 $session = Yii::$app->session;
+                 $session->setFlash('msg','บันทึกรายการเรียบร้อย');
+                return $this->redirect(['index']);
             }
         }
 
