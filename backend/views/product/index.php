@@ -200,8 +200,12 @@ $this->registerJsFile(
                          //   'id',
                              [
                                   'attribute'=>'product_code',
+                                  'format'=>'html',
                                   'headerOptions' => ['style' => 'text-align: left'],
                                   'contentOptions' => ['style' => 'vertical-align: middle'],  
+                                  'value'=>function($data){
+                                    return '<a href="'.Url::to(['product/view/'.$data->id],true).'">'.$data->product_code.'</a>';
+                                  }
                              ],
                              [
                                   'attribute'=>'name',
