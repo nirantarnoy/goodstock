@@ -128,7 +128,7 @@ class PlantController extends Controller
         $model = $this->findModel($id);
         $model_address = new AddressBook();
         $model_address_plant = AddressBook::find()->where(['party_id'=>$id,'party_type_id'=>1])->one();
-        $model_bankdata = \backend\models\BankAccount::find()->where(['party_id'=>$id,'party_type_id'=>1])->all();
+        $model_bankdata = \backend\models\Bankaccount::find()->where(['party_id'=>$id,'party_type_id'=>1])->all();
 
         if ($model->load(Yii::$app->request->post()) && $model_address->load(Yii::$app->request->post())) {
             
@@ -149,7 +149,7 @@ class PlantController extends Controller
                if(count($bankid)>0){
                 for($i=0;$i<=count($bankid)-1;$i++){
                    
-                   $modelcheck = \backend\models\BankAccount::find()->where(['party_id'=>$id,'party_type_id'=>1,'account_no'=>$accountno[$i]])->one();
+                   $modelcheck = \backend\models\Bankaccount::find()->where(['party_id'=>$id,'party_type_id'=>1,'account_no'=>$accountno[$i]])->one();
                    if($modelcheck){
 
                         $modelcheck->account_name = $accountname[$i];
@@ -158,7 +158,7 @@ class PlantController extends Controller
                         $modelcheck->save(false);
                                
                    }else{
-                        $model_account = new \backend\models\BankAccount();
+                        $model_account = new \backend\models\Bankaccount();
                         $model_account->party_id = $id;
                         $model_account->party_type_id = $id;
                         $model_account->account_type_id = $typeid[$i];
