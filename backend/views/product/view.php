@@ -87,7 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                     ]) ?>
                </div>
-               <div class="col-lg-6">
+               <div class="col-lg-4">
                    <?= DetailView::widget([
                         'model' => $model,
                         'options'=>['class'=>'borderless'],
@@ -134,19 +134,45 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'attribute'=>'created_by',
                                 'value'=>function($data){
-                                    return \backend\models\User::getUserinfo($data->created_by)->username;
+                                    $name = \backend\models\User::getUserinfo($data->created_by);
+                                    return $name!=null?$name->username:'';
                                 }
                             ],
                             [
                                 'attribute'=>'updated_by',
                                 'value'=>function($data){
-                                     return \backend\models\User::getUserinfo($data->updated_by)->username;
+                                     $name = \backend\models\User::getUserinfo($data->updated_by);
+                                    return $name!=null?$name->username:'';
                                 }
                             ],
                         ],
                     ]) ?>
                </div>
+               <div class="col-lg-4">
+                <p><b>สถานะจำนวนสินค้า</b></p>
+                 <table class="table">
+                   
+                 </table>
+               </div>
            </div>
+
+       </div>
+ </div>
+ <div class="x_panel">
+        <div class="x_title">
+            <h3><i class="fa fa-asterisk"></i> ความเคลื่อนไหวสินค้า </small></h3>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+
+       </div>
+ </div>
+ <div class="x_panel">
+        <div class="x_title">
+            <h3><i class="fa fa-image"></i> รูปภาพสินค้า </small></h3>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
 
        </div>
  </div>
