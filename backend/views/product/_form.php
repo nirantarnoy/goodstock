@@ -103,14 +103,14 @@ use kartik\select2\Select2;
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">จัดเก็บขั้นต่ำ <span class="required"></span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                               <?= $form->field($model, 'min_stock')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
+                                               <?= $form->field($model, 'min_stock')->textInput(['maxlength' => true,'class'=>'form-control','value'=>$model->min_stock!=""?$model->min_stock:0])->label(false) ?>
                                             </div>
                                           </div>
                                           <div class="form-group">
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">จัดเก็บสูงสุด <span class="required"></span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                               <?= $form->field($model, 'max_stock')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
+                                               <?= $form->field($model, 'max_stock')->textInput(['maxlength' => true,'class'=>'form-control','value'=>$model->max_stock!=""?$model->max_stock:0])->label(false) ?>
                                             </div>
                                           </div>
                                      
@@ -128,14 +128,14 @@ use kartik\select2\Select2;
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">ต้นทุน <span class="required"></span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                               <?= $form->field($model, 'cost')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
+                                               <?= $form->field($model, 'cost')->textInput(['maxlength' => true,'class'=>'form-control','value'=>$model->cost!=""?$model->cost:0])->label(false) ?>
                                             </div>
                                           </div>
                                            <div class="form-group">
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">ราคา <span class="required"></span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                               <?= $form->field($model, 'price')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
+                                               <?= $form->field($model, 'price')->textInput(['maxlength' => true,'class'=>'form-control','value'=>$model->price!=""?$model->price:0])->label(false) ?>
                                             </div>
                                           </div>
                                            <div class="form-group">
@@ -162,13 +162,7 @@ use kartik\select2\Select2;
                                             </div>
                                           </div>
 
-                                           <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">สถานะ <span class="required"></span>
-                                            </label>
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                               <?= $form->field($model, 'status')->widget(Switchery::className(),['options'=>['label'=>'','class'=>'form-control']])->label(false) ?>
-                                            </div>
-                                          </div>
+                                           
                                  </div>
                                 
                             </div>
@@ -179,44 +173,51 @@ use kartik\select2\Select2;
                                           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">น้ำหนักสินค้า <span class="required"></span>
                                           </label>
                                           <div class="col-md-6 col-sm-6 col-xs-12">
-                                              <?= $form->field($model, 'netweight')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
+                                              <?= $form->field($model, 'netweight')->textInput(['maxlength' => true,'class'=>'form-control','value'=>$model->netweight!=""?$model->netweight:0])->label(false) ?>
                                           </div>
                                       </div>
                                       <div class="form-group">
                                           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">น้ำหนักบรรจุภัณฑ์ <span class="required"></span>
                                           </label>
                                           <div class="col-md-6 col-sm-6 col-xs-12">
-                                              <?= $form->field($model, 'tareweight')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
+                                              <?= $form->field($model, 'tareweight')->textInput(['maxlength' => true,'class'=>'form-control','value'=>$model->tareweight!=""?$model->tareweight:0])->label(false) ?>
                                           </div>
                                       </div>
                                       <div class="form-group">
                                           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">น้ำหนักรวม <span class="required"></span>
                                           </label>
                                           <div class="col-md-6 col-sm-6 col-xs-12">
-                                              <?= $form->field($model, 'grossweight')->textInput(['maxlength' => true,'class'=>'form-control','disabled'=>'disabled'])->label(false) ?>
+                                              <?= $form->field($model, 'grossweight')->textInput(['maxlength' => true,'class'=>'form-control','disabled'=>'disabled','value'=>$model->grossweight!=""?$model->grossweight:0])->label(false) ?>
                                           </div>
                                       </div>
+                                      <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">สถานะ <span class="required"></span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                               <?= $form->field($model, 'status')->widget(Switchery::className(),['options'=>['label'=>'','class'=>'form-control']])->label(false) ?>
+                                            </div>
+                                          </div>
                                    </div>
                                    <div class="col-lg-6">
                                <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">สินค้าทั้งหมด <span class="required"></span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <?= $form->field($model, 'all_qty')->textInput(['maxlength' => true,'class'=>'form-control','disabled'=>'disabled'])->label(false) ?>
+                                        <?= $form->field($model, 'all_qty')->textInput(['maxlength' => true,'class'=>'form-control','disabled'=>'disabled','value'=>$model->all_qty!=""?$model->all_qty:0])->label(false) ?>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">สินค้าจอง <span class="required"></span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <?= $form->field($model, 'reserved_qty')->textInput(['maxlength' => true,'class'=>'form-control','disabled'=>'disabled'])->label(false) ?>
+                                        <?= $form->field($model, 'reserved_qty')->textInput(['maxlength' => true,'class'=>'form-control','disabled'=>'disabled','value'=>$model->reserved_qty!=""?$model->reserved_qty:0])->label(false) ?>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">สินค้าที่ใช้ได้ <span class="required"></span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <?= $form->field($model, 'available_qty')->textInput(['maxlength' => true,'class'=>'form-control','disabled'=>'disabled'])->label(false) ?>
+                                        <?= $form->field($model, 'available_qty')->textInput(['maxlength' => true,'class'=>'form-control','disabled'=>'disabled','value'=>$model->available_qty!=""?$model->available_qty:0])->label(false) ?>
                                     </div>
                                 </div>
                              </div>
@@ -230,8 +231,10 @@ use kartik\select2\Select2;
 
                         
 
-                        <div class="form-group">
+                        <div class="form-group pull-right">
                             <?= Html::submitButton(Yii::t('app', 'บันทึก'), ['class' => 'btn btn-success']) ?>
+                            <div class="btn btn-default">ดูรายละเอียด</div>
+                            <div class="btn btn-danger">ยกเลิก</div>
                         </div>
                     </div>
                 </div>
