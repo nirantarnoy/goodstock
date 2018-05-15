@@ -239,12 +239,12 @@ $bank = Bank::find()->all();
                               <?php if(!$model->isNewRecord):?>
                                   <?php foreach($model_bankdata as $value):?>
                                     <tr id="shop-bank-id">
-                                      <td class="txt-bank-id" style="vertical-align: middle;">
+                                      <td  style="vertical-align: middle;">
                                         <?= Html::img('@web/uploads/logo/'.\backend\models\Bank::getLogo($value->bank_id),['style'=>'width: 20%;']);?>
                                         <input type="hidden" class="bank_id" name="bank_id[]" value="<?= $value->bank_id;?>"/>
                                         <input type="hidden" class="rec_id" name="rec_id[]" value="<?= $value->id;?>"/>
                                       </td>
-                                      <td style="vertical-align: middle;"><?= \backend\models\Bank::getBankName($value->bank_id);?></td>
+                                      <td class="txt-bank-id" style="vertical-align: middle;"><?= \backend\models\Bank::getBankName($value->bank_id);?></td>
                                       
                                      <td class="txt-acc-no" style="vertical-align: middle;">
                                       <?= $value->account_no;?>
@@ -252,7 +252,7 @@ $bank = Bank::find()->all();
                                     </td>
                                     <td class="txt-acc-name" style="vertical-align: middle;">
                                       <?= $value->account_name;?>
-                                      <input type="hidden" class="account_name" id="account_name" name="account_name[]" value="<?= $value->account_name;?>"/>
+                                      <input type="text" class="account_name" id="account_name" name="account_name[]" value="<?= $value->account_name;?>"/>
                                     </td>
                                      <td style="vertical-align: middle;">
                                       <?= \backend\helpers\AccountType::getTypeById($value->account_type_id);?>
@@ -395,20 +395,24 @@ $bank = Bank::find()->all();
                       // clonedRow.find("input").val("");
                       // $(".table-bank tbody").append(clonedRow);
 
-                      $(".table-bank tbody tr").each(function(){
+                      $(".table-bank tbody.banklist tr").each(function(){
                           var recid = $(this).closest("tr").find(".rec_id").val();
-                          alert(recid);
-                          alert(has_edit);
                           if(recid == has_edit){
+                             
+                              
+                              $(this).closest("tr").find(".txt-acc-no").text(account_no);
+                              $(this).closest("tr").find(".txt-acc-name").text(account_name);
+                              $(this).closest("tr").find(".txt-bank-id").text(bank_text);
 
-                              $(".txt-acc-no").text(account_no);
-                              $(".txt-acc-name").text(account_name);
-                              $(".txt-bank-id").text(bank_text);
 
 
-                              $(".account_name").val(account_name);
-                              $(".account_no").val(account_no);
-                              $(".account_type").val(act_type);
+                              $(this).closest("tr").find(".bank_id").val(type);
+                              $(this).closest("tr").find(".account_name").val(account_name);
+                              $(this).closest("tr").find(".account_no").val("9000000000");
+                              $(this).closest("tr").find(".account_type").val(act_type);
+
+                              alert($(this).closest("tr").find(".account_type").val());
+                              //return;
                           }
                       });
 

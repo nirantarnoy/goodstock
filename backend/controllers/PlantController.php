@@ -142,7 +142,7 @@ class PlantController extends Controller
              //$has_edit = Yii::$app->request->post('has_edit');
 
               
-            //print_r($);return;
+            //print_r($accountno);return;
             if($model->save()){
                
                if(count($bankid)>0){
@@ -169,9 +169,9 @@ class PlantController extends Controller
 
                 }
 
-               // print_r($accountno);
+               // print_r($accountno);return;
 
-                \backend\models\BankAccount::deleteAll(['AND',['party_id'=>$id,'party_type_id'=>1],['NOT IN','account_no',$accountno]]);
+               // \backend\models\BankAccount::deleteAll(['AND',['party_id'=>$id,'party_type_id'=>1],['NOT IN','account_no',$accountno]]);
                 // $x = \backend\models\BankAccount::find()->where(['AND',['party_id'=>$id,'party_type_id'=>1],['NOT IN','account_no',$accountno]])->count();
 
                 // return $x;
