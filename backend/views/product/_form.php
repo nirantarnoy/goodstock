@@ -231,7 +231,7 @@ use kartik\select2\Select2;
 
                         
 
-                        <div class="form-group pull-right">
+                        <div class="form-group pull-center">
                             <?= Html::submitButton(Yii::t('app', 'บันทึก'), ['class' => 'btn btn-success']) ?>
                             <div class="btn btn-default">ดูรายละเอียด</div>
                             <div class="btn btn-danger">ยกเลิก</div>
