@@ -35,7 +35,8 @@ class Journal extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-
+            [['journal_no'],'required'],
+          //  [['journal_no'],'required'],
             [['reference_type_id', 'trans_type', 'status', 'created_at', 'updated_at','trans_date', 'created_by', 'updated_by'], 'integer'],
             [['name', 'description', 'reference'], 'string', 'max' => 255],
         ];
@@ -49,6 +50,7 @@ class Journal extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'ชื่อ'),
+            'journal_no' => Yii::t('app', 'เลขที่'),
             'trans_date' => Yii::t('app', 'วันที่'),
             'description' => Yii::t('app', 'รายละเอียด'),
             'reference' => Yii::t('app', 'รายการอ้างอิง'),

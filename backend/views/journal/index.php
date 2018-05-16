@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <i class="fa fa-plus"></i> สร้างรายการ <span class="caret"></span>
                           </button>
                           <ul class="dropdown-menu">
-                            <li><a href="#">เบิก</a></li>
+                            <li><a href="<?=Url::to(['journal/createissue'],true)?>">เบิก</a></li>
                             <li><a href="#">คืน</a></li>
                             <li><a href="#">ปรับสต๊อก</a></li>
                             <li><a href="#">ย้าย</a></li>

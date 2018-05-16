@@ -75,6 +75,20 @@ class JournalController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+
+        ]);
+    }
+    public function actionCreateissue()
+    {
+        $model = new Journal();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+             'title' => 'สร้างใบเบิก',
         ]);
     }
 
