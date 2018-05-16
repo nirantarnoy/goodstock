@@ -3,21 +3,19 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Location;
-use backend\models\LocationSearch;
+use backend\models\Journaltable;
+use backend\models\JournaltableSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-
 /**
- * LocationController implements the CRUD actions for Location model.
+ * JournaltableController implements the CRUD actions for Journaltable model.
  */
-class LocationController extends Controller
+class JournaltableController extends Controller
 {
-    public $enableCsrfValidation = false;
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function behaviors()
     {
@@ -32,27 +30,28 @@ class LocationController extends Controller
     }
 
     /**
-     * Lists all Location models.
+     * Lists all Journaltable models.
      * @return mixed
      */
     public function actionIndex()
     {
         $pageSize = \Yii::$app->request->post("perpage");
-        $searchModel = new LocationSearch();
+        $searchModel = new JournaltableSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $pageSize;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-             'perpage' => $pageSize,
+            'perpage' => $pageSize,
         ]);
     }
 
     /**
-     * Displays a single Location model.
+     * Displays a single Journaltable model.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
@@ -62,13 +61,13 @@ class LocationController extends Controller
     }
 
     /**
-     * Creates a new Location model.
+     * Creates a new Journaltable model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Location();
+        $model = new Journaltable();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
              $session = Yii::$app->session;
@@ -82,17 +81,18 @@ class LocationController extends Controller
     }
 
     /**
-     * Updates an existing Location model.
+     * Updates an existing Journaltable model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $session = Yii::$app->session;
+             $session = Yii::$app->session;
             $session->setFlash('msg','บันทึกรายการเรียบร้อย');
                  return $this->redirect(['index']);
         }
@@ -103,28 +103,31 @@ class LocationController extends Controller
     }
 
     /**
-     * Deletes an existing Location model.
+     * Deletes an existing Journaltable model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+         $session = Yii::$app->session;
+            $session->setFlash('msg','บันทึกรายการเรียบร้อย');
+                 return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Location model based on its primary key value.
+     * Finds the Journaltable model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Location the loaded model
+     * @return Journaltable the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Location::findOne($id)) !== null) {
+        if (($model = Journaltable::findOne($id)) !== null) {
             return $model;
         }
 

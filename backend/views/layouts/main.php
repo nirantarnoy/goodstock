@@ -96,6 +96,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                             ["label" => "ประเภทการส่งของ", "url" => ["deliverytype/index"]],
                                             ["label" => "ข้อตกลงซื้อขาย", "url" => ["tradetable/index"]],
                                             ["label" => "ธนาคาร", "url" => ["bank/index"]],
+                                            ["label" => "สมุดบันทีกรายวัน", "url" => ["journaltable/index"]],
                                         ],
                                     ],
                                     [
