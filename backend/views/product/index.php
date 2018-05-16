@@ -84,6 +84,7 @@ $this->registerJsFile(
                        <div class="btn-group">
                           <div class="btn btn-default"><i class="fa fa-upload"></i> นำเข้า</div>
                           <div class="btn btn-default"><i class="fa fa-download"></i> นำออก</div>
+                           <div class="btn btn-default"><i class="fa fa-thumbs-up"></i> อนุมัติผู้ขาย</div>
                           <div class="btn btn-default btn-bulk-remove"><i class="fa fa-trash"></i><span class="remove_item"></span> ลบ</div>
                           <div class="btn btn-default"><i class="fa fa-print"></i> พิมพ์</div>
                           <div class="btn btn-default"><i class="fa fa-barcode"></i> พิมพ์บาร์โค้ด</div>

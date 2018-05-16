@@ -67,7 +67,7 @@ class Product extends \yii\db\ActiveRecord
             'category_id' => Yii::t('app', 'กลุ่มสินค้า'),
             'product_type_id' => Yii::t('app', 'ประเภทสินค้า'),
             'unit_id' => Yii::t('app', 'หน่วยนับ'),
-            'min_stock' => Yii::t('app', 'จัดเก็ยขั้นต่ำ'),
+            'min_stock' => Yii::t('app', 'จัดเก็บขั้นต่ำ'),
             'max_stock' => Yii::t('app', 'จัดเก็บสูงสุด'),
             'is_hold' => Yii::t('app', 'ระงับการใช้งาน'),
             'has_variant' => Yii::t('app', 'มีสินค้าแปรผัน'),
