@@ -32,7 +32,9 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             
       </div>
-     </div><br/>
+     </div>
+<div class="row" style="margin-top: 5px;">
+  <div class="col-lg-12">
  <div class="x_panel">
         <div class="x_title">
             <h3><i class="fa fa-cube"></i> รายละเอียดสินค้า <small><?= $model->name?></small></h3>
@@ -190,6 +192,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
        </div>
  </div>
+</div>
+</div>
+
  <div class="row">
    <div class="col-md-6">
                 <div class="x_panel">
