@@ -332,6 +332,48 @@ $this->registerJsFile(
                         ],
                     ]); ?>
                     </div>
+
+                   <!--  <div class="row">
+                      <div class="col-lg-12">
+                        <?php foreach($dataProvider->getModels() as $value):?>
+                              <div class="col-md-3 col-xs-12 widget widget_tally_box">
+                              <div class="x_panel fixed_height_300">
+                                <div class="x_content">
+                                  <h3 class="name"><?=$value->product_code?></h3>
+                                  <p>
+                                    <?=$value->name?>
+                                  </p>
+                                   <div class="flex">
+                                    <ul class="list-inline count2">
+                                      <li>
+                                        <span>
+                                          <?php if($value->all_qty >0): ?>
+                                            <div class="label label-success"> มีสินค้า</div>
+                                          <?php else:?>
+                                            <div class="label label-danger"> ไม่มีสินค้า</div>
+                                          <?php endif;?>
+                                        </span>
+                                      </li>
+                                      <li>
+                                        <span>
+                                          <?=$value->all_qty?>
+                                        </span>
+                                      </li>
+                                      
+                                    </ul>
+                                    
+                                  </div>
+                                  <div class="btn-group">
+                                      <div class="btn btn-default"><i class="fa fa-eye"></i></div>
+                                      <div class="btn btn-default"><i class="fa fa-pencil"></i></div>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          <?php endforeach;?>
+                      </div>
+                    </div> -->
+
                   </div>
                 </div>
               </div>
@@ -339,6 +381,7 @@ $this->registerJsFile(
         </div>
     <?php Pjax::end(); ?>
 </div>
+
 <?php 
   $this->registerJsFile( '@web/js/sweetalert.min.js',['depends' => [\yii\web\JqueryAsset::className()]],static::POS_END);
   $this->registerCssFile( '@web/css/sweetalert.css');

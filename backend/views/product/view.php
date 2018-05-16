@@ -89,6 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             
                         ],
                     ]) ?>
+                     <!-- <div class="btn btn-default" style="margin-top: 5px;"> ดูตามที่จัดเก็บ</div> -->
                </div>
                <div class="col-lg-4">
                    <?= DetailView::widget([
@@ -257,11 +258,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         <a class="title" href="#">SO180002</a>
                         <p>คุณอนันต์, นาทม นครพนม.</p>
                       </div>
-                    </article>
-                  </div>
-                  <div class="x_footer pull-right">
+                    </article> 
+                    <div class="x_footer pull-right">
                      <div class="btn btn-default"> ดูเพิ่มเติม</div>
                   </div>
+                  </div>
+                 
                 </div>
               </div>
               <div class="col-md-6">
