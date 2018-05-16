@@ -156,21 +156,21 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="row">
                        <div class="col-md-6 tile">
                           <span><b>จำนวนสินค้าทั้งหมด</b></span>
-                          <h2>231,809 <i class="fa fa-cube text-primary"></i></h2>
+                          <h2><?=$model->all_qty!=""?number_format($model->all_qty):0?> <i class="fa fa-cube text-primary"></i></h2>
                           <span class="sparkline22 graph" style="height: 160px;">
                                 <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
                           </span>
                         </div>
                         <div class="col-md-6 tile">
                           <span><b>จำนวนสินค้าจอง</b></span>
-                          <h2>809 <i class="fa fa-lock text-danger"></i></h2>
+                          <h2><?=$model->reserved_qty!=""?number_format($model->reserved_qty):0?> <i class="fa fa-lock text-danger"></i></h2>
                           <span class="sparkline22 graph" style="height: 160px;">
                                 <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
                           </span>
                         </div>
                         <div class="col-md-6 tile">
                           <span><b>จำนวนสินค้าใช้ได้</b></span>
-                          <h2>231,000 <i class="fa fa-unlock text-success"></i></h2>
+                          <h2><?=$model->available_qty!=""?number_format($model->available_qty):0?> <i class="fa fa-unlock text-success"></i></h2>
                           <span class="sparkline22 graph" style="height: 160px;">
                                 <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
                           </span>
@@ -180,7 +180,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="row">
                        <div class="col-md-12 tile">
                           <span><b>มูลค่ารวม</b></span>
-                          <h2>231,809 บาท</h2>
+                          <h2><?=$model->all_qty!=""?number_format($model->all_qty * $model->cost):0?> บาท</h2>
                           <span class="sparkline22 graph" style="height: 160px;">
                                 <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
                           </span>

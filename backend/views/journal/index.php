@@ -136,7 +136,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             </form>
                             </div>
                           </div>
-                        </div>
+                        </div><br />
                         <div class="table-responsive">
 
     <?= GridView::widget([
@@ -144,7 +144,7 @@ $this->params['breadcrumbs'][] = $this->title;
          'emptyCell'=>'-',
                     'layout'=>'{items}{summary}{pager}',
                     'summary' => "แสดง {begin} - {end} ของทั้งหมด {totalCount} รายการ",
-                    'showOnEmpty'=>false,
+                    //'showOnEmpty'=>false,
                     'tableOptions' => ['class' => 'table table-hover'],
                     'emptyText' => '<div style="color: red;align: center;"> <b>ไม่พบรายการไดๆ</b></div>',
                     'columns' => [
