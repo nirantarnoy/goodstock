@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use toxor88\switchery\Switchery;
 use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Product */
 /* @var $form yii\widgets\ActiveForm */
@@ -229,16 +230,19 @@ use kartik\select2\Select2;
                       </div>
                     </div>
 
-                        
-
-                        <div class="form-group pull-center">
-                            <?= Html::submitButton(Yii::t('app', 'บันทึก'), ['class' => 'btn btn-success']) ?>
-                            <div class="btn btn-default">ดูรายละเอียด</div>
-                            <div class="btn btn-danger">ยกเลิก</div>
+                        <div class="col-md-8 col-md-offset-4">
+                           <?= Html::submitButton(Yii::t('app', 'บันทึก'), ['class' => 'btn btn-success']) ?>
+                           <?php if(!$model->isNewRecord):?>
+                            <div class="btn btn-default"><a href="<?=Url::to(['product/view/','id'=>$model->id],true)?>">ดูรายละเอียด</a></div>
+                          <?php endif;?>
+                            <div class="btn btn-danger"><a style="color: #FFF" href="<?=Url::to(['product/index'],true)?>">ยกเลิก</a></div>
                         </div>
+
+                      
                     </div>
                 </div>
 
     <?php ActiveForm::end(); ?>
 
 </div>
+            
