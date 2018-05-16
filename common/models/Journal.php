@@ -22,7 +22,7 @@ use Yii;
 class Journal extends \yii\db\ActiveRecord
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {
@@ -30,33 +30,35 @@ class Journal extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['reference_type_id', 'trans_type', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+
+            [['reference_type_id', 'trans_type', 'status', 'created_at', 'updated_at','trans_date', 'created_by', 'updated_by'], 'integer'],
             [['name', 'description', 'reference'], 'string', 'max' => 255],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
-            'description' => Yii::t('app', 'Description'),
-            'reference' => Yii::t('app', 'Reference'),
-            'reference_type_id' => Yii::t('app', 'Reference Type ID'),
-            'trans_type' => Yii::t('app', 'Trans Type'),
-            'status' => Yii::t('app', 'Status'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'created_by' => Yii::t('app', 'Created By'),
-            'updated_by' => Yii::t('app', 'Updated By'),
+            'name' => Yii::t('app', 'ชื่อ'),
+            'trans_date' => Yii::t('app', 'วันที่'),
+            'description' => Yii::t('app', 'รายละเอียด'),
+            'reference' => Yii::t('app', 'รายการอ้างอิง'),
+            'reference_type_id' => Yii::t('app', 'ประเภทรายการอ้างอิง'),
+            'trans_type' => Yii::t('app', 'ประเภทรายการ'),
+            'status' => Yii::t('app', 'สถานะ'),
+            'created_at' => Yii::t('app', 'สร้างเมื่อ'),
+            'updated_at' => Yii::t('app', 'แก้ไขเมื่อ'),
+            'created_by' => Yii::t('app', 'สร้างโดย'),
+            'updated_by' => Yii::t('app', 'แก้ไขโดย'),
         ];
     }
 }

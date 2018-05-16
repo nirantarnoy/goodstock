@@ -118,8 +118,8 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                             ["label" => "คลังสินค้า", "url" => ["warehouse/index"]],
                                             ["label" => "ล๊อกจัดเก็บ", "url" => ["location/index"]],
                                             ["label" => "สินค้าคงเหลือ", "url" => ["stockbalance/index"]],
-                                            ["label" => "จัดการสต๊อก", "url" => ["movement/index"]],
-                                            ["label" => "นับสต๊อก", "url" => ["counting/index"]],
+                                            ["label" => "จัดการสต๊อก", "url" => ["journal/index"]],
+                                           
                                         ],
                                     ],
                                     [
