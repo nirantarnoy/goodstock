@@ -125,4 +125,10 @@ class PurchreqController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
+
+    public function actionAddline(){
+    $data = Yii::$app->request->post('data');
+    return $this->renderPartial('_addline',['data'=>$data]);
 }
+}
+

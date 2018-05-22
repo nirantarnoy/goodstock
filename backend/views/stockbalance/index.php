@@ -52,8 +52,16 @@ $warehouseall = \backend\models\Warehouse::find()->where(['!=','name',''])->orde
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 <div class="x_panel">
                   <div class="x_title">
-                   
-                    <h4 class="pull"><i class="fa fa-database"></i> <?=$this->title?> <small></small></h4>
+                    
+                    <h4 class="pull-left"><i class="fa fa-database"></i> <?=$this->title?> <small></small></h4>
+                    <div class="pull-right">
+                        <div class="btn-group">
+                          <div class="btn btn-default"><i class="fa fa-upload"></i> นำเข้า</div>
+                          <div class="btn btn-default"><i class="fa fa-download"></i> นำออก</div>
+                          <div class="btn btn-default"><i class="fa fa-random"></i> ย้ายที่เก็บ</div>
+                          <div class="btn btn-default"><i class="fa fa-print"></i> พิมพ์</div>
+                      </div>
+                    </div>
                     <!-- <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                       <li class="dropdown">
@@ -145,8 +153,7 @@ $warehouseall = \backend\models\Warehouse::find()->where(['!=','name',''])->orde
         'tableOptions' => ['class' => 'table table-hover'],
         'emptyText' => '<div style="color: red;align: center;"> <b>ไม่พบรายการไดๆ</b></div>',
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn','contentOptions' => ['style' => 'vertical-align: middle']],
-
+            ['class' => 'yii\grid\CheckboxColumn','headerOptions' => ['style' => 'text-align: center'],'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;']],
             //'id',
             //'plant_id',
             [
