@@ -12,7 +12,9 @@ return [
     'controllerNamespace' => 'backend\controllers',
     //'defaultRoute'=>'dashboard',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+        'gridview' => ['class' => 'kartik\grid\Module'],
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
@@ -70,6 +72,7 @@ return [
               '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
         ],
     ],
+
     ],
     'params' => $params,
 ];

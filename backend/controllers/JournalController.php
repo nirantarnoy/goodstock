@@ -91,6 +91,19 @@ class JournalController extends Controller
              'title' => 'สร้างใบเบิก',
         ]);
     }
+    public function actionCreateadjust()
+    {
+        $model = new Journal();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+            'title' => 'สร้างใบปรับยอด',
+        ]);
+    }
 
     /**
      * Updates an existing Journal model.

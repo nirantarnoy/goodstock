@@ -1,12 +1,13 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\Url;
 use lavrentiev\widgets\toastr\Notification;
 use dosamigos\multiselect\MultiSelect;
 use yii\helpers\ArrayHelper;
+use kartik\cmenu\ContextMenu;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\StockbalanceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -16,8 +17,37 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $groupall = \backend\models\Productcat::find()->where(['!=','name',''])->orderby(['name'=>SORT_ASC])->all();
 $warehouseall = \backend\models\Warehouse::find()->where(['!=','name',''])->orderby(['name'=>SORT_ASC])->all();
+
+$items = [
+    ['label'=>'Action', 'url'=>'#'],
+    ['label'=>'Another action', 'url'=>'#'],
+    ['label'=>'Something else here', 'url'=>'#'],
+    '<li class="divider"></li>',
+    ['label'=>'Separated link', 'url'=>'#'],
+];
+
+
+?>
+<?php
+$scripts = <<<'JS'
+   function (e, element, target) {
+    e.preventDefault();
+    if (e.target.tagName == 'SPAN') {
+        e.preventDefault();
+        this.closemenu();
+        return false;
+    }
+    return true;
+}
+JS;
 ?>
 <div class="stockbalance-index">
+
+    <?php //ContextMenu::begin([
+//        'items'=>$items,
+//        'options'=>['tag'=>'div'],
+//        'pluginOptions'=>['before'=>$scripts]
+    //]);?>
     <?php $session = Yii::$app->session;
       if ($session->getFlash('msg')): ?>
        <!-- <div class="alert alert-success alert-dismissible" role="alert">
@@ -150,31 +180,63 @@ $warehouseall = \backend\models\Warehouse::find()->where(['!=','name',''])->orde
         'layout'=>'{items}{summary}{pager}',
         'summary' => "แสดง {begin} - {end} ของทั้งหมด {totalCount} รายการ",
        // 'showOnEmpty'=>false,
-        'tableOptions' => ['class' => 'table table-hover'],
+        //'tableOptions' => ['class' => 'table table-hover','style'=>'border: 0px 0px 0px 0px;'],
+        'bordered'=>false,
+        'striped' => false,
+        'hover' => true,
         'emptyText' => '<div style="color: red;align: center;"> <b>ไม่พบรายการไดๆ</b></div>',
+        'rowOptions' => function($model, $key, $index, $gird){
+            $contextMenuId = $gird->columns[0]->contextMenuId;
+            return ['data'=>[ 'toggle' => 'context','target'=> "#".$contextMenuId ]];
+        },
         'columns' => [
-            ['class' => 'yii\grid\CheckboxColumn','headerOptions' => ['style' => 'text-align: center'],'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;']],
+            [
+                'class' => \liyunfang\contextmenu\SerialColumn::className(),
+                'contextMenu' => true,
+                //'contextMenuAttribute' => 'id',
+                'template' => '<li class="divider"></li> {view} {update} <li class="divider"></li> {story}',
+                'buttons' => [
+                    'story' => function ($url, $model) {
+                        $title = Yii::t('app', 'Story');
+                        $label = '<span class="glyphicon glyphicon-film"></span> ' . $title;
+                        $url = \Yii::$app->getUrlManager()->createUrl(['/user/story','id' => $model->id]);
+                        $options = ['tabindex' => '-1','title' => $title, 'data' => ['pjax' => '0' ,  'toggle' => 'tooltip']];
+                        return '<li>' . Html::a($label, $url, $options) . '</li>' . PHP_EOL;
+                    }
+                ],
+            ],
+            [
+                'class' => 'kartik\grid\CheckboxColumn',
+                'headerOptions' => ['style' => 'text-align: center'],
+                'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;']],
             //'id',
             //'plant_id',
+
             [
                 'attribute'=>'product_id',
                 'contentOptions' => ['style' => 'vertical-align: middle'], 
-                // 'value'=>function($data){
-                //    return \backend\helpers\RunnoTitle::getTypeById($data->module_id);
-                // } 
+                 'value'=>function($data){
+                    return \backend\models\Product::findProductinfo($data->product_id)->product_code;
+                 }
             ],
 
             //'id',
            // 'party_id',
             [
                 'attribute'=>'warehouse_id',
-                'contentOptions' => ['style' => 'vertical-align: middle'], 
+                'contentOptions' => ['style' => 'vertical-align: middle'],
+                'value'=>function($data){
+                    return \backend\models\Warehouse::findWarehouseinfo($data->warehouse_id)->name;
+                }
                
             ],
 
             [
                 'attribute'=>'location_id',
-                'contentOptions' => ['style' => 'vertical-align: middle'], 
+                'contentOptions' => ['style' => 'vertical-align: middle'],
+                'value'=>function($data){
+                    return \backend\models\Location::findLocationinfo($data->warehouse_id)->name;
+                }
                
             ],
             [
@@ -187,19 +249,10 @@ $warehouseall = \backend\models\Warehouse::find()->where(['!=','name',''])->orde
                 'contentOptions' => ['style' => 'vertical-align: middle'], 
                
             ],
-             [
-                'attribute'=>'price',
-                'label' => 'ต้นทุน',
-                'contentOptions' => ['style' => 'vertical-align: middle'], 
-               
+
+
             ],
-             [
-                'attribute'=>'amount',
-                'label' => 'มูลค่ารวม',
-                'contentOptions' => ['style' => 'vertical-align: middle'], 
-               
-            ],
-            ]
+
                     ]); ?>
                 </div>
             </div>

@@ -1,13 +1,14 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\Url;
 use backend\assets\ICheckAsset;
 use lavrentiev\widgets\toastr\Notification;
 use dosamigos\multiselect\MultiSelect;
 use yii\helpers\ArrayHelper;
+use kartik\cmenu\ContextMenu;
 
 ICheckAsset::register($this);
 /* @var $this yii\web\View */
@@ -82,7 +83,7 @@ $this->registerJsFile(
                          <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างรหัสสินค้า'), ['create'], ['class' => 'btn btn-success']) ?>
                        </div>
                        <div class="btn-group">
-                          <div class="btn btn-default"><i class="fa fa-upload"></i> นำเข้า</div>
+                          <div class="btn btn-default btn-import"><i class="fa fa-upload"></i> นำเข้า</div>
                           <div class="btn btn-default"><i class="fa fa-download"></i> นำออก</div>
                            <div class="btn btn-default"><i class="fa fa-thumbs-up"></i> อนุมัติผู้ขาย</div>
                           <div class="btn btn-default btn-bulk-remove"><i class="fa fa-trash"></i><span class="remove_item"></span> ลบ</div>
@@ -191,9 +192,45 @@ $this->registerJsFile(
                         'layout'=>'{items}{summary}{pager}',
                         'summary' => "แสดง {begin} - {end} ของทั้งหมด {totalCount} รายการ",
                         'showOnEmpty'=>false,
-                        'tableOptions' => ['class' => 'table table-hover'],
+                        'bordered'=>false,
+                        'striped' => false,
+                        'hover' => true,
+                        //'tableOptions' => ['class' => 'table table-hover'],
                         'emptyText' => '<div style="color: red;align: center;"> <b>ไม่พบรายการไดๆ</b></div>',
+                        'rowOptions' => function($model, $key, $index, $gird){
+                            $contextMenuId = $gird->columns[0]->contextMenuId;
+                            return ['data'=>[ 'toggle' => 'context','target'=> "#".$contextMenuId ]];
+                        },
                         'columns' => [
+                            [
+                                'class' => \liyunfang\contextmenu\SerialColumn::className(),
+                                'contextMenu' => true,
+                                //'contextMenuAttribute' => 'id',
+                                'template' => '<br /> {view} {update} <li class="divider"></li> {delete}',
+                                'buttons' => [
+                                    'view' => function ($url, $model) {
+                                        $title = Yii::t('app', 'ดูรายละเอียด');
+                                        $label = '<span class="fa fa-plus"></span> ' . $title;
+                                        $url = \Yii::$app->getUrlManager()->createUrl(['/product/view','id' => $model->id]);
+                                        $options = ['tabindex' => '1','title' => $title, 'data' => ['pjax' => '0' ,  'toggle' => 'tooltips']];
+                                        return '<li>' . Html::a($label, $url, $options) . '</li>' . PHP_EOL;
+                                    },
+                                    'update' => function ($url, $model) {
+                                        $title = Yii::t('app', 'แก้ไข');
+                                        $label = '<span class="fa fa-pencil"></span> ' . $title;
+                                        $url = \Yii::$app->getUrlManager()->createUrl(['/product/update','id' => $model->id]);
+                                        $options = ['tabindex' => '-1','title' => $title, 'data' => ['pjax' => '0' ,  'toggle' => 'tooltip']];
+                                        return '<li>' . Html::a($label, $url, $options) . '</li>' . PHP_EOL;
+                                    },
+                                    'delete' => function ($url, $model) {
+                                        $title = Yii::t('app', 'ลบรายการ');
+                                        $label = '<span class="fa fa-trash-o"></span> ' . $title;
+                                        $url = \Yii::$app->getUrlManager()->createUrl(['/product/delete','id' => $model->id]);
+                                        $options = ['tabindex' => '-1','title' => $title, 'data' => ['pjax' => '0' ,  'toggle' => 'tooltip']];
+                                        return '<li>' . Html::a($label, $url, $options) . '</li>' . PHP_EOL;
+                                    },
+                                ],
+                            ],
                             ['class' => 'yii\grid\CheckboxColumn','headerOptions' => ['style' => 'text-align: center'],'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;']],
                              // ['class' => 'yii\grid\RadioButtonColumn','headerOptions' => ['style' => 'text-align: center'],'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;']],
                           //  ['class' => 'yii\grid\SerialColumn','contentOptions' => ['style' => 'vertical-align: middle']],
@@ -281,54 +318,7 @@ $this->registerJsFile(
                                                          return $data->status === 1 ? '<div class="label label-success">Active</div>':'<div class="label label-default">Inactive</div>';
                                                        }
                                                       ],
-                                                       [
 
-                                                          'header' => '',
-                                                          'headerOptions' => ['style' => 'width: 160px;text-align:center;','class' => 'activity-view-link',],
-
-
-                                                          'class' => 'yii\grid\ActionColumn',
-                                                          'contentOptions' => ['style' => 'text-align: center;'],
-                                                          'buttons' => [
-                                                              'view' => function($url, $data, $index) {
-                                                                  $options = [
-                                                                      'title' => Yii::t('yii', 'View'),
-                                                                      'aria-label' => Yii::t('yii', 'View'),
-                                                                      'data-pjax' => '0',
-                                                                  ];
-                                                                  return Html::a(
-                                                                                  '<span class="glyphicon glyphicon-eye-open btn btn-default"></span>', $url, $options);
-                                                              },
-                                                                  'update' => function($url, $data, $index) {
-                                                                  $options = array_merge([
-                                                                      'title' => Yii::t('yii', 'Update'),
-                                                                      'aria-label' => Yii::t('yii', 'Update'),
-                                                                      'data-pjax' => '0',
-                                                                      'id'=>'modaledit',
-                                                                  ]);
-                                                                  return $data->status == 1? Html::a(
-                                                                                          '<span class="glyphicon glyphicon-pencil btn btn-default"></span>', $url, [
-                                                                                      'id' => 'activity-view-link',
-                                                                                      //'data-toggle' => 'modal',
-                                                                                      // 'data-target' => '#modal',
-                                                                                      'data-id' => $index,
-                                                                                      'data-pjax' => '0',
-                                                                                     // 'style'=>['float'=>'rigth'],
-                                                                          ]):'';
-                                                              },
-                                                                      'delete' => function($url, $data, $index) {
-                                                                          $options = array_merge([
-                                                                            'title' => Yii::t('yii', 'Delete'),
-                                                                            'aria-label' => Yii::t('yii', 'Delete'),
-                                                                            //'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
-                                                                            //'data-method' => 'post',
-                                                                            //'data-pjax' => '0',
-                                                                            'onclick'=>'recDelete($(this));'
-                                                                          ]);
-                                                                  return Html::a('<span class="glyphicon glyphicon-trash btn btn-default"></span>', 'javascript:void(0)', $options);
-                                                              }
-                                                                  ]
-                                                          ],
                         ],
                     ]); ?>
                     </div>
@@ -381,6 +371,29 @@ $this->registerJsFile(
         </div>
     <?php Pjax::end(); ?>
 </div>
+<div id="importModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><i class="fa fa-upload"></i> นำเข้ารายารสินค้า <small id="items"> </small></h4>
+            </div>
+            <div class="modal-body">
+               <div class="row">
+                   <div class="col-lg-12">
+                       <i class="fa fa-warning text-danger"></i> <small class="text-danger"> ขนาดไฟล์ไม่เกิน 100 MB</small>
+                   </div>
+               </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-add-bank">บันทึก</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 <?php 
   $this->registerJsFile( '@web/js/sweetalert.min.js',['depends' => [\yii\web\JqueryAsset::className()]],static::POS_END);
@@ -389,7 +402,9 @@ $this->registerJsFile(
   $this->registerJs('
 
     $(function(){
-
+        $(".btn-import").click(function(){
+            $("#importModal").modal("show");
+        });
         $(".btn-bulk-remove").attr("disabled",true);
 
         var viewtype = "'.$view_type.'";

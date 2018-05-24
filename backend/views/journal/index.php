@@ -7,6 +7,7 @@ use yii\helpers\Url;
 use lavrentiev\widgets\toastr\Notification;
 use dosamigos\multiselect\MultiSelect;
 use yii\helpers\ArrayHelper;
+use kartik\cmenu\ContextMenu;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\JournalSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -15,6 +16,18 @@ $this->title = Yii::t('app', 'จัดการสต๊อกสินค้�
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="journal-index">
+   <?php ContextMenu::begin([
+    'items' => [
+    ['label' => 'Action', 'url' => '#'],
+    ['label' => 'Another action', 'url' => '#'],
+    ['label' => 'Something else here', 'url' => '#'],
+    '<li class="divider"></li>',
+    ['label' => 'Separated link', 'url' => '#'],
+    ],
+    ]);
+    // fill in any content within your target container
+    echo "niran";
+    ContextMenu::end(); ?>
     <?php $session = Yii::$app->session;
       if ($session->getFlash('msg')): ?>
        <!-- <div class="alert alert-success alert-dismissible" role="alert">
@@ -58,8 +71,8 @@ $this->params['breadcrumbs'][] = $this->title;
                           </button>
                           <ul class="dropdown-menu">
                             <li><a href="<?=Url::to(['journal/createissue'],true)?>">เบิก</a></li>
-                            <li><a href="#">คืน</a></li>
-                            <li><a href="#">ปรับสต๊อก</a></li>
+                            <li><a href="<?=Url::to(['journal/createissue'],true)?>">คืน</a></li>
+                            <li><a href="<?=Url::to(['journal/createadjust'],true)?>">ปรับสต๊อก</a></li>
                             <li><a href="#">ย้าย</a></li>
                             <li><a href="#">นับสต๊อก</a></li>
                           

@@ -47,4 +47,9 @@ class Location extends \common\models\Location
 		    ];
 		 }
 
+    public function findLocationinfo($id){
+        $model = Location::find()->where(['id'=>$id])->one();
+        return count($model)>0?$model:null;
+    }
+
 }
