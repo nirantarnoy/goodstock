@@ -130,4 +130,29 @@ class ProductController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
+    public function actionExporttemplate(){
+        $strExcelFileName="form_product.xls";
+        header('Content-Encoding: UTF-8');
+        header("Content-Type: application/x-msexcel ; name=\"$strExcelFileName\" charset=utf-8");
+        header("Content-Disposition: attachment; filename=\"$strExcelFileName\"");
+        header("Content-Transfer-Encoding: binary");
+        header("Pragma: no-cache");
+        header("Expires: 0");
+
+        echo "
+           <table border='1'>
+             <tr>
+                <td>Product Code</td>
+                <td>Name</td>
+                <td>Category</td>
+                <td>Unit</td>
+                <td>Qty</td>
+                <td>Price</td>
+            </tr>
+            </table>
+        ";
+
+
+
+    }
 }

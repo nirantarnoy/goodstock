@@ -377,14 +377,30 @@ $this->registerJsFile(
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><i class="fa fa-upload"></i> นำเข้ารายารสินค้า <small id="items"> </small></h4>
+                <h4 class="modal-title"><i class="fa fa-upload"></i> นำเข้ารายการสินค้า <small id="items"> </small></h4>
             </div>
             <div class="modal-body">
-               <div class="row">
-                   <div class="col-lg-12">
-                       <i class="fa fa-warning text-danger"></i> <small class="text-danger"> ขนาดไฟล์ไม่เกิน 100 MB</small>
-                   </div>
-               </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <small class="text-info"> สามารถดาวน์โหลด template สำหรับการนำเข้าสินค้าโดยคลิก </small><a href="<?=Url::to(['product/exporttemplate'],true)?>" style="text-decoration-style: dashed;text-decoration: underline;">ที่นี่</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                       <br />
+
+                        <form action="">
+                            <input type="file" accept=".csv"  class="form-control" name="import_product">
+                        </form>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <i class="fa fa-warning text-danger"></i> <small class="text-danger"> ขนาดไฟล์ไม่เกิน 100 MB</small>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success btn-add-bank">บันทึก</button>
