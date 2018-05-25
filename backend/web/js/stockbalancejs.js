@@ -63,8 +63,9 @@ $(document).on('ready pjax:success', function() {
                         $(".btn-trasfer").removeClass("btn-default");
                         $(".btn-trasfer").addClass("btn-primary");
                         $(".remove_item").html("["+orderList.length+"]");
-                        $(".btn-bulk-remove").attr('disabled',false);
-                        $(".btn-view").attr('disabled',false);
+                          $(".btn-bulk-remove").attr('disabled',false);
+                          $(".btn-printbarcode").attr('disabled',false);
+                          $(".btn-view").attr('disabled',false);
                         $(".btn-update").attr('disabled',false);
                         $(".listid").val(orderList);
                         $("#items").html("สินค้าจำนวน "+orderList.length+" รายการ");
@@ -77,6 +78,7 @@ $(document).on('ready pjax:success', function() {
                         $(".btn-trasfer").addClass("btn-default");
                         $(".remove_item").html("["+orderList.length+"]");
                         $(".btn-bulk-remove").attr('disabled',true);
+                        $(".btn-printbarcode").attr('disabled',true);
                         $(".btn-view").attr('disabled',true);
                         $(".btn-update").attr('disabled',true);
                         $(".listid").val(orderList);
@@ -156,7 +158,8 @@ $(document).on('ready pjax:success', function() {
                         $(".btn-bulk-remove").removeClass("btn-default");
                         $(".btn-bulk-remove").addClass("btn-danger");
                         $(".btn-bulk-remove").attr('disabled',false);
-                       // console.log("niran");
+                        $(".btn-printbarcode").attr('disabled',false);
+                          // console.log("niran");
                       }else{
                         $(".btn-trasfer").attr("disabled",true);
                         $(".btn-trasfer").removeClass("btn-primary");
@@ -169,6 +172,7 @@ $(document).on('ready pjax:success', function() {
                         $("#items").html("สินค้าจำนวน "+orderList.length+" รายการ");
                         $(".btn-bulk-remove").addClass("btn-default");
                         $(".btn-bulk-remove").removeClass("btn-danger");
+                        $(".btn-printbarcode").attr('disabled',true);
                         //console.log("ddfdfdfd");
                       }
                   });

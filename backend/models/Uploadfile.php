@@ -8,7 +8,7 @@ class Uploadfile extends Model
     public $file;
     public function rules(){
         return [
-            //[['file'],'required'],
+            [['file'],'required'],
             [['file'],'string']
         ];
     }

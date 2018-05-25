@@ -251,48 +251,117 @@ class ProductController extends Controller
     }
     public function actionPrintbarcode(){
         if(Yii::$app->request->post()){
-            $prod_id = Yii::$app->request->post('prod_id');
+            $prod_id = Yii::$app->request->post('product_listid');
             $paper_type = Yii::$app->request->post('paper_type');
             $paper_format = Yii::$app->request->post('paper_format');
             $qty = Yii::$app->request->post('qty');
 
+            $show_code = Yii::$app->request->post('show_code');
+            $show_name = Yii::$app->request->post('show_name');
+
+            $prodid = explode(',',$prod_id);
             $paper_size =  Pdf::FORMAT_LEGAL;
             $orient =  Pdf::ORIENT_PORTRAIT;
+
             if($paper_format == 1){
                 $orient = Pdf::ORIENT_LANDSCAPE;
             }
-            if($paper_type == 1){
+            if($paper_type == 0){
+                $paper_size = [100,50];
+            }else if($paper_type == 1){
                 $paper_size = Pdf::FORMAT_A4;
             }else if($paper_type == 2){
                 $paper_size = Pdf::FORMAT_LETTER;
             }
 
 
-            $modellist = Product::find()->where(['id'=>$prod_id])->all();
+            $modellist = Product::find()->where(['id'=>$prodid])->all();
 
             $pdf = new Pdf([
                 'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
-                'format' => Pdf::FORMAT_A4,
+                'format' => $paper_size,
+               // 'format' => [60, 30],//กำหนดขนาด
                 'orientation' => $orient,
                 'destination' => Pdf::DEST_BROWSER,
                 'content' => $this->renderPartial('_print',[
                     'list'=>$modellist,
+                    'barcode_qty' => $qty,
+                    'show_code' => $show_code,
+                    'show_name' => $show_name,
                     // 'from_date'=> $from_date,
                     // 'to_date' => $to_date,
                 ]),
                 //'content' => "nira",
                 'cssFile' => '@backend/web/css/pdf.css',
-                'options' => [
-                    'title' => 'รายงานระหัสินค้า',
-                    'subject' => ''
-                ],
+               // 'cssFile' => '@frontend/web/css/kv-mpdf-bootstrap.css',
+//                'options' => [
+//                    'title' => 'บาร์โต้ดรหัสสินค้า',
+//                    'subject' => ''
+//                ],
                 'methods' => [
-                    'SetHeader' => ['รายงานรหัสสินค้า||Generated On: ' . date("r")],
-                    'SetFooter' => ['|Page {PAGENO}|'],
+                  //  'SetHeader' => ['บาร์โค้ดรหัสสินค้า||Generated On: ' . date("r")],
+                  //  'SetFooter' => ['|Page {PAGENO}|'],
                 ]
             ]);
             return $pdf->render();
 
         }
+    }
+    public function actionExport($type){
+        if($type !=''){
+
+            $contenttype = "";
+            $fileName = "";
+
+            if($type == 'xsl'){
+                $contenttype = "application/x-msexcel";
+                $fileName="export_product.xls";
+            }
+            if($type == 'csv'){
+                $contenttype = "application/csv";
+                $fileName="export_product.csv";
+            }
+
+            header('Content-Encoding: UTF-8');
+            header("Content-Type: ".$contenttype." ; name=\"$fileName\" ;charset=utf-8");
+            header("Content-Disposition: attachment; filename=\"$fileName\"");
+            header("Content-Transfer-Encoding: binary");
+            header("Pragma: no-cache");
+            header("Expires: 0");
+
+            print "\xEF\xBB\xBF";
+
+            $model = Product::find()->where(['id'=>1])->all();
+            if($model){
+                echo "
+                       <table border='1'>
+                         <tr>
+                            <td>Product Code</td>
+                            <td>Name</td>
+                            <td>Category</td>
+                            <td>Unit</td>
+                            <td>Qty</td>
+                            <td>Price</td>
+                        </tr>
+                       
+                    ";
+                foreach($model as $data){
+                    $cat = \backend\models\Productcat::findGroupname($data->category_id);
+                    $unit = \backend\models\Unit::findUnitname($data->unit_id);
+                    echo "
+                        <tr>
+                            <td>$data->product_code</td>
+                            <td>$data->name</td>
+                            <td>$cat</td>
+                            <td>$unit</td>
+                            <td>$data->all_qty</td>
+                            <td>$data->price</td>
+                        </tr>
+                    ";
+                }
+                echo "</table>";
+            }
+        }
+
     }
 }

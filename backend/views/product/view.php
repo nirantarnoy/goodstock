@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\helpers\Url;
+use kartik\daterange\DateRangePicker;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Product */
@@ -213,6 +214,20 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <?php
+                              echo '<label class="control-label">Date Range</label>';
+                              echo '<div class="drp-container">';
+                                  echo DateRangePicker::widget([
+                                  'name'=>'date_range_2',
+                                  'presetDropdown'=>true,
+                                  'hideInput'=>true
+                                  ]);
+                                  echo '</div>';
+                                  ?>
+                          </div>
+                      </div>
                     <article class="media event">
                       <a class="pull-left date">
                         <p class="month">05</p>
@@ -273,7 +288,7 @@ $this->params['breadcrumbs'][] = $this->title;
               <div class="col-md-6">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2><i class="fa fa-line-chart"></i> กราฟความเคลื่นไหว <small>ล่าสุด</small></h2>
+                    <h2><i class="fa fa-line-chart"></i> กราฟความเคลื่นไหว</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>

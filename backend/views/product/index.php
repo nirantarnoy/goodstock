@@ -86,13 +86,15 @@ $this->registerJsFile(
                        <div class="btn-group">
                           <div class="btn btn-default btn-import"><i class="fa fa-upload"></i> นำเข้า</div>
                           <div class="btn btn-default btn-export"><i class="fa fa-download"></i> นำออก</div>
+
                            <div class="btn btn-default btn-approve-vendor"><i class="fa fa-thumbs-up"></i> อนุมัติผู้ขาย</div>
                           <div class="btn btn-default btn-bulk-remove"><i class="fa fa-trash"></i><span class="remove_item"></span> ลบ</div>
-                          <div class="btn btn-default btn-print"><i class="fa fa-print"></i> พิมพ์</div>
+                          <div class="btn btn-default btn-print-stock"><i class="fa fa-print"></i> พิมพ์สต๊อก</div>
                           <div class="btn btn-default btn-printbarcode"><i class="fa fa-barcode"></i> พิมพ์บาร์โค้ด</div>
                           <div class="btn btn-default view-list"><i class="fa fa-list"></i></div>
                           <div class="btn btn-default view-grid"><i class="fa fa-th"></i></div>
                       </div>
+
                     <h4 class="pull-right"><?=$this->title?> <i class="fa fa-cubes"></i><small></small></h4>
                     <!-- <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
@@ -434,7 +436,8 @@ $this->registerJsFile(
                 <div class="row">
                     <div class="col-lg-12">
                         <br />
-                        <div class="btn btn-default" style="display: block;padding: 15px 15px 15px 15px;border: 1px solid gray;"><i class="fa fa-file-excel-o label-success"></i> XLS File</div>
+                        <a href="<?=Url::to(['product/export','type'=>'xls'],true)?>" target="_blank" class="btn btn-default" style="display: block;padding: 15px 15px 15px 15px;border: 1px solid gray;"><i class="fa fa-file-excel-o label-success"></i> XLS File</a>
+                        <a href="<?=Url::to(['product/export','type'=>'csv'],true)?>" target="_blank" class="btn btn-default" style="display: block;padding: 15px 15px 15px 15px;border: 1px solid gray;"><i class="fa fa-file-photo-o label-success"></i> CSV File</a>
                         <div class="btn btn-default" style="display: block;padding: 15px 15px 15px 15px;border: 1px solid gray;"><i class="fa fa-file-pdf-o label-danger"></i> PDF File</div>
                         <div class="btn btn-default" style="display: block;padding: 15px 15px 15px 15px;border: 1px solid gray;"><i class="fa fa-file-o"></i> TEXT File</div>
                     </div>
@@ -454,7 +457,7 @@ $this->registerJsFile(
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><i class="fa fa-window-close"></i></button>
-                <h4 class="modal-title"><i class="fa fa-barcode"></i> พิมพ์รหัสบาร์โต้ด <small id="items"> </small></h4>
+                <h4 class="modal-title"><i class="fa fa-barcode"></i> พิมพ์รหัสบาร์โค้ด <small id="items"> </small></h4>
             </div>
             <div class="modal-body">
                 <?php $form_upload = ActiveForm::begin(['action'=>'printbarcode','options'=>['enctype' => 'multipart/form-data','class'=>'form-horizontal form-label-left','target'=>'_blank']]); ?>
@@ -467,8 +470,9 @@ $this->registerJsFile(
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">ขนาดกระดาษ
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
+                        <input type="hidden" class="product_listid" name="product_listid" value="">
                         <select name="paper_type" id="paper-type" class="form-control">
-                            <option value="0">สลิป</option>
+
                             <option value="1">A4</option>
                             <option value="2">Letter</option>
                         </select>
@@ -492,9 +496,28 @@ $this->registerJsFile(
                         <input type="number" value="1" min="1" name="qty" class="form-control" style="width: 50%;">
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">พิมพ์รหัสสินค้า
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <select name="show_code" id="paper-type" class="form-control">
+                            <option value="0">พิมพ์</option>
+                            <option value="1">ไม่พิมพ์</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">พิมพ์ชื่อสินค้า
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <select name="show_name" id="paper-type" class="form-control">
+                            <option value="0">พิมพ์</option>
+                            <option value="1">ไม่พิมพ์</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
-
                 <input type="submit" class="btn btn-success" value="พิมพ์">
                 <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
             </div>
@@ -518,9 +541,15 @@ $this->registerJsFile(
             $("#exportModal").modal("show");
         });
            $(".btn-printbarcode").click(function(){
+            if(orderList.length < 1){
+                return false;
+            }
+            $(".product_listid").val(orderList);
             $("#barcodeModal").modal("show");
         });
         $(".btn-bulk-remove").attr("disabled",true);
+        $(".btn-printbarcode").attr("disabled",true);
+        
 
         var viewtype = "'.$view_type.'";
         if(viewtype == "list"){
