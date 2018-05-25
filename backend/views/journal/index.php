@@ -26,7 +26,6 @@ $this->params['breadcrumbs'][] = $this->title;
     ],
     ]);
     // fill in any content within your target container
-    echo "niran";
     ContextMenu::end(); ?>
     <?php $session = Yii::$app->session;
       if ($session->getFlash('msg')): ?>

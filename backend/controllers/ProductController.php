@@ -8,6 +8,12 @@ use backend\models\ProductSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
+use yii\helpers\Json;
+use kartik\mpdf\Pdf;
+use backend\helpers\TransType;
+use backend\models\TransCalculate;
+
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -41,11 +47,14 @@ class ProductController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $pageSize;
 
+        $modelupload = new \backend\models\Uploadfile();
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'perpage' => $pageSize,
             'viewtype' => 'list',
+            'modelupload'=> $modelupload,
         ]);
     }
 
@@ -151,8 +160,139 @@ class ProductController extends Controller
             </tr>
             </table>
         ";
+    }
+    public function actionImportproduct(){
+
+        $model = new \backend\models\Uploadfile();
+        if(Yii::$app->request->post()){
+            $uploaded = UploadedFile::getInstance($model, 'file');
+            if(!empty($uploaded)) {
+                $upfiles = time() . "." . $uploaded->getExtension();
+                if($uploaded->saveAs('../web/uploads/files/'.$upfiles)) {
+                    //echo "okk";return;
+                    $myfile = '../web/uploads/files/' . $upfiles;
+                    $file = fopen($myfile, "r");
+                    fwrite($file, "\xEF\xBB\xBF");
+                    setlocale(LC_ALL, 'th_TH.TIS-620');
+                    $i = -1;
+                    $res = 0;
+                    $data = [];
+                    while (($rowData = fgetcsv($file, 10000, ",")) !== FALSE) {
+                        $i += 1;
+                        if ($rowData[0] == '' || $i == 0) {
+                            continue;
+                        }
+                        $modelprod = \backend\models\Product::find()->where(['product_code' => $rowData[0]])->one();
+                        if (count($modelprod) > 0) {
+                            // $data_all +=1;
+                            // array_push($data_fail,['name'=>$rowData[0][1]]);
+                            continue;
+                        }
+                        $modelx = new \backend\models\Product();
+                        $modelx->product_code = $rowData[0];
+                        $modelx->barcode = $rowData[0];
+                        $modelx->name = $rowData[1];
+                        $modelx->description = $rowData[1] ;
+                        $modelx->category_id = $this->checkCat($rowData[2]);
+                        $modelx->unit_id = $this->checkUnit($rowData[3]);
+                        $modelx->price = $rowData[5];
+                        $modelx->all_qty = str_replace(',','', $rowData[4]);;
+                        $modelx->available_qty = str_replace(',','', $rowData[4]);;
+                        $modelx->status = 1;
+
+                        if ($modelx->save(false)) {
+                            $res += 1;
+                            // $data_all +=1;
+                             array_push($data,['prod_id'=>$modelx->id,'qty'=>$modelx->all_qty,'warehouse_id'=>1,'trans_type'=>TransType::TRANS_ADJUST]);
+                        }
+                    }
+                     $update_stock = TransCalculate::createJournal($data);
+                    if($res > 0 && $update_stock){
+                        $session = Yii::$app->session;
+                        $session->setFlash('msg','นำเข้าข้อมูลสินค้าเรียบร้อย');
+                        return $this->redirect(['index']);
+                    }else{
+                        $session = Yii::$app->session;
+                        $session->setFlash('msg-error','พบข้อมผิดพลาด');
+                        return $this->redirect(['index']);
+                    }
+                }
+                fclose($file);
+            }else{
+
+            }
+        }
+    }
+    public function checkCat($name){
+        $model = \backend\models\Productcat::find()->where(['name'=>$name])->one();
+        if(count($model)>0){
+            return $model->id;
+        }else{
+            $model_new = new \backend\models\Productcat();
+            $model_new->name = $name;
+            $model_new->status = 1;
+            if($model_new->save(false)){
+                return $model_new->id;
+            }
+        }
+    }
+    public function checkUnit($name){
+        $model = \backend\models\Unit::find()->where(['name'=>$name])->one();
+        if(count($model)>0){
+            return $model->id;
+        }else{
+            $model_new = new \backend\models\Unit();
+            $model_new->name = $name;
+            $model_new->status = 1;
+            if($model_new->save(false)){
+                return $model_new->id;
+            }
+        }
+    }
+    public function actionPrintbarcode(){
+        if(Yii::$app->request->post()){
+            $prod_id = Yii::$app->request->post('prod_id');
+            $paper_type = Yii::$app->request->post('paper_type');
+            $paper_format = Yii::$app->request->post('paper_format');
+            $qty = Yii::$app->request->post('qty');
+
+            $paper_size =  Pdf::FORMAT_LEGAL;
+            $orient =  Pdf::ORIENT_PORTRAIT;
+            if($paper_format == 1){
+                $orient = Pdf::ORIENT_LANDSCAPE;
+            }
+            if($paper_type == 1){
+                $paper_size = Pdf::FORMAT_A4;
+            }else if($paper_type == 2){
+                $paper_size = Pdf::FORMAT_LETTER;
+            }
 
 
+            $modellist = Product::find()->where(['id'=>$prod_id])->all();
 
+            $pdf = new Pdf([
+                'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
+                'format' => Pdf::FORMAT_A4,
+                'orientation' => $orient,
+                'destination' => Pdf::DEST_BROWSER,
+                'content' => $this->renderPartial('_print',[
+                    'list'=>$modellist,
+                    // 'from_date'=> $from_date,
+                    // 'to_date' => $to_date,
+                ]),
+                //'content' => "nira",
+                'cssFile' => '@backend/web/css/pdf.css',
+                'options' => [
+                    'title' => 'รายงานระหัสินค้า',
+                    'subject' => ''
+                ],
+                'methods' => [
+                    'SetHeader' => ['รายงานรหัสสินค้า||Generated On: ' . date("r")],
+                    'SetFooter' => ['|Page {PAGENO}|'],
+                ]
+            ]);
+            return $pdf->render();
+
+        }
     }
 }

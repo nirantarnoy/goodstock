@@ -9,6 +9,7 @@ use lavrentiev\widgets\toastr\Notification;
 use dosamigos\multiselect\MultiSelect;
 use yii\helpers\ArrayHelper;
 use kartik\cmenu\ContextMenu;
+use yii\widgets\ActiveForm;
 
 ICheckAsset::register($this);
 /* @var $this yii\web\View */
@@ -84,11 +85,11 @@ $this->registerJsFile(
                        </div>
                        <div class="btn-group">
                           <div class="btn btn-default btn-import"><i class="fa fa-upload"></i> นำเข้า</div>
-                          <div class="btn btn-default"><i class="fa fa-download"></i> นำออก</div>
-                           <div class="btn btn-default"><i class="fa fa-thumbs-up"></i> อนุมัติผู้ขาย</div>
+                          <div class="btn btn-default btn-export"><i class="fa fa-download"></i> นำออก</div>
+                           <div class="btn btn-default btn-approve-vendor"><i class="fa fa-thumbs-up"></i> อนุมัติผู้ขาย</div>
                           <div class="btn btn-default btn-bulk-remove"><i class="fa fa-trash"></i><span class="remove_item"></span> ลบ</div>
-                          <div class="btn btn-default"><i class="fa fa-print"></i> พิมพ์</div>
-                          <div class="btn btn-default"><i class="fa fa-barcode"></i> พิมพ์บาร์โค้ด</div>
+                          <div class="btn btn-default btn-print"><i class="fa fa-print"></i> พิมพ์</div>
+                          <div class="btn btn-default btn-printbarcode"><i class="fa fa-barcode"></i> พิมพ์บาร์โค้ด</div>
                           <div class="btn btn-default view-list"><i class="fa fa-list"></i></div>
                           <div class="btn btn-default view-grid"><i class="fa fa-th"></i></div>
                       </div>
@@ -205,12 +206,14 @@ $this->registerJsFile(
                             [
                                 'class' => \liyunfang\contextmenu\SerialColumn::className(),
                                 'contextMenu' => true,
+                                'headerOptions' => ['style' => 'text-align: left'],
+                                'contentOptions' => ['style' => 'vertical-align: middle'],
                                 //'contextMenuAttribute' => 'id',
                                 'template' => '<br /> {view} {update} <li class="divider"></li> {delete}',
                                 'buttons' => [
                                     'view' => function ($url, $model) {
                                         $title = Yii::t('app', 'ดูรายละเอียด');
-                                        $label = '<span class="fa fa-plus"></span> ' . $title;
+                                        $label = '<span class="fa fa-eye"></span> ' . $title;
                                         $url = \Yii::$app->getUrlManager()->createUrl(['/product/view','id' => $model->id]);
                                         $options = ['tabindex' => '1','title' => $title, 'data' => ['pjax' => '0' ,  'toggle' => 'tooltips']];
                                         return '<li>' . Html::a($label, $url, $options) . '</li>' . PHP_EOL;
@@ -376,10 +379,11 @@ $this->registerJsFile(
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button type="button" class="close" data-dismiss="modal"><i class="fa fa-window-close"></i></button>
                 <h4 class="modal-title"><i class="fa fa-upload"></i> นำเข้ารายการสินค้า <small id="items"> </small></h4>
             </div>
             <div class="modal-body">
+                <?php $form_upload = ActiveForm::begin(['action'=>'importproduct','options'=>['enctype' => 'multipart/form-data']]); ?>
                 <div class="row">
                     <div class="col-lg-12">
                         <small class="text-info"> สามารถดาวน์โหลด template สำหรับการนำเข้าสินค้าโดยคลิก </small><a href="<?=Url::to(['product/exporttemplate'],true)?>" style="text-decoration-style: dashed;text-decoration: underline;">ที่นี่</a>
@@ -389,9 +393,9 @@ $this->registerJsFile(
                     <div class="col-lg-12">
                        <br />
 
-                        <form action="">
-                            <input type="file" accept=".csv"  class="form-control" name="import_product">
-                        </form>
+                           <?= $form_upload->field($modelupload,'file')->fileinput(['class'=>'form-control','accept'=>'.csv'])->label(false)?>
+
+
                     </div>
                 </div>
                 <br />
@@ -403,9 +407,98 @@ $this->registerJsFile(
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success btn-add-bank">บันทึก</button>
+
+                <input type="submit" class="btn btn-success" value="ตกลง">
                 <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
             </div>
+            <?php ActiveForm::end();?>
+        </div>
+
+    </div>
+</div>
+<div id="exportModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="fa fa-window-close"></i> </button>
+                <h4 class="modal-title"><i class="fa fa-download"></i> นำออกรายการสินค้า <small id="items"> </small></h4>
+            </div>
+            <div class="modal-body">
+                <?php $form_upload = ActiveForm::begin(['action'=>'exportproduct','options'=>['enctype' => 'multipart/form-data']]); ?>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <small class="text-info"> เลือกรูปแบบข้อมูลที่ต้องการนำออก</small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <br />
+                        <div class="btn btn-default" style="display: block;padding: 15px 15px 15px 15px;border: 1px solid gray;"><i class="fa fa-file-excel-o label-success"></i> XLS File</div>
+                        <div class="btn btn-default" style="display: block;padding: 15px 15px 15px 15px;border: 1px solid gray;"><i class="fa fa-file-pdf-o label-danger"></i> PDF File</div>
+                        <div class="btn btn-default" style="display: block;padding: 15px 15px 15px 15px;border: 1px solid gray;"><i class="fa fa-file-o"></i> TEXT File</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+            </div>
+            <?php ActiveForm::end();?>
+        </div>
+
+    </div>
+</div>
+<div id="barcodeModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="fa fa-window-close"></i></button>
+                <h4 class="modal-title"><i class="fa fa-barcode"></i> พิมพ์รหัสบาร์โต้ด <small id="items"> </small></h4>
+            </div>
+            <div class="modal-body">
+                <?php $form_upload = ActiveForm::begin(['action'=>'printbarcode','options'=>['enctype' => 'multipart/form-data','class'=>'form-horizontal form-label-left','target'=>'_blank']]); ?>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <small class="text-info"> เลือกรูปแบบที่ต้องการ</small>
+                    </div>
+                </div><br />
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">ขนาดกระดาษ
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <select name="paper_type" id="paper-type" class="form-control">
+                            <option value="0">สลิป</option>
+                            <option value="1">A4</option>
+                            <option value="2">Letter</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">รูปแบบกระดาษ
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <select name="paper_format" id="paper-type" class="form-control">
+                            <option value="0">แนวตั้ง</option>
+                            <option value="1">แนวนอน</option>
+
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">จำนวนบาร์โค้ด
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <input type="number" value="1" min="1" name="qty" class="form-control" style="width: 50%;">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+                <input type="submit" class="btn btn-success" value="พิมพ์">
+                <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+            </div>
+            <?php ActiveForm::end();?>
         </div>
 
     </div>
@@ -421,6 +514,12 @@ $this->registerJsFile(
         $(".btn-import").click(function(){
             $("#importModal").modal("show");
         });
+          $(".btn-export").click(function(){
+            $("#exportModal").modal("show");
+        });
+           $(".btn-printbarcode").click(function(){
+            $("#barcodeModal").modal("show");
+        });
         $(".btn-bulk-remove").attr("disabled",true);
 
         var viewtype = "'.$view_type.'";
@@ -434,6 +533,10 @@ $this->registerJsFile(
         $("#perpage").change(function(){
             $("#form-perpage").submit();
         });
+//        $(".btn-save").click(function(){
+//            $("#form-import").attr("href","'.Url::to(['product/importproduct'],true).'");
+//            $("#form-import").submit();
+//        });
     });
 
    function recDelete(e){

@@ -8,11 +8,14 @@ use lavrentiev\widgets\toastr\Notification;
 use dosamigos\multiselect\MultiSelect;
 use yii\helpers\ArrayHelper;
 use kartik\cmenu\ContextMenu;
+use backend\assets\ICheckAsset;
+
+ICheckAsset::register($this);
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\StockbalanceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'สินค้าคงคลัง');
+$this->title = Yii::t('app', 'ภาพรวมสินค้าคงคลัง');
 $this->params['breadcrumbs'][] = $this->title;
 
 $groupall = \backend\models\Productcat::find()->where(['!=','name',''])->orderby(['name'=>SORT_ASC])->all();
@@ -26,7 +29,11 @@ $items = [
     ['label'=>'Separated link', 'url'=>'#'],
 ];
 
-
+$this->registerJsFile(
+    '@web/js/stockbalancejs.js?V=001',
+    ['depends' => [\yii\web\JqueryAsset::className()]],
+    static::POS_END
+);
 ?>
 <?php
 $scripts = <<<'JS'
@@ -82,7 +89,6 @@ JS;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 <div class="x_panel">
                   <div class="x_title">
-                    
                     <h4 class="pull-left"><i class="fa fa-database"></i> <?=$this->title?> <small></small></h4>
                     <div class="pull-right">
                         <div class="btn-group">
@@ -214,9 +220,10 @@ JS;
 
             [
                 'attribute'=>'product_id',
+                'format'=>'html',
                 'contentOptions' => ['style' => 'vertical-align: middle'], 
                  'value'=>function($data){
-                    return \backend\models\Product::findProductinfo($data->product_id)->product_code;
+                     return '<a href="'.Url::to(['product/view/'.$data->product_id],true).'">'.\backend\models\Product::findProductinfo($data->product_id)->product_code.'</a>';
                  }
             ],
 
@@ -224,9 +231,10 @@ JS;
            // 'party_id',
             [
                 'attribute'=>'warehouse_id',
+                'format'=>'html',
                 'contentOptions' => ['style' => 'vertical-align: middle'],
                 'value'=>function($data){
-                    return \backend\models\Warehouse::findWarehouseinfo($data->warehouse_id)->name;
+                    return '<a href="'.Url::to(['warehouse/view/'.$data->warehouse_id],true).'">'.\backend\models\Warehouse::findWarehouseinfo($data->warehouse_id)->name.'</a>';
                 }
                
             ],

@@ -51,5 +51,9 @@ class Unit extends \common\models\Unit
 		 	$model = Unit::find()->where(['id'=>$id])->one();
 		 	return count($model)>0?$model->name:'';
 		 }
+        public function findUnitid($code){
+            $model = Unit::find()->where(['name'=>$code])->one();
+            return count($model)>0?$model->id:0;
+        }
 
 }

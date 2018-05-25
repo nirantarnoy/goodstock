@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Warehouse */
@@ -31,6 +32,9 @@ $this->registerCss('
         ]) ?>
         <div class="btn btn-default"><i class="fa fa-print"></i> พิมพ์</div>
             </div>
+          <div class="pull-right">
+              <a href="<?=Url::to(array('warehouse/index'),true)?>"><div class="btn btn-default">กลับ <i class="fa fa-arrow-right"></i> </div></a>
+          </div>
             
       </div>
      </div>
