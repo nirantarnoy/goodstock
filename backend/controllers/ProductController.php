@@ -101,9 +101,13 @@ class ProductController extends Controller
     public function actionView($id)
     {
         $modeljournalline = \backend\models\Journalline::find()->where(['product_id'=>$id])->all();
+        $uploadfile = new \backend\models\Uploadfile();
+        $photoes = \backend\models\Productgallery::find()->all();
         return $this->render('view', [
             'model' => $this->findModel($id),
             'modeljournalline' => $modeljournalline,
+            'photoes'=>$photoes,
+            'uploadfile'=>$uploadfile,
         ]);
     }
 

@@ -201,7 +201,36 @@ $this->params['breadcrumbs'][] = $this->title;
  </div>
 </div>
 </div>
+    <div class="x_panel">
+        <div class="x_title">
+            <h3><i class="fa fa-image"></i> รูปภาพสินค้า </small></h3>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="row">
+                <div class="col-lg-2">
+                    <?php  $form = \yii\widgets\ActiveForm::begin(['options' =>['enctype'=>'multipart/form-data']]);?>
+                    <?=$form->field($uploadfile,'file')->fileInput(['class'=>'form-control'])->label(false);?>
+                    <input type="submit" class="btn btn-primary" value="Upload">
+                    <?php \yii\widgets\ActiveForm::end();?>
+                </div>
+                <div class="col-lg-10" style="float: left;">
+                    <?php foreach($photoes as $value):?>
+                        <div class="card">
+                            <img src="<?= Yii::$app->request->baseUrl ?>/uploads/img/<?=$value->photo?>" alt="Avatar" style="width:100%">
+                            <div class="card-container">
+                                <p>civic.jpg</p>
+                                <div class="btn btn-default"><i class="fa fa-pencil"></i> </div>
+                                <div class="btn btn-danger"><i class="fa fa-trash"></i> </div>
+                            </div>
+                        </div>
+                    <?php endforeach;?>
+                </div>
 
+            </div>
+
+        </div>
+    </div>
  <div class="row">
    <div class="col-md-6">
                 <div class="x_panel">
@@ -268,14 +297,23 @@ $this->params['breadcrumbs'][] = $this->title;
               </div>
  </div>
 
- <div class="x_panel">
-        <div class="x_title">
-            <h3><i class="fa fa-image"></i> รูปภาพสินค้า </small></h3>
-            <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
 
-       </div>
- </div>
 
 </div>
+
+<?php $this->registerCss('
+   .card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 20%;
+    float: left;
+    margin: 5px;
+    }
+    
+    .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+    .card-container {
+        padding: 2px 16px;
+    }
+');?>

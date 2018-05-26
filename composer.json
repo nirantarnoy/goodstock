@@ -34,7 +34,8 @@
         "kartik-v/yii2-context-menu": "*",
         "liyunfang/yii2-contextmenu": "*",
         "phpoffice/phpexcel": "dev-develop",
-        "vilochane/yii2-barcode-generator": "dev-master"
+        "vilochane/yii2-barcode-generator": "dev-master",
+        "noam148/yii2-image-manager" : "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
