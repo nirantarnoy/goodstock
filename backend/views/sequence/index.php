@@ -52,7 +52,10 @@ $this->params['breadcrumbs'][] = $this->title;
                        <?= Html::a(Yii::t('app', '<i class="fa fa-plus"></i> สร้างลำดับเอกสาร'), ['create'], ['class' => 'btn btn-success']) ?>
                      </div>
                      <div class="btn-group">
-                        <?= Html::a(Yii::t('app', '<i class="fa fa-adn"></i> สร้างลำดับเอกสารอัตโนมัติ'), ['create'], ['class' => 'btn btn-primary']) ?>
+                         <div class="btn btn-primary btn-auto">
+                             <i class="fa fa-adn"></i> สร้างอัตโนมัติ
+                         </div>
+
                     </div>
                    
                     <h4 class="pull-right"><?=$this->title?> <i class="fa fa-institution"></i> <small></small></h4>
@@ -220,3 +223,22 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     <?php Pjax::end(); ?>
 </div>
+<?php
+     $url_to_gen = Url::to(['sequence/autogen'],true);
+     $this->registerJs('
+         $(function(){
+            $(".btn-auto").click(function(){
+                swal({
+                  title: "ยืนยัน",
+                  text: "คุณต้องการให้ระบบสร้างเลขที่อัตโนมัติใช่หรือไม่",
+                  type: "warning",
+                  showCancelButton: true,
+                  closeOnConfirm: false,
+                  showLoaderOnConfirm: true
+                }, function () {
+                     
+                });
+            });
+         });
+            
+',static::POS_END)?>

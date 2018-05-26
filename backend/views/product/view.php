@@ -215,9 +215,9 @@ $this->params['breadcrumbs'][] = $this->title;
                   </div>
                   <div class="x_content">
                       <div class="row">
-                          <div class="col-lg-12">
+                          <div class="col-lg-6">
                             <?php
-                              echo '<label class="control-label">Date Range</label>';
+
                               echo '<div class="drp-container">';
                                   echo DateRangePicker::widget([
                                   'name'=>'date_range_2',
@@ -228,58 +228,24 @@ $this->params['breadcrumbs'][] = $this->title;
                                   ?>
                           </div>
                       </div>
+                      <?php foreach($modeljournalline as $data):?>
                     <article class="media event">
                       <a class="pull-left date">
-                        <p class="month">05</p>
-                        <p class="day">10</p>
+                        <p class="month"><?=date('m',$data->created_at)?></p>
+                        <p class="day"><?=date('d',$data->created_at)?></p>
                       </a>
                       <div class="media-body">
-                        <a class="title" href="#">SO180009</a>
-                        <p>คุณสมบัติ, บางเขน กรุงเทพมหานคร.</p>
+                        <a class="title" href="#"><?=$data->journal_id?></a>
+                          <p>ประเภทรายการ : <label class="label-info" style="padding: 0px 5px 0px 5px;color: #fff;">Adjustment</label> ประเภทสต๊อก : <label class="label-success" style="padding: 0px 5px 0px 5px;color: #fff;"> เข้า </label>        จำนวน : <b><?=number_format($data->qty,0)?></b></p>
+                          <p>ดำเนินการโดย : </p>
                       </div>
                     </article>
-                    <article class="media event">
-                      <a class="pull-left date">
-                        <p class="month">05</p>
-                        <p class="day">09</p>
-                      </a>
-                      <div class="media-body">
-                        <a class="title" href="#">AD180012</a>
-                        <p>Administrator, ปรับยอดสินค้าเข้าคลัง.</p>
-                      </div>
-                    </article>
-                    <article class="media event">
-                      <a class="pull-left date">
-                        <p class="month">05</p>
-                        <p class="day">09</p>
-                      </a>
-                      <div class="media-body">
-                        <a class="title" href="#">AD180009</a>
-                        <p>Administrator, ปรับยอดสินค้าเข้าคลัง.</p>
-                      </div>
-                    </article>
-                     <article class="media event">
-                      <a class="pull-left date">
-                        <p class="month">05</p>
-                        <p class="day">09</p>
-                      </a>
-                      <div class="media-body">
-                        <a class="title" href="#">AD180008</a>
-                        <p>Administrator, ปรับยอดสินค้าเข้าคลัง.</p>
-                      </div>
-                    </article>
-                    <article class="media event">
-                      <a class="pull-left date">
-                        <p class="month">04</p>
-                        <p class="day">31</p>
-                      </a>
-                      <div class="media-body">
-                        <a class="title" href="#">SO180002</a>
-                        <p>คุณอนันต์, นาทม นครพนม.</p>
-                      </div>
-                    </article> 
+                          <hr>
+                    <?php endforeach;?>
                     <div class="x_footer pull-right">
+                        <?php if(count($modeljournalline)>0):?>
                      <div class="btn btn-default"> ดูเพิ่มเติม</div>
+                        <?php endif;?>
                   </div>
                   </div>
                  
@@ -288,7 +254,7 @@ $this->params['breadcrumbs'][] = $this->title;
               <div class="col-md-6">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2><i class="fa fa-line-chart"></i> กราฟความเคลื่นไหว</h2>
+                    <h2><i class="fa fa-line-chart"></i> ภาพรวมยอดขาย</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>

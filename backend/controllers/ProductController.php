@@ -30,7 +30,7 @@ class ProductController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['POST','GET'],
                 ],
             ],
         ];
@@ -42,11 +42,43 @@ class ProductController extends Controller
      */
     public function actionIndex()
     {
+        $group = '';
+        $stockstatus = '';
+        $searcname = '';
+        if(Yii::$app->request->isPost){
+            $group = Yii::$app->request->post('product_group');
+            $stockstatus = Yii::$app->request->post('stock_status');
+            $searcname = Yii::$app->request->post('search_all');
+        }
+
         $pageSize = \Yii::$app->request->post("perpage");
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->pagination->pageSize = $pageSize;
+        $dataProvider->query->andFilterWhere(['category_id'=>$group])->andFilterWhere(['OR',['LIKE','product_code',$searcname],['LIKE','name',$searcname]]);
+        if(count($stockstatus)>1){
+            if(in_array("1",$stockstatus,true) and in_array("2",$stockstatus,true) and in_array("3",$stockstatus,true)){
 
+            }else  if(in_array("1",$stockstatus,true) and in_array("2",$stockstatus,true)){
+                $dataProvider->query->andFilterWhere(['>','all_qty',0]);
+            }else if(in_array("1",$stockstatus,true) and in_array("3",$stockstatus,true)){
+                $dataProvider->query->andFilterWhere(['OR',['AND',['>','all_qty',0],['<=','min_stock','all_qty']],['=','all_qty',0]]);
+            }else if(in_array("2",$stockstatus,true) and in_array("3",$stockstatus,true)){
+                $dataProvider->query->andFilterWhere(['OR',['>','min_stock','all_qty'],['=','all_qty',0]]);
+            }
+
+        }else{
+            //echo $stockstatus[0];return;
+            if($stockstatus[0] == "1"){
+                $dataProvider->query->andFilterWhere(['AND',['>','all_qty',0],['<=','min_stock','all_qty']]);
+            }else if($stockstatus[0] == "2"){
+                $dataProvider->query->andFilterWhere(['>','min_stock','all_qty']);
+            }else if($stockstatus[0] == "3"){
+                $dataProvider->query->andFilterWhere(['=','all_qty',0]);
+            }
+        }
+
+
+        $dataProvider->pagination->pageSize = $pageSize;
         $modelupload = new \backend\models\Uploadfile();
 
         return $this->render('index', [
@@ -55,6 +87,9 @@ class ProductController extends Controller
             'perpage' => $pageSize,
             'viewtype' => 'list',
             'modelupload'=> $modelupload,
+            'group'=>$group,
+            'stockstatus'=> $stockstatus,
+            'searchname' => $searcname,
         ]);
     }
 
@@ -65,8 +100,10 @@ class ProductController extends Controller
      */
     public function actionView($id)
     {
+        $modeljournalline = \backend\models\Journalline::find()->where(['product_id'=>$id])->all();
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'modeljournalline' => $modeljournalline,
         ]);
     }
 
@@ -121,6 +158,8 @@ class ProductController extends Controller
     {
         $this->findModel($id)->delete();
 
+        $session = Yii::$app->session;
+        $session->setFlash('msg','ลบรหัสสินค้าเรียบร้อย');
         return $this->redirect(['index']);
     }
 

@@ -20,8 +20,6 @@ $this->title = Yii::t('app', 'รหัสสินค้า');
 $this->params['breadcrumbs'][] = $this->title;
 
 $view_type = $viewtype;
-$group = '';
-$stockstatus = '';
 
 $groupall = \backend\models\Productcat::find()->where(['!=','name',''])->orderby(['name'=>SORT_ASC])->all();
 $stock_status = [['id'=>1,'name'=>'มีสินค้า'],['id'=>2,'name'=>'สินค่าต่ำกว่ากำหนด'],['id'=>3,'name'=>'ไม่มีสินค้า']];
@@ -118,7 +116,7 @@ $this->registerJsFile(
                             <form id="search-form" action="<?=Url::to(['product/index'],true)?>" method="post">
                             <div class="form-inline">
                               
-                                <input type="text" class="form-control" name="search_all" value="" placeholder="ค้นหารหัส,ชื่อ">
+                                <input type="text" class="form-control search_all" name="search_all" value="<?=$searchname;?>" placeholder="ค้นหารหัส,ชื่อ">
                                 <?php      
                                       echo MultiSelect::widget([
                                               'id'=>"product_group",
@@ -155,8 +153,9 @@ $this->registerJsFile(
                                                       'enableCaseInsensitiveFiltering'=>true,
                                                   ], 
                                   ]); ?>
+                                <input type="hidden" name="perpage" value="<?=$perpage?>">
                                    <div class="btn-group">
-                                         <div class="btn btn-info btn-search"> ค้นหา</div>
+                                         <input type="submit" class="btn btn-info btn-search" value="ค้นหา" />
                                   <div class="btn btn-default btn-reset"> รีเซ็ต</div>
                                    </div>
                               
@@ -231,8 +230,8 @@ $this->registerJsFile(
                                         $title = Yii::t('app', 'ลบรายการ');
                                         $label = '<span class="fa fa-trash-o"></span> ' . $title;
                                         $url = \Yii::$app->getUrlManager()->createUrl(['/product/delete','id' => $model->id]);
-                                        $options = ['tabindex' => '-1','title' => $title, 'data' => ['pjax' => '0' ,  'toggle' => 'tooltip']];
-                                        return '<li>' . Html::a($label, $url, $options) . '</li>' . PHP_EOL;
+                                        $options = ['class'=>'del-product','tabindex' => '-1','title' => $title, 'data' => ['pjax' => '0' ,  'toggle' => 'tooltip'],'data-url'=>$url,'onclick'=>'recDelete($(this));'];
+                                        return '<li>' . Html::a($label, 'javascript:void(0)', $options) . '</li>' . PHP_EOL;
                                     },
                                 ],
                             ],
@@ -518,7 +517,7 @@ $this->registerJsFile(
                 </div>
             </div>
             <div class="modal-footer">
-                <input type="submit" class="btn btn-success" value="พิมพ์">
+                <input type="submit" class="btn btn-success btn-print-barcode" value="พิมพ์">
                 <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
             </div>
             <?php ActiveForm::end();?>
@@ -534,6 +533,37 @@ $this->registerJsFile(
   $this->registerJs('
 
     $(function(){
+    
+        if($("#product_group").val()!=""){
+            $("#product_group").multiselect({
+               includeSelectAllOption: true,
+               enableFiltering: true,
+               nonSelectedText: "กลุ่มสินค้า"
+            });
+            $("select#product_group").parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"}); 
+          }
+          
+        $("select#prouduct_group").change(function(){
+           if($(this).val()!=""){
+                $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"});
+           }else{
+                $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"#F5F5F5","color":"#000"});
+            }
+        }); 
+         
+         $("div.btn-reset").click(function(){
+
+                $(".search_all").val("");
+                $("select#product_group option:selected").remove();
+                $("select#product_group").multiselect("rebuild");
+        
+                $("select#stock_status option:selected").remove();
+                $("select#stock_status").multiselect("rebuild");
+      
+                
+                $(".btn-search").trigger("click");
+         });
+          
         $(".btn-import").click(function(){
             $("#importModal").modal("show");
         });
@@ -547,10 +577,12 @@ $this->registerJsFile(
             $(".product_listid").val(orderList);
             $("#barcodeModal").modal("show");
         });
+        $(".btn-print-barcode").click(function(){
+           $("#barcodeModal").modal("hide");
+        });
         $(".btn-bulk-remove").attr("disabled",true);
-        $(".btn-printbarcode").attr("disabled",true);
         
-
+       
         var viewtype = "'.$view_type.'";
         if(viewtype == "list"){
           $(".view-list").addClass("active");
@@ -571,7 +603,8 @@ $this->registerJsFile(
    function recDelete(e){
         //e.preventDefault();
         var url = e.attr("data-url");
-        //alert(url);
+        //var url ="'.Url::to(['product/delete','id'=>10],true).'" ;
+        alert(url);
         swal({
               title: "ต้องการลบรายการนี้ใช่หรือไม่",
               text: "",
@@ -581,7 +614,7 @@ $this->registerJsFile(
               showLoaderOnConfirm: true
             }, function () {
               e.attr("href",url); 
-              e.toggle("click");        
+              e.trigger("click");        
         });
     }
 
