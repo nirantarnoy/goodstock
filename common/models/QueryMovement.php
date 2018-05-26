@@ -67,7 +67,7 @@ class QueryMovement extends \yii\db\ActiveRecord
             'status' => Yii::t('app', 'Status'),
             'journal_no' => Yii::t('app', 'เลขที่รายการ'),
             'trans_date' => Yii::t('app', 'วันที่'),
-            'created_at' => Yii::t('app', 'Created At'),
+            'created_at' => Yii::t('app', 'วันที่ทำรายการ'),
             'updated_at' => Yii::t('app', 'Updated At'),
             'created_by' => Yii::t('app', 'ผู้ดำเนินการ'),
             'updated_by' => Yii::t('app', 'Updated By'),
