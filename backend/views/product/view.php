@@ -258,7 +258,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                           }
                                       ],
                                       'reference',
-                                      'to_wh',
+                                      [
+                                          'attribute' => 'to_wh',
+                                          'contentOptions' => ['style' => 'vertical-align: middle'],
+                                          'format'=>'html',
+                                          'value' => function($data){
+                                            return '<a href="'.Url::to(['warehouse/view','id'=>$data->to_wh],true).'">'.\backend\models\Warehouse::findWarehousename($data->to_wh).'</a>';
+                                          }
+                                        ],
                                       [
                                               'attribute' => 'qty',
                                               'contentOptions' => ['style' => 'vertical-align: middle'],

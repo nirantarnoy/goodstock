@@ -110,6 +110,7 @@ class ProductController extends Controller
        // echo strtotime() ."-". strtotime(trim($dt_range[1]));
         $movementSearch = new \backend\models\MovementSearch();
         $movementDp = $movementSearch->search(Yii::$app->request->queryParams);
+        $movementDp->query->andFilterWhere(['product_id'=>$id]);
         if(isset(Yii::$app->request->queryParams['MovementSearch']['created_at'])){
             $dt = Yii::$app->request->queryParams['MovementSearch']['created_at'];
             $dt_range = explode("to",$dt);
@@ -119,7 +120,7 @@ class ProductController extends Controller
 
         }
 
-        $photoes = \backend\models\Productgallery::find()->all();
+        $photoes = \backend\models\Productgallery::find(['product_id'=>$id])->all();
         return $this->render('view', [
             'model' => $this->findModel($id),
             'modeljournalline' => $modeljournalline,
@@ -235,6 +236,7 @@ class ProductController extends Controller
                     $myfile = '../web/uploads/files/' . $upfiles;
                     $file = fopen($myfile, "r");
                     fwrite($file, "\xEF\xBB\xBF");
+
                     setlocale(LC_ALL, 'th_TH.TIS-620');
                     $i = -1;
                     $res = 0;
