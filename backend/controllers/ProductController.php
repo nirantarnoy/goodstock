@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\Uploadfile;
 use Yii;
 use backend\models\Product;
 use backend\models\ProductSearch;
@@ -405,6 +406,30 @@ class ProductController extends Controller
                 echo "</table>";
             }
         }
-
     }
+        public function actionUploadphoto(){
+            $model = new Uploadfile();
+            $prodid = Yii::$app->request->post('product_id');
+            $uploaded = UploadedFile::getInstances($model, 'file');
+            if(!empty($uploaded)) {
+                //print_r($uploaded);return;
+                foreach($uploaded as $data){
+                    $modelphoto = new \backend\models\Productgallery();
+                    $upfiles = time() . "." . $data->getExtension();
+                    if($data->saveAs('../web/uploads/gallery/'.$upfiles)) {
+                       $modelphoto->product_id = $prodid;
+                       $modelphoto->photo = $upfiles;
+                    }
+                    $modelphoto->save(false);
+
+
+                }
+            }
+            return $this->redirect(['view','id'=>$prodid]);
+        }
+        public function actionDeletephoto($id,$prodid){
+            \backend\models\Productgallery::deleteAll(['id'=>$id]);
+            return $this->redirect(['view','id'=>$prodid]);
+        }
+
 }
