@@ -43,7 +43,7 @@ class ProductController extends Controller
     public function actionIndex()
     {
         $group = '';
-        $stockstatus = '';
+        $stockstatus = [];
         $searcname = '';
         if(Yii::$app->request->isPost){
             $group = Yii::$app->request->post('product_group');
