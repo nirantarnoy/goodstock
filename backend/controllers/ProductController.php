@@ -66,7 +66,7 @@ class ProductController extends Controller
                 $dataProvider->query->andFilterWhere(['OR',['>','min_stock','all_qty'],['=','all_qty',0]]);
             }
 
-        }else{
+        }else if(count($stockstatus)>0 and count($stockstatus)<2){
             //echo $stockstatus[0];return;
             if($stockstatus[0] == "1"){
                 $dataProvider->query->andFilterWhere(['AND',['>','all_qty',0],['<=','min_stock','all_qty']]);
