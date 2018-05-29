@@ -45,7 +45,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
             <div class="left_col scroll-view">
 
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="index.php?r=dashboard" class="site_title"><i class="fa fa-cubes"></i> <span>Good Inventory</span></a>
+                    <a href="index.php?r=dashboard" class="site_title" style="font-family: Cloud-Bold"><i class="fa fa-thumbs-o-up"></i> <span>Good WMS</span></a>
                 </div>
                 <div class="clearfix"></div>
 

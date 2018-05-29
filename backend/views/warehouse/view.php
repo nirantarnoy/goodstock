@@ -178,7 +178,7 @@ $this->registerCss('
                                           'contentOptions' => ['style' => 'vertical-align: middle'],
                                           'format'=>'html',
                                           'value' => function($data){
-                                              return '<a href="'.Url::to(['product/view','id'=>$data->to_wh],true).'">'.\backend\models\Product::findProductcode($data->product_id).'</a>';
+                                              return '<a href="'.Url::to(['product/view','id'=>$data->product_id],true).'">'.\backend\models\Product::findProductcode($data->product_id).'</a>';
                                           }
                                       ],
                                       [
