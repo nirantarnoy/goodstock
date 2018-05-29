@@ -3,6 +3,9 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\helpers\Url;
+use yii\widgets\Pjax;
+use yii\grid\GridView;
+use kartik\daterange\DateRangePicker;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Warehouse */
@@ -144,7 +147,7 @@ $this->registerCss('
     </div>
 
   <div class="row">
-   <div class="col-md-6">
+   <div class="col-md-12">
                 <div class="x_panel">
                   <div class="x_title">
                     <h2><i class="fa fa-asterisk"></i> ประวัติสินค้า เข้า-ออก <small>ล่าสุด</small></h2>
@@ -155,77 +158,96 @@ $this->registerCss('
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                    <article class="media event">
-                      <a class="pull-left date">
-                        <p class="month">05</p>
-                        <p class="day">10</p>
-                      </a>
-                      <div class="media-body">
-                        <a class="title" href="#">SO180009</a>
-                        <p>คุณสมบัติ, บางเขน กรุงเทพมหานคร.</p>
+                      <div class="row">
+                          <?php Pjax::begin(); ?>
+                          <div class="col-lg-12">
+                              <?= GridView::widget([
+                                  'dataProvider' => $movementDp,
+                                  'filterModel' => $movementSearch,
+                                  'emptyCell'=>'-',
+                                  'layout'=>'{summary}{items}{pager}',
+                                  'summary' => "แสดง {begin} - {end} ของทั้งหมด {totalCount} รายการ",
+                                  'showOnEmpty'=>true,
+                                  'tableOptions' => ['class' => 'table table-hover'],
+                                  'emptyText' => '<div style="color: red;align: center;"> <b>ไม่พบรายการไดๆ</b></div>',
+                                  'columns' => [
+                                      ['class' => 'yii\grid\SerialColumn','contentOptions' => ['style' => 'vertical-align: middle;text-align: center;']],
+                                      'journal_no',
+                                      [
+                                          'attribute' => 'product_id',
+                                          'contentOptions' => ['style' => 'vertical-align: middle'],
+                                          'format'=>'html',
+                                          'value' => function($data){
+                                              return '<a href="'.Url::to(['product/view','id'=>$data->to_wh],true).'">'.\backend\models\Product::findProductcode($data->product_id).'</a>';
+                                          }
+                                      ],
+                                      [
+                                          'attribute'=>'trans_type',
+                                          'contentOptions' => ['style' => 'vertical-align: middle'],
+                                          'value' => function($data){
+                                              return \backend\helpers\TransType::getTypeById($data->trans_type);
+                                          }
+                                      ],
+                                      'reference',
+
+                                      [
+                                          'attribute' => 'qty',
+                                          'contentOptions' => ['style' => 'vertical-align: middle'],
+                                          'value' => function($data){
+                                              return number_format($data->qty,0);
+                                          }
+                                      ],
+                                      [
+                                          'label'=> 'รายการ',
+                                          'contentOptions' => ['style' => 'vertical-align: middle'],
+                                          'format' => 'html',
+                                          'value' => function($data){
+                                              return "<div class='label label-success'> เข้า </div>";
+                                          }
+
+                                      ] ,
+
+                                      [
+                                          'attribute' => 'created_by',
+                                          'contentOptions' => ['style' => 'vertical-align: middle'],
+                                          'value' => function($data){
+                                              return \backend\models\User::getUserinfo($data->created_by)->username;
+                                          }
+                                      ],
+                                      [
+                                          'attribute' => 'created_at',
+                                          'contentOptions' => ['style' => 'vertical-align: middle'],
+                                          'value' =>function($data){
+                                              return date('d-m-y h:i:s',$data->created_at);
+                                          } ,
+                                          'format' => 'raw',
+                                          'filter' => DateRangePicker::widget([
+                                              'model' => $movementSearch ,
+                                              // 'name'=>'niran',
+                                              'attribute' => 'created_at',
+                                              'value' => date('d-m-Y'),
+                                              'convertFormat'=>true,
+                                              'presetDropdown'=>true,
+                                              'hideInput'=>true,
+                                              'pluginOptions'=>[
+                                                  'locale'=>[
+                                                      'format'=>'d-m-Y',
+                                                      'separator'=>' to ',
+                                                  ],
+                                                  'opens'=>'left'
+                                              ]
+                                          ])
+                                      ]
+                                  ],
+                              ]); ?>
+                          </div>
+                          <?php Pjax::end(); ?>
                       </div>
-                    </article>
-                    <article class="media event">
-                      <a class="pull-left date">
-                        <p class="month">05</p>
-                        <p class="day">09</p>
-                      </a>
-                      <div class="media-body">
-                        <a class="title" href="#">AD180012</a>
-                        <p>Administrator, ปรับยอดสินค้าเข้าคลัง.</p>
-                      </div>
-                    </article>
-                    <article class="media event">
-                      <a class="pull-left date">
-                        <p class="month">05</p>
-                        <p class="day">09</p>
-                      </a>
-                      <div class="media-body">
-                        <a class="title" href="#">AD180009</a>
-                        <p>Administrator, ปรับยอดสินค้าเข้าคลัง.</p>
-                      </div>
-                    </article>
-                     <article class="media event">
-                      <a class="pull-left date">
-                        <p class="month">05</p>
-                        <p class="day">09</p>
-                      </a>
-                      <div class="media-body">
-                        <a class="title" href="#">AD180008</a>
-                        <p>Administrator, ปรับยอดสินค้าเข้าคลัง.</p>
-                      </div>
-                    </article>
-                    <article class="media event">
-                      <a class="pull-left date">
-                        <p class="month">04</p>
-                        <p class="day">31</p>
-                      </a>
-                      <div class="media-body">
-                        <a class="title" href="#">SO180002</a>
-                        <p>คุณอนันต์, นาทม นครพนม.</p>
-                      </div>
-                    </article>
                   </div>
-                  <div class="x_footer pull-right">
-                     <div class="btn btn-default"> ดูเพิ่มเติม</div>
-                  </div>
+
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2><i class="fa fa-line-chart"></i> กราฟความเคลื่นไหว <small>ล่าสุด</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                    
-                  </div>
-                </div>
-              </div>
+
  </div>
 
 </div>

@@ -84,8 +84,14 @@ class WarehouseController extends Controller
      */
     public function actionView($id)
     {
+        $movementSearch = new \backend\models\MovementSearch();
+        $movementDp = $movementSearch->search(Yii::$app->request->queryParams);
+        $movementDp->pagination->pageSize = 10;
+        $movementDp->query->andFilterWhere(['to_wh'=>$id]);
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'movementSearch'=>$movementSearch,
+            'movementDp' => $movementDp,
         ]);
     }
 

@@ -111,6 +111,7 @@ class ProductController extends Controller
        // echo strtotime() ."-". strtotime(trim($dt_range[1]));
         $movementSearch = new \backend\models\MovementSearch();
         $movementDp = $movementSearch->search(Yii::$app->request->queryParams);
+        $movementDp->pagination->pageSize = 10;
         $movementDp->query->andFilterWhere(['product_id'=>$id]);
         if(isset(Yii::$app->request->queryParams['MovementSearch']['created_at'])){
             $dt = Yii::$app->request->queryParams['MovementSearch']['created_at'];
