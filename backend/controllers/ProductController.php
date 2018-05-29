@@ -528,5 +528,12 @@ class ProductController extends Controller
             \backend\models\Productgallery::deleteAll(['id'=>$id]);
             return $this->redirect(['view','id'=>$prodid]);
         }
-
+    public function actionPrintstock(){
+        if(Yii::$app->request->isPost){
+            $prodid = Yii::$app->request->post('prodid');
+            if($prodid!=''){
+                $model = new \backend\models\Journal();
+            }
+        }
+    }
 }

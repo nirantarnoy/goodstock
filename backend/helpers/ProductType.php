@@ -6,14 +6,17 @@ class ProductType
 {
     const PRODUCT = 1;
     const SERVICE = 2;
+    const PRODUCT_MASTER = 3;
     private static $data = [
         1 => 'สินค้า',
-        2 => 'บริการ'
+        2 => 'บริการ',
+        3 => 'สินค้าต้นฉบับ'
     ];
 
 	private static $dataobj = [
         ['id'=>1,'name' => 'สินค้า'],
         ['id'=>2,'name' => 'บริการ'],
+        ['id'=>3,'name' => 'สินค้าต้นฉบับ'],
     ];
     public static function asArray()
     {

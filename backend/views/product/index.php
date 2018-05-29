@@ -86,11 +86,12 @@ $this->registerJsFile(
                           <div class="btn btn-default btn-export"><i class="fa fa-download"></i> นำออก</div>
 
                            <div class="btn btn-default btn-approve-vendor"><i class="fa fa-thumbs-up"></i> อนุมัติผู้ขาย</div>
-                          <div class="btn btn-default btn-bulk-remove"><i class="fa fa-trash"></i><span class="remove_item"></span> ลบ</div>
+                           <div class="btn btn-default btn-add-component"><i class="fa fa-object-group"></i> จัดชุดสินค้า</div>
+                           <div class="btn btn-default btn-bulk-remove"><i class="fa fa-trash"></i><span class="remove_item"></span> ลบ</div>
                           <div class="btn btn-default btn-print-stock"><i class="fa fa-print"></i> พิมพ์สต๊อก</div>
                           <div class="btn btn-default btn-printbarcode"><i class="fa fa-barcode"></i> พิมพ์บาร์โค้ด</div>
-                          <div class="btn btn-default view-list"><i class="fa fa-list"></i></div>
-                          <div class="btn btn-default view-grid"><i class="fa fa-th"></i></div>
+<!--                          <div class="btn btn-default view-list"><i class="fa fa-list"></i></div>-->
+<!--                          <div class="btn btn-default view-grid"><i class="fa fa-th"></i></div>-->
                       </div>
 
                     <h4 class="pull-right"><?=$this->title?> <i class="fa fa-cubes"></i><small></small></h4>
@@ -532,6 +533,43 @@ $this->registerJsFile(
 
     </div>
 </div>
+<div id="stockModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="fa fa-window-close"></i></button>
+                <h4 class="modal-title"><i class="fa fa-print"></i> พิมพ์สต๊อกสินค้า <small id="items"> </small></h4>
+            </div>
+            <div class="modal-body">
+                <?php $form_upload = ActiveForm::begin(['action'=>'printstock','options'=>['enctype' => 'multipart/form-data','class'=>'form-horizontal form-label-left','target'=>'_blank']]); ?>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">พิมพ์สำหรับ
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <input type="hidden" class="product_listid" name="product_listid" value="">
+                        <select name="paper_type" id="paper-type" class="form-control">
+
+                            <option value="1">จำนวนสต๊อกสินค้าเท่านั้น</option>
+                            <option value="2">จำนวนสต๊อกและนับยอด</option>
+                        </select>
+                    </div>
+                </div>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                </label>
+                <div class="col-md-8 col-sm-12 col-xs-12">
+                     <i class="fa fa-warning"></i> <span class="text-danger"> ถ้าต้องการสร้างใบนับสต๊อกให้เลือกหัวข้อ "จำนวนสต๊อกและนับยอด"</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-success btn-print-barcode" value="พิมพ์">
+                <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+            </div>
+            <?php ActiveForm::end();?>
+        </div>
+
+    </div>
+</div>
 
 <?php 
   $this->registerJsFile( '@web/js/sweetalert.min.js',['depends' => [\yii\web\JqueryAsset::className()]],static::POS_END);
@@ -598,6 +636,9 @@ $this->registerJsFile(
             }
             $(".product_listid").val(orderList);
             $("#barcodeModal").modal("show");
+        });
+         $(".btn-print-stock").click(function(){
+            $("#stockModal").modal("show");
         });
         $(".btn-print-barcode").click(function(){
            $("#barcodeModal").modal("hide");
