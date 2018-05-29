@@ -193,56 +193,26 @@
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                    <article class="media event">
-                      <a class="pull-left date">
-                        <p class="month">April</p>
-                        <p class="day">23</p>
-                      </a>
-                      <div class="media-body">
-                        <a class="title" href="#">Item One Title</a>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                      </div>
-                    </article>
-                    <article class="media event">
-                      <a class="pull-left date">
-                        <p class="month">April</p>
-                        <p class="day">23</p>
-                      </a>
-                      <div class="media-body">
-                        <a class="title" href="#">Item Two Title</a>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                      </div>
-                    </article>
-                    <article class="media event">
-                      <a class="pull-left date">
-                        <p class="month">April</p>
-                        <p class="day">23</p>
-                      </a>
-                      <div class="media-body">
-                        <a class="title" href="#">Item Two Title</a>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                      </div>
-                    </article>
-                    <article class="media event">
-                      <a class="pull-left date">
-                        <p class="month">April</p>
-                        <p class="day">23</p>
-                      </a>
-                      <div class="media-body">
-                        <a class="title" href="#">Item Two Title</a>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                      </div>
-                    </article>
-                    <article class="media event">
-                      <a class="pull-left date">
-                        <p class="month">April</p>
-                        <p class="day">23</p>
-                      </a>
-                      <div class="media-body">
-                        <a class="title" href="#">Item Three Title</a>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                      </div>
-                    </article>
+                      <article class="media event">
+                          <a class="pull-left date">
+                              <p class="month">April</p>
+                              <p class="day">23</p>
+                          </a>
+                          <div class="media-body">
+                              <a class="title" href="#">PO18000423</a>
+                              <p>ร้านเอ บี ซี คอมพิวเตอร์</p>
+                          </div>
+                      </article>
+                      <article class="media event">
+                          <a class="pull-left date">
+                              <p class="month">April</p>
+                              <p class="day">19</p>
+                          </a>
+                          <div class="media-body">
+                              <a class="title" href="#">PO18000409</a>
+                              <p>บริษัท โอนามี เคมิคอล จำกัด</p>
+                          </div>
+                      </article>
                   </div>
                 </div>
               </div>
@@ -269,54 +239,15 @@
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
+
                     <article class="media event">
                       <a class="pull-left date">
                         <p class="month">April</p>
                         <p class="day">23</p>
                       </a>
                       <div class="media-body">
-                        <a class="title" href="#">Item One Title</a>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                      </div>
-                    </article>
-                    <article class="media event">
-                      <a class="pull-left date">
-                        <p class="month">April</p>
-                        <p class="day">23</p>
-                      </a>
-                      <div class="media-body">
-                        <a class="title" href="#">Item Two Title</a>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                      </div>
-                    </article>
-                    <article class="media event">
-                      <a class="pull-left date">
-                        <p class="month">April</p>
-                        <p class="day">23</p>
-                      </a>
-                      <div class="media-body">
-                        <a class="title" href="#">Item Two Title</a>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                      </div>
-                    </article>
-                    <article class="media event">
-                      <a class="pull-left date">
-                        <p class="month">April</p>
-                        <p class="day">23</p>
-                      </a>
-                      <div class="media-body">
-                        <a class="title" href="#">Item Two Title</a>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                      </div>
-                    </article>
-                    <article class="media event">
-                      <a class="pull-left date">
-                        <p class="month">April</p>
-                        <p class="day">23</p>
-                      </a>
-                      <div class="media-body">
-                        <a class="title" href="#">Item Three Title</a>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <a class="title" href="#">SO18000290</a>
+                        <p>คุณวิทยา,สำปาง.</p>
                       </div>
                     </article>
                   </div>
@@ -347,6 +278,17 @@
                   <div class="x_content">
                       <ul class="list-unstyled top_profiles scroll-view">
                           <li class="media event">
+                              <a class="pull-left border-green profile_thumb">
+                                  <i class="fa fa-user green"></i>
+                              </a>
+                              <div class="media-body">
+                                  <a class="title" href="#">หจก.สุริยา</a>
+                                  <p><strong>230,000. </strong> อุตสาหกรรมยาง </p>
+                                  <p> <small>3 Sales Today</small>
+                                  </p>
+                              </div>
+                          </li>
+                          <li class="media event">
                               <a class="pull-left border-aero profile_thumb">
                                   <i class="fa fa-user aero"></i>
                               </a>
@@ -357,17 +299,7 @@
                                   </p>
                               </div>
                           </li>
-                          <li class="media event">
-                              <a class="pull-left border-green profile_thumb">
-                                  <i class="fa fa-user green"></i>
-                              </a>
-                              <div class="media-body">
-                                  <a class="title" href="#">Ms. Mary Jane</a>
-                                  <p><strong>$2300. </strong> Agent Avarage Sales </p>
-                                  <p> <small>12 Sales Today</small>
-                                  </p>
-                              </div>
-                          </li>
+
                           <li class="media event">
                               <a class="pull-left border-blue profile_thumb">
                                   <i class="fa fa-user blue"></i>
