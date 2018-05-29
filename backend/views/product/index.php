@@ -169,7 +169,14 @@ $this->registerJsFile(
                               <div class="form-inline">
                                 <form id="form-perpage" class="form-inline" action="<?=Url::to(['product/index'],true)?>" method="post">
                                 <div class="form-group">
-                                 <label>แสดง </label>
+                                    <?php for($i=0;$i<=count($group)-1;$i++):?>
+                                        <input type="hidden" name="product_group[]" value="<?=$group[$i]?>">
+                                    <?php endfor;?>
+                                    <?php for($i=0;$i<=count($stockstatus)-1;$i++):?>
+                                        <input type="hidden" name="stock_status[]" value="<?=$stockstatus[$i]?>">
+                                    <?php endfor;?>
+                                    <input type="hidden" name="search_all" value="<?=$searchname;?>">
+                                    <label>แสดง </label>
                                   <select class="form-control" name="perpage" id="perpage">
                                      <option value="20" <?=$perpage=='20'?'selected':''?>>20</option>
                                      <option value="50" <?=$perpage=='50'?'selected':''?> >50</option>
@@ -384,7 +391,7 @@ $this->registerJsFile(
                 <h4 class="modal-title"><i class="fa fa-upload"></i> นำเข้ารายการสินค้า <small id="items"> </small></h4>
             </div>
             <div class="modal-body">
-                <?php $form_upload = ActiveForm::begin(['action'=>'importproduct','options'=>['enctype' => 'multipart/form-data']]); ?>
+                <?php $form_upload = ActiveForm::begin(['action'=>'importupdate','options'=>['enctype' => 'multipart/form-data']]); ?>
                 <div class="row">
                     <div class="col-lg-12">
                         <small class="text-info"> สามารถดาวน์โหลด template สำหรับการนำเข้าสินค้าโดยคลิก </small><a href="<?=Url::to(['product/exporttemplate'],true)?>" style="text-decoration-style: dashed;text-decoration: underline;">ที่นี่</a>
@@ -542,8 +549,23 @@ $this->registerJsFile(
             });
             $("select#product_group").parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"}); 
           }
+           if($("#stock_status").val()!=""){
+            $("#stock_status").multiselect({
+               includeSelectAllOption: true,
+               enableFiltering: true,
+               nonSelectedText: "ประเภทสต๊อก"
+            });
+            $("select#stock_status").parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"}); 
+          }
           
         $("select#prouduct_group").change(function(){
+           if($(this).val()!=""){
+                $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"});
+           }else{
+                $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"#F5F5F5","color":"#000"});
+            }
+        }); 
+        $("select#stock_status").change(function(){
            if($(this).val()!=""){
                 $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"});
            }else{

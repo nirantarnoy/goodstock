@@ -14,6 +14,7 @@ use yii\filters\VerbFilter;
  */
 class StockbalanceController extends Controller
 {
+    public $enableCsrfValidation = false;
     /**
      * {@inheritdoc}
      */
@@ -35,15 +36,45 @@ class StockbalanceController extends Controller
      */
     public function actionIndex()
     {
-         $pageSize = \Yii::$app->request->post("perpage");
+        $group = [];
+        $warehouse = [];
+        $searchall = '';
+
+        if(Yii::$app->request->isPost){
+            $group = Yii::$app->request->post('product_group');
+            $warehouse = Yii::$app->request->post('warehouse');
+            $searchall = Yii::$app->request->post('search_all');
+        }
+
+        $pageSize = \Yii::$app->request->post("perpage");
         $searchModel = new StockbalanceSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $modelfind_product = \backend\models\Product::find()->andFilterWhere(['category_id'=>$group])->andFilterWhere(['OR',['LIKE','product_code',$searchall],['LIKE','name',$searchall]])->all();
+
+        //echo count($modelfind_product);return;
+        if(count($modelfind_product)>0){
+            $idlist = [];
+            foreach($modelfind_product as $value){
+                array_push($idlist,$value->id);
+            }
+            $dataProvider->query->where(['product_id'=>$idlist]);
+            if($warehouse !=null){
+                $dataProvider->query->andFilterWhere(['warehouse_id'=>$warehouse]);
+            }
+        }
+
+
+
         $dataProvider->pagination->pageSize = $pageSize;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'perpage' => $pageSize,
+            'searchall'=>$searchall,
+            'group'=> $group,
+            'warehouse'=>$warehouse,
         ]);
     }
 

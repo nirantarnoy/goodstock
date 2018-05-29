@@ -50,5 +50,18 @@ class Product extends \common\models\Product
            $model = Product::find()->where(['id'=>$id])->one();
            return count($model)>0?$model:null;
          }
+         public function findProductcode($id){
+          $model = Product::find()->where(['id'=>$id])->one();
+          return count($model)>0?$model->product_code:'';
+        }
+        public function findProductcatname($id){
+            $model = Product::find()->where(['id'=>$id])->one();
+            $catname = '';
+            if($model){
+                $catname = \backend\models\Productcat::findGroupname($model->category_id);
+            }
+
+            return $catname;
+        }
 
 }

@@ -218,21 +218,7 @@ $this->params['breadcrumbs'][] = $this->title;
                   <div class="x_content">
                       <div class="row">
                           <div class="col-lg-4 pull-right">
-                            <?php
-//
-//                              echo '<div class="drp-container">';
-//                                  echo DateRangePicker::widget([
-//                                  'name'=>'date_range_2',
-//                                  'presetDropdown'=>true,
-//                                  'hideInput'=>true,
-//                                  'options' => [
-//                                          'onchange'=>'
-//
-//                                          '
-//                                  ]
-//                                  ]);
-//                                  echo '</div>';
-                                  ?>
+
                           </div>
                       </div>
                       <div class="row">

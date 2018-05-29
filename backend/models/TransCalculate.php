@@ -48,6 +48,12 @@ class TransCalculate extends \yii\base\Model
        if($param){
           $model_stock = Stockbalance::find()->where(['product_id'=>$param[0]['prod_id'],'warehouse_id'=>$param[0]['warehouse_id']])->one();
           if($model_stock){
+              $model_stock->quantity = $model_stock->quantity + $param[0]['qty'];
+              if($model_stock->save(false)){
+                  self::updateProductInvent($param[0]['prod_id']);
+              }else{
+                 return false;
+              }
 
           }else{
               $model = new Stockbalance();
@@ -69,8 +75,9 @@ class TransCalculate extends \yii\base\Model
 
            $model_product = Product::find()->where(['id'=>$product_id])->one();
            if($model_product){
-               $model_product->all_qty = $sum_all;
-               $model_product->save();
+               $model_product->all_qty = $sum_all ;
+               $model_product->available_qty = $model_product->all_qty - (int)$model_product->reserved_qty;
+               $model_product->save(false);
            }
     }
 }

@@ -118,8 +118,8 @@ JS;
                         <div class="row">
                           <div class="col-lg-10">
                             <div class="form-inline">
-                               
-                                <input type="text" class="form-control" name="search_all" value="" placeholder="ค้นหารหัส,ชื่อ">
+                                <form id="search-form" action="<?=Url::to(['stockbalance/index'],true)?>" method="post">
+                                <input type="text" class="form-control search_all" name="search_all" value="<?=$searchall?>" placeholder="ค้นหารหัส,ชื่อ">
                                 <?php      
                                       echo MultiSelect::widget([
                                               'id'=>"product_group",
@@ -128,7 +128,7 @@ JS;
                                               "options" => ['multiple'=>"multiple",
                                                               'onchange'=>''], // for the actual multiselect
                                               'data' => count($groupall)==0?['ไม่มีข้อมูล']:ArrayHelper::map($groupall,'id','name'), // data as array
-                                              'value' => null, // if preselected
+                                              'value' => $group, // if preselected
                                               "clientOptions" => 
                                                   [
                                                       "includeSelectAllOption" => true,
@@ -146,7 +146,7 @@ JS;
                                               "options" => ['multiple'=>"multiple",
                                                               'onchange'=>''], // for the actual multiselect
                                               'data' => count($warehouseall)==0?['ไม่มีข้อมูล']:ArrayHelper::map($warehouseall,'id','name'), // data as array
-                                              'value' => null, // if preselected
+                                              'value' => $warehouse, // if preselected
                                               "clientOptions" => 
                                                   [
                                                       "includeSelectAllOption" => true,
@@ -158,16 +158,22 @@ JS;
                                   ]); ?>
                                  
                                    <div class="btn-group">
-                                         <div class="btn btn-info btn-search"> ค้นหา</div>
+                                         <input type="submit" class="btn btn-info btn-search" value="ค้นหา" />
                                   <div class="btn btn-default btn-reset"> รีเซ็ต</div>
                                    </div>
-                              
-                              
+                                </form>
                             </div>
                           </div>
                           <div class="col-lg-2">
-                            <form id="form-perpage" class="form-inline" action="<?=Url::to(['customergroup/index'],true)?>" method="post">
+                            <form id="form-perpage" class="form-inline" action="<?=Url::to(['stockbalance/index'],true)?>" method="post">
                               <div class="form-group">
+                                  <?php for($i=0;$i<=count($group)-1;$i++):?>
+                                      <input type="hidden" name="product_group[]" value="<?=$group[$i]?>">
+                                  <?php endfor;?>
+                                  <?php for($i=0;$i<=count($warehouse)-1;$i++):?>
+                                      <input type="hidden" name="warehouse[]" value="<?=$warehouse[$i]?>">
+                                  <?php endfor;?>
+                                  <input type="hidden" name="search_all" value="<?=$searchall;?>">
                                <label>แสดง </label>
                                 <select class="form-control" name="perpage" id="perpage">
                                    <option value="20" <?=$perpage=='20'?'selected':''?>>20</option>
@@ -179,91 +185,152 @@ JS;
                             </form>
                           </div>
                         </div><br />
-                        <div class="table-responsive">
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'emptyCell'=>'-',
-        'layout'=>'{items}{summary}{pager}',
-        'summary' => "แสดง {begin} - {end} ของทั้งหมด {totalCount} รายการ",
-       // 'showOnEmpty'=>false,
-        //'tableOptions' => ['class' => 'table table-hover','style'=>'border: 0px 0px 0px 0px;'],
-        'bordered'=>false,
-        'striped' => false,
-        'hover' => true,
-        'emptyText' => '<div style="color: red;align: center;"> <b>ไม่พบรายการไดๆ</b></div>',
-        'rowOptions' => function($model, $key, $index, $gird){
-            $contextMenuId = $gird->columns[0]->contextMenuId;
-            return ['data'=>[ 'toggle' => 'context','target'=> "#".$contextMenuId ]];
-        },
-        'columns' => [
-            [
-                'class' => \liyunfang\contextmenu\SerialColumn::className(),
-                'contextMenu' => true,
-                //'contextMenuAttribute' => 'id',
-                'template' => '<li class="divider"></li> {view} {update} <li class="divider"></li> {story}',
-                'buttons' => [
-                    'story' => function ($url, $model) {
-                        $title = Yii::t('app', 'Story');
-                        $label = '<span class="glyphicon glyphicon-film"></span> ' . $title;
-                        $url = \Yii::$app->getUrlManager()->createUrl(['/user/story','id' => $model->id]);
-                        $options = ['tabindex' => '-1','title' => $title, 'data' => ['pjax' => '0' ,  'toggle' => 'tooltip']];
-                        return '<li>' . Html::a($label, $url, $options) . '</li>' . PHP_EOL;
-                    }
-                ],
-            ],
-            [
-                'class' => 'kartik\grid\CheckboxColumn',
-                'headerOptions' => ['style' => 'text-align: center'],
-                'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;']],
-            //'id',
-            //'plant_id',
+                        <div class="table-grid table-responsive">
 
-            [
-                'attribute'=>'product_id',
-                'format'=>'html',
-                'contentOptions' => ['style' => 'vertical-align: middle'], 
-                 'value'=>function($data){
-                     return '<a href="'.Url::to(['product/view/'.$data->product_id],true).'">'.\backend\models\Product::findProductinfo($data->product_id)->product_code.'</a>';
-                 }
-            ],
+            <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+                'emptyCell'=>'-',
+                'layout'=>'{items}{summary}{pager}',
+                'summary' => "แสดง {begin} - {end} ของทั้งหมด {totalCount} รายการ",
+               // 'showOnEmpty'=>false,
+                //'tableOptions' => ['class' => 'table table-hover','style'=>'border: 0px 0px 0px 0px;'],
+                'bordered'=>false,
+                'striped' => false,
+                'hover' => true,
+                'emptyText' => '<div style="color: red;align: center;"> <b>ไม่พบรายการไดๆ</b></div>',
+                'rowOptions' => function($model, $key, $index, $gird){
+                    $contextMenuId = $gird->columns[0]->contextMenuId;
+                    return ['data'=>[ 'toggle' => 'context','target'=> "#".$contextMenuId ]];
+                },
+                'columns' => [
+                    [
+                        'class' => \liyunfang\contextmenu\SerialColumn::className(),
+                        'contextMenu' => true,
+                        //'contextMenuAttribute' => 'id',
+                        'template' => '<li class="divider"></li> {view} {update} <li class="divider"></li> {story}',
+                        'buttons' => [
+                            'story' => function ($url, $model) {
+                                $title = Yii::t('app', 'Story');
+                                $label = '<span class="glyphicon glyphicon-film"></span> ' . $title;
+                                $url = \Yii::$app->getUrlManager()->createUrl(['/user/story','id' => $model->id]);
+                                $options = ['tabindex' => '-1','title' => $title, 'data' => ['pjax' => '0' ,  'toggle' => 'tooltip']];
+                                return '<li>' . Html::a($label, $url, $options) . '</li>' . PHP_EOL;
+                            }
+                        ],
+                    ],
+                    [
+                        'class' => 'kartik\grid\CheckboxColumn',
+                        'headerOptions' => ['style' => 'text-align: center'],
+                        'contentOptions' => ['style' => 'vertical-align: middle;text-align: center;']],
+                    //'id',
+                    //'plant_id',
 
-            //'id',
-           // 'party_id',
-            [
-                'attribute'=>'warehouse_id',
-                'format'=>'html',
-                'contentOptions' => ['style' => 'vertical-align: middle'],
-                'value'=>function($data){
-                    return '<a href="'.Url::to(['warehouse/view/'.$data->warehouse_id],true).'">'.\backend\models\Warehouse::findWarehouseinfo($data->warehouse_id)->name.'</a>';
-                }
-               
-            ],
+                    [
+                        'attribute'=>'product_id',
+                        'format'=>'html',
+                        'contentOptions' => ['style' => 'vertical-align: middle'],
+                         'value'=>function($data){
+                             return '<a href="'.Url::to(['product/view/'.$data->product_id],true).'">'.\backend\models\Product::findProductcode($data->product_id).'</a>';
+                         }
+                    ],
 
-            [
-                'attribute'=>'location_id',
-                'contentOptions' => ['style' => 'vertical-align: middle'],
-                'value'=>function($data){
-                    return \backend\models\Location::findLocationinfo($data->warehouse_id)->name;
-                }
-               
-            ],
-            [
-                'attribute'=>'lot_id',
-                'contentOptions' => ['style' => 'vertical-align: middle'], 
-               
-            ],
-            [
-                'attribute'=>'quantity',
-                'contentOptions' => ['style' => 'vertical-align: middle'], 
-               
-            ],
+                    //'id',
+                   // 'party_id',
+                    [
+                        'attribute'=>'warehouse_id',
+                        'format'=>'html',
+                        'contentOptions' => ['style' => 'vertical-align: middle'],
+                        'value'=>function($data){
+                            return '<a href="'.Url::to(['warehouse/view/'.$data->warehouse_id],true).'">'.\backend\models\Warehouse::findWarehouseinfo($data->warehouse_id)->name.'</a>';
+                        }
+
+                    ],
+                    [
+
+                        'label'=>'กลุ่มสินค้า',
+                        'contentOptions' => ['style' => 'vertical-align: middle'],
+                        'value'=>function($data){
+                            return \backend\models\Product::findProductcatname($data->product_id);
+                        }
+
+                    ],
+
+                    [
+                        'attribute'=>'location_id',
+                        'contentOptions' => ['style' => 'vertical-align: middle'],
+                        'value'=>function($data){
+                            return \backend\models\Location::findLocationinfo($data->warehouse_id)->name;
+                        }
+
+                    ],
+                    [
+                        'attribute'=>'lot_id',
+                        'contentOptions' => ['style' => 'vertical-align: middle'],
+
+                    ],
+                    [
+                        'attribute'=>'quantity',
+                        'contentOptions' => ['style' => 'vertical-align: middle'],
+
+                    ],
 
 
-            ],
+                    ],
 
-                    ]); ?>
+                            ]); ?>
                 </div>
             </div>
         </div>
     <?php Pjax::end(); ?>
 </div>
+<?php
+ $this->registerJs('
+    $(function(){
+         if($("#product_group").val()!=""){
+            $("#product_group").multiselect({
+               includeSelectAllOption: true,
+               enableFiltering: true,
+               nonSelectedText: "กลุ่มสินค้า"
+            });
+            $("select#product_group").parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"}); 
+          }
+           $("select#product_group").change(function(){
+           if($(this).val()!=""){
+                $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"});
+           }else{
+                $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"#F5F5F5","color":"#000"});
+            }
+        }); 
+        if($("#warehouse").val()!=""){
+            $("#warehouse").multiselect({
+               includeSelectAllOption: true,
+               enableFiltering: true,
+               nonSelectedText: "กลุ่มสินค้า"
+            });
+            $("select#warehouse").parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"}); 
+          }
+           $("select#warehouse").change(function(){
+           if($(this).val()!=""){
+                $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"gray","color":"#FFF"});
+           }else{
+                $(this).parent().find(".btn-group").find(".multiselect").css({"background-color":"#F5F5F5","color":"#000"});
+            }
+        }); 
+        $("div.btn-reset").click(function(){
+
+                $(".search_all").val("");
+                $("select#product_group option:selected").remove();
+                $("select#product_group").multiselect("rebuild");
+        
+                $("select#warehouse option:selected").remove();
+                $("select#warehouse").multiselect("rebuild");
+      
+                
+                $(".btn-search").trigger("click");
+         });
+            $("#perpage").change(function(){
+            $("#form-perpage").submit();
+        });
+    });
+ ',static::POS_END);
+?>

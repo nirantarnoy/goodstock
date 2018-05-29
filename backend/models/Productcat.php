@@ -50,9 +50,9 @@ class Productcat extends \common\models\ProductCategory
 		 	$model = Productcat::find()->where(['id'=>$id])->one();
 		 	return count($model)>0?$model->name:'';
 		 }
-            public function findGroupid($code){
+		 public function findGroupid($code){
                 $model = Productcat::find()->where(['product_code'=>$code])->one();
                 return count($model)>0?$model->id:0;
-            }
+        }
 
 }

@@ -43,14 +43,16 @@ class ProductController extends Controller
      */
     public function actionIndex()
     {
-        $group = '';
+        $group = [];
         $stockstatus = [];
         $searcname = '';
         if(Yii::$app->request->isPost){
             $group = Yii::$app->request->post('product_group');
             $stockstatus = Yii::$app->request->post('stock_status');
             $searcname = Yii::$app->request->post('search_all');
+
         }
+
 
         $pageSize = \Yii::$app->request->post("perpage");
         $searchModel = new ProductSearch();
@@ -105,7 +107,6 @@ class ProductController extends Controller
         $modeljournalline = \backend\models\Journalline::find()->where(['product_id'=>$id])->all();
         $uploadfile = new \backend\models\Uploadfile();
 
-
         //echo strtotime(date_format($start,'d-m-Y'));
        // echo strtotime() ."-". strtotime(trim($dt_range[1]));
         $movementSearch = new \backend\models\MovementSearch();
@@ -120,7 +121,8 @@ class ProductController extends Controller
 
         }
 
-        $photoes = \backend\models\Productgallery::find(['product_id'=>$id])->all();
+        $photoes = \backend\models\Productgallery::find()->where(['product_id'=>$id])->all();
+
         return $this->render('view', [
             'model' => $this->findModel($id),
             'modeljournalline' => $modeljournalline,
@@ -220,6 +222,7 @@ class ProductController extends Controller
                 <td>Unit</td>
                 <td>Qty</td>
                 <td>Price</td>
+                <td>Cost</td>
             </tr>
             </table>
         ";
@@ -260,6 +263,7 @@ class ProductController extends Controller
                         $modelx->category_id = $this->checkCat($rowData[2]);
                         $modelx->unit_id = $this->checkUnit($rowData[3]);
                         $modelx->price = $rowData[5];
+                        $modelx->cost = $rowData[6];
                         $modelx->all_qty = str_replace(',','', $rowData[4]);;
                         $modelx->available_qty = str_replace(',','', $rowData[4]);;
                         $modelx->status = 1;
@@ -272,6 +276,77 @@ class ProductController extends Controller
                     }
                      $update_stock = TransCalculate::createJournal($data);
                     if($res > 0 && $update_stock){
+                        $session = Yii::$app->session;
+                        $session->setFlash('msg','นำเข้าข้อมูลสินค้าเรียบร้อย');
+                        return $this->redirect(['index']);
+                    }else{
+                        $session = Yii::$app->session;
+                        $session->setFlash('msg-error','พบข้อมผิดพลาด');
+                        return $this->redirect(['index']);
+                    }
+                }
+                fclose($file);
+            }else{
+
+            }
+        }
+    }
+    public function actionImportupdate(){
+        $model = new \backend\models\Uploadfile();
+        if(Yii::$app->request->post()){
+            $uploaded = UploadedFile::getInstance($model, 'file');
+            if(!empty($uploaded)) {
+                $upfiles = time() . "." . $uploaded->getExtension();
+                if($uploaded->saveAs('../web/uploads/files/'.$upfiles)) {
+                    //echo "okk";return;
+                    $myfile = '../web/uploads/files/' . $upfiles;
+                    $file = fopen($myfile, "r");
+                    fwrite($file, "\xEF\xBB\xBF");
+
+                    setlocale(LC_ALL, 'th_TH.TIS-620');
+                    $i = -1;
+                    $res = 0;
+                    $data = [];
+                    $update_stock = false;
+                    while (($rowData = fgetcsv($file, 10000, ",")) !== FALSE) {
+                        $i += 1;
+                        if ($rowData[0] == '' || $i == 0) {
+                            continue;
+                        }
+                        $modelprod = \backend\models\Product::find()->where(['product_code' => $rowData[0]])->one();
+                        if (count($modelprod) > 0) {
+                            $modelprod->price = $rowData[5];
+                            $modelprod->cost = $rowData[6];
+                            $modelprod->category_id = $this->checkCat($rowData[2]);
+                            $modelprod->unit_id = $this->checkUnit($rowData[3]);
+                            $modelprod->all_qty = str_replace(',','', $rowData[4]);
+                            if($modelprod->save(false)){
+                                $res += 1;
+                                array_push($data,['prod_id'=>$modelprod->id,'qty'=>$modelprod->all_qty,'warehouse_id'=>1,'trans_type'=>TransType::TRANS_ADJUST]);
+                            }
+                        }else{
+                            $modelx = new \backend\models\Product();
+                            $modelx->product_code = $rowData[0];
+                            $modelx->barcode = $rowData[0];
+                            $modelx->name = $rowData[1];
+                            $modelx->description = $rowData[1] ;
+                            $modelx->category_id = $this->checkCat($rowData[2]);
+                            $modelx->unit_id = $this->checkUnit($rowData[3]);
+                            $modelx->price = $rowData[5];
+                            $modelx->cost = str_replace(',','', $rowData[6]);
+                            $modelx->all_qty = str_replace(',','', $rowData[4]);
+                            $modelx->available_qty = str_replace(',','', $rowData[4]);
+                            $modelx->status = 1;
+                            if ($modelx->save(false)) {
+                                $res += 1;
+                                // $data_all +=1;
+                                array_push($data,['prod_id'=>$modelx->id,'qty'=>$modelx->all_qty,'warehouse_id'=>1,'trans_type'=>TransType::TRANS_ADJUST]);
+                            }
+                        }
+                        $update_stock = TransCalculate::createJournal($data);
+                    }
+
+                    if($res > 0 && $update_stock ){
                         $session = Yii::$app->session;
                         $session->setFlash('msg','นำเข้าข้อมูลสินค้าเรียบร้อย');
                         return $this->redirect(['index']);
@@ -406,6 +481,7 @@ class ProductController extends Controller
                             <td>Unit</td>
                             <td>Qty</td>
                             <td>Price</td>
+                            <td>Cost</td>
                         </tr>
                        
                     ";
@@ -420,6 +496,7 @@ class ProductController extends Controller
                             <td>$unit</td>
                             <td>$data->all_qty</td>
                             <td>$data->price</td>
+                            <td>$data->cost</td>
                         </tr>
                     ";
                 }

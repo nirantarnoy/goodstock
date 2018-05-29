@@ -31,7 +31,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
     <![endif]-->
     <style>
         body{
-            font-family: "Ekkamai";
+            font-family: "Cloud-Light";
         }
     </style>
 </head>
