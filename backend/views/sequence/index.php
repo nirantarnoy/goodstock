@@ -14,15 +14,19 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="sequence-index">
   <?php $session = Yii::$app->session;
-      if ($session->getFlash('msg')): ?>
+      if ($session->getFlash('msg') || $session->getFlash('msg-error') ): ?>
        <!-- <div class="alert alert-success alert-dismissible" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <?php //echo $session->getFlash('msg'); ?>
+          <?php //echo $session->getFlash('msg');
+              $alert_type = $session->getFlash('msg')?"success":"error";
+              $message = $session->getFlash('msg')?$session->getFlash('msg'):$session->getFlash('msg-error');
+
+       // ?>
       </div> -->
         <?php echo Notification::widget([
-            'type' => 'success',
+            'type' => $alert_type,
             'title' => 'แจ้งผลการทำงาน',
-            'message' => $session->getFlash('msg'),
+            'message' => $message,
           //  'message' => 'Hello',
             'options' => [
                 "closeButton" => false,
@@ -150,10 +154,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 'contentOptions' => ['style' => 'vertical-align: middle;'], 
                 'value'=> function($data){
                    $full = "";
+                   $use_year = "";
+                   $use_month = "";
+                   $use_day = "";
                    for($i=0;$i<=strlen($data->maximum)-1;$i++){
                     $full.="0";
                    }
-                   return $data->prefix.$data->symbol.$full;
+                   if($data->use_year){
+                       $use_year = date('y');
+                   }
+                   if($data->use_month){
+                        $use_month = date('y');
+                   }
+                   if($data->use_day){
+                        $use_day = date('y');
+                    }
+                   return $data->prefix.$data->symbol.$use_year.$use_month.$use_day.$full;
                 } 
             ],
             //'status',
@@ -210,6 +226,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                                             //'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
                                                                             //'data-method' => 'post',
                                                                             //'data-pjax' => '0',
+                                                                            'data-url'=>Url::to(['sequence/delete','id'=>$data->id],true),
                                                                             'onclick'=>'recDelete($(this));'
                                                                           ]);
                                                                   return Html::a('<span class="glyphicon glyphicon-trash btn btn-default"></span>', 'javascript:void(0)', $options);
@@ -225,6 +242,8 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <?php
      $url_to_gen = Url::to(['sequence/autogen'],true);
+$this->registerJsFile( '@web/js/sweetalert.min.js',['depends' => [\yii\web\JqueryAsset::className()]],static::POS_END);
+$this->registerCssFile( '@web/css/sweetalert.css');
      $this->registerJs('
          $(function(){
             $(".btn-auto").click(function(){
@@ -236,9 +255,34 @@ $this->params['breadcrumbs'][] = $this->title;
                   closeOnConfirm: false,
                   showLoaderOnConfirm: true
                 }, function () {
-                     
+                     $.ajax({
+                        type: "post",
+                        dataType: "html",
+                        url: "'.$url_to_gen.'",
+                        data: {autogen: 1},
+                        success: function(data){
+                          alert(data);
+                        }
+                     });
                 });
             });
          });
+         function recDelete(e){
+        //e.preventDefault();
+        var url = e.attr("data-url");
+        //var url ="'.Url::to(['product/delete','id'=>10],true).'" ;
+        //alert(url);
+        swal({
+              title: "ต้องการลบรายการนี้ใช่หรือไม่",
+              text: "",
+              type: "warning",
+              showCancelButton: true,
+              closeOnConfirm: false,
+              showLoaderOnConfirm: true
+            }, function () {
+              e.attr("href",url); 
+              e.trigger("click");        
+        });
+    }
             
 ',static::POS_END)?>

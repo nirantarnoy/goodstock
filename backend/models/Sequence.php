@@ -46,5 +46,36 @@ class Sequence extends \common\models\Sequence
 		        ],
 		    ];
 		 }
+       public function autogen(){
+           $x = \backend\helpers\RunnoTitle::asArrayObject();
+           $res = 0;
+           for ($i=0;$i<=count($x)-1;$i++){
+               $model = Sequence::find()->where(['module_id'=>$x[$i]['id']])->one();
+              if(!$model){
+                 $modelseq = new Sequence();
+                 $modelseq->prefix = $x[$i]['prefix'];
+                 $modelseq->minimum = 1;
+                 $modelseq->maximum = 999999;
+                 $modelseq->currentnum = 0;
+                 $modelseq->module_id = $x[$i]['id'];
+                 $modelseq->use_day = 0;
+                 $modelseq->use_month = 0;
+                 $modelseq->use_year = 1;
+                 $modelseq->symbol = "";
+                 $modelseq->status = 1;
+                 if($modelseq->save()){
+                     $res +=1;
+                 }
+              }
+           }
+           if($res){
+               return true;
+           }else{
+               return false;
+           }
 
+       }
+       public function updateNumber($module_id){
+
+       }
 }

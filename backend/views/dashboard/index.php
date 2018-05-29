@@ -6,34 +6,34 @@
             <div class="row top_tiles">
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
-                  <div class="icon"><i class="fa fa-caret-square-o-right"></i></div>
-                  <div class="count">179</div>
-                  <h3>New Sign ups</h3>
-                  <p>Lorem ipsum psdea itgum rixt.</p>
+                  <div class="icon"><i class="fa fa-arrow-circle-o-down"></i></div>
+                  <div class="count">19</div>
+                  <h3>สินค้าค่้างรับ</h3>
+                  <p>ค้างรับสินค้าจากใบสั่งซื้อ.</p>
                 </div>
               </div>
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
-                  <div class="icon"><i class="fa fa-comments-o"></i></div>
-                  <div class="count">179</div>
-                  <h3>New Sign ups</h3>
-                  <p>Lorem ipsum psdea itgum rixt.</p>
+                  <div class="icon"><i class="fa fa-arrow-circle-o-up"></i></div>
+                  <div class="count">3</div>
+                  <h3>สินค้าค้างส่ง</h3>
+                  <p>ค้างส่งสินค้าในใบออร์เดอร์.</p>
                 </div>
               </div>
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
-                  <div class="icon"><i class="fa fa-sort-amount-desc"></i></div>
-                  <div class="count">179</div>
-                  <h3>New Sign ups</h3>
-                  <p>Lorem ipsum psdea itgum rixt.</p>
+                  <div class="icon"><i class="fa fa-clock-o"></i></div>
+                  <div class="count">43</div>
+                  <h3>ออร์เดอร์ถึง Due</h3>
+                  <p>ออเดอร์ถึงเวลาเรียกเก็บเงิน.</p>
                 </div>
               </div>
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
-                  <div class="icon"><i class="fa fa-check-square-o"></i></div>
-                  <div class="count">179</div>
-                  <h3>New Sign ups</h3>
-                  <p>Lorem ipsum psdea itgum rixt.</p>
+                  <div class="icon"><i class="fa fa-crosshairs"></i></div>
+                  <div class="count">5</div>
+                  <h3>สินค้าใกล้หมดอายุ</h3>
+                  <p>รายการสินค้าใกล้หมดอายุ หรือ หมดอายุ.</p>
                 </div>
               </div>
             </div>
@@ -42,7 +42,7 @@
               <div class="col-md-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Transaction Summary <small>Weekly progress</small></h2>
+                    <h2>สรุปภาพรวมการทำรายการ <small>ประจำวัน</small></h2>
                     <div class="filter">
                       <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
                         <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
@@ -58,15 +58,15 @@
                       </div>
                       <div class="tiles">
                         <div class="col-md-4 tile">
-                          <span>Total Sessions</span>
+                          <span>ยอดสั่งซื้อรวม</span>
                           <h2>231,809</h2>
                           <span class="sparkline11 graph" style="height: 160px;">
                                <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
                           </span>
                         </div>
                         <div class="col-md-4 tile">
-                          <span>Total Revenue</span>
-                          <h2>$231,809</h2>
+                          <span>ยอดขายรวม</span>
+                          <h2>231,809</h2>
                           <span class="sparkline22 graph" style="height: 160px;">
                                 <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
                           </span>
@@ -85,7 +85,7 @@
                     <div class="col-md-3 col-sm-12 col-xs-12">
                       <div>
                         <div class="x_title">
-                          <h2>Top Profiles</h2>
+                          <h2>สินค้าขายดี</h2>
                           <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                             </li>
@@ -103,63 +103,7 @@
                           </ul>
                           <div class="clearfix"></div>
                         </div>
-                        <ul class="list-unstyled top_profiles scroll-view">
-                          <li class="media event">
-                            <a class="pull-left border-aero profile_thumb">
-                              <i class="fa fa-user aero"></i>
-                            </a>
-                            <div class="media-body">
-                              <a class="title" href="#">Ms. Mary Jane</a>
-                              <p><strong>$2300. </strong> Agent Avarage Sales </p>
-                              <p> <small>12 Sales Today</small>
-                              </p>
-                            </div>
-                          </li>
-                          <li class="media event">
-                            <a class="pull-left border-green profile_thumb">
-                              <i class="fa fa-user green"></i>
-                            </a>
-                            <div class="media-body">
-                              <a class="title" href="#">Ms. Mary Jane</a>
-                              <p><strong>$2300. </strong> Agent Avarage Sales </p>
-                              <p> <small>12 Sales Today</small>
-                              </p>
-                            </div>
-                          </li>
-                          <li class="media event">
-                            <a class="pull-left border-blue profile_thumb">
-                              <i class="fa fa-user blue"></i>
-                            </a>
-                            <div class="media-body">
-                              <a class="title" href="#">Ms. Mary Jane</a>
-                              <p><strong>$2300. </strong> Agent Avarage Sales </p>
-                              <p> <small>12 Sales Today</small>
-                              </p>
-                            </div>
-                          </li>
-                          <li class="media event">
-                            <a class="pull-left border-aero profile_thumb">
-                              <i class="fa fa-user aero"></i>
-                            </a>
-                            <div class="media-body">
-                              <a class="title" href="#">Ms. Mary Jane</a>
-                              <p><strong>$2300. </strong> Agent Avarage Sales </p>
-                              <p> <small>12 Sales Today</small>
-                              </p>
-                            </div>
-                          </li>
-                          <li class="media event">
-                            <a class="pull-left border-green profile_thumb">
-                              <i class="fa fa-user green"></i>
-                            </a>
-                            <div class="media-body">
-                              <a class="title" href="#">Ms. Mary Jane</a>
-                              <p><strong>$2300. </strong> Agent Avarage Sales </p>
-                              <p> <small>12 Sales Today</small>
-                              </p>
-                            </div>
-                          </li>
-                        </ul>
+
                       </div>
                     </div>
 
@@ -174,7 +118,7 @@
               <div class="col-md-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Weekly Summary <small>Activity shares</small></h2>
+                    <h2>ภาพรวมผลประกอบการ <small>กำไรขาดทุน</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -230,7 +174,7 @@
               <div class="col-md-4">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Lastest <small>Purchase order</small></h2>
+                    <h2>ใบสั่งซื้อ <small>ล่าสุด</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -306,7 +250,7 @@
               <div class="col-md-4">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Lastest <small>Sale orders</small></h2>
+                    <h2>ออร์เดอร์ <small>ล่าสุด</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -382,7 +326,7 @@
               <div class="col-md-4">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Top Profiles <small>Sessions</small></h2>
+                    <h2>ลูกค้าที่ยอดขาย <small>สูงสุด</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -401,56 +345,63 @@
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                    <article class="media event">
-                      <a class="pull-left date">
-                        <p class="month">April</p>
-                        <p class="day">23</p>
-                      </a>
-                      <div class="media-body">
-                        <a class="title" href="#">Item One Title</a>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                      </div>
-                    </article>
-                    <article class="media event">
-                      <a class="pull-left date">
-                        <p class="month">April</p>
-                        <p class="day">23</p>
-                      </a>
-                      <div class="media-body">
-                        <a class="title" href="#">Item Two Title</a>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                      </div>
-                    </article>
-                    <article class="media event">
-                      <a class="pull-left date">
-                        <p class="month">April</p>
-                        <p class="day">23</p>
-                      </a>
-                      <div class="media-body">
-                        <a class="title" href="#">Item Two Title</a>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                      </div>
-                    </article>
-                    <article class="media event">
-                      <a class="pull-left date">
-                        <p class="month">April</p>
-                        <p class="day">23</p>
-                      </a>
-                      <div class="media-body">
-                        <a class="title" href="#">Item Two Title</a>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                      </div>
-                    </article>
-                    <article class="media event">
-                      <a class="pull-left date">
-                        <p class="month">April</p>
-                        <p class="day">23</p>
-                      </a>
-                      <div class="media-body">
-                        <a class="title" href="#">Item Three Title</a>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                      </div>
-                    </article>
+                      <ul class="list-unstyled top_profiles scroll-view">
+                          <li class="media event">
+                              <a class="pull-left border-aero profile_thumb">
+                                  <i class="fa fa-user aero"></i>
+                              </a>
+                              <div class="media-body">
+                                  <a class="title" href="#">Ms. Mary Jane</a>
+                                  <p><strong>$2300. </strong> Agent Avarage Sales </p>
+                                  <p> <small>12 Sales Today</small>
+                                  </p>
+                              </div>
+                          </li>
+                          <li class="media event">
+                              <a class="pull-left border-green profile_thumb">
+                                  <i class="fa fa-user green"></i>
+                              </a>
+                              <div class="media-body">
+                                  <a class="title" href="#">Ms. Mary Jane</a>
+                                  <p><strong>$2300. </strong> Agent Avarage Sales </p>
+                                  <p> <small>12 Sales Today</small>
+                                  </p>
+                              </div>
+                          </li>
+                          <li class="media event">
+                              <a class="pull-left border-blue profile_thumb">
+                                  <i class="fa fa-user blue"></i>
+                              </a>
+                              <div class="media-body">
+                                  <a class="title" href="#">Ms. Mary Jane</a>
+                                  <p><strong>$2300. </strong> Agent Avarage Sales </p>
+                                  <p> <small>12 Sales Today</small>
+                                  </p>
+                              </div>
+                          </li>
+                          <li class="media event">
+                              <a class="pull-left border-aero profile_thumb">
+                                  <i class="fa fa-user aero"></i>
+                              </a>
+                              <div class="media-body">
+                                  <a class="title" href="#">Ms. Mary Jane</a>
+                                  <p><strong>$2300. </strong> Agent Avarage Sales </p>
+                                  <p> <small>12 Sales Today</small>
+                                  </p>
+                              </div>
+                          </li>
+                          <li class="media event">
+                              <a class="pull-left border-green profile_thumb">
+                                  <i class="fa fa-user green"></i>
+                              </a>
+                              <div class="media-body">
+                                  <a class="title" href="#">Ms. Mary Jane</a>
+                                  <p><strong>$2300. </strong> Agent Avarage Sales </p>
+                                  <p> <small>12 Sales Today</small>
+                                  </p>
+                              </div>
+                          </li>
+                      </ul>
                   </div>
                 </div>
               </div>

@@ -34,6 +34,7 @@ class Journaltable extends \yii\db\ActiveRecord
     {
         return [
             [['name'],'required'],
+            [['name'],'unique'],
             [['account_type', 'account_id', 'created_at', 'updated_at', 'created_by', 'updated_by','trans_type'], 'integer'],
             [['name', 'description'], 'string', 'max' => 255],
         ];

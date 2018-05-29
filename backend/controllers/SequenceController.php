@@ -23,7 +23,7 @@ class SequenceController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['POST','GET'],
                 ],
             ],
         ];
@@ -35,6 +35,7 @@ class SequenceController extends Controller
      */
     public function actionIndex()
     {
+
         $pageSize = \Yii::$app->request->post("perpage");
         $searchModel = new SequenceSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -69,8 +70,13 @@ class SequenceController extends Controller
     {
         $model = new Sequence();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->save()){
+                $session = Yii::$app->session;
+                $session->setFlash('msg','บันทึกรายการเรียบร้อย');
+                return $this->redirect(['index']);
+            }
+
         }
 
         return $this->render('create', [
@@ -89,8 +95,12 @@ class SequenceController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->save()){
+                $session = Yii::$app->session;
+                $session->setFlash('msg','บันทึกรายการเรียบร้อย');
+                return $this->redirect(['index']);
+            }
         }
 
         return $this->render('update', [
@@ -107,9 +117,20 @@ class SequenceController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $session = Yii::$app->session;
+        $modelchecktrans = \backend\models\Journal::find()->where(['trans_type'=>$id])->count();
+        if(!$modelchecktrans){
+            $this->findModel($id)->delete();
+                $session->setFlash('msg','ลบรายการเรียบร้อย');
+            return $this->redirect(['index']);
+        }else{
 
-        return $this->redirect(['index']);
+            $session->setFlash('msg-error','พบข้อผิดพลาดในการทำรายการ');
+            return $this->redirect(['index']);
+        }
+
+
+
     }
 
     /**
@@ -126,5 +147,14 @@ class SequenceController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+    public function actionAutogen(){
+        if(Yii::$app->request->isAjax){
+            $gentype = Yii::$app->request->post('autogen');
+            if($gentype){
+               $x = Sequence::autogen();
+               return $this->redirect(['index']);
+            }
+        }
     }
 }

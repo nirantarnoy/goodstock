@@ -434,10 +434,10 @@ class ProductController extends Controller
                 //'content' => "nira",
                 'cssFile' => '@backend/web/css/pdf.css',
                // 'cssFile' => '@frontend/web/css/kv-mpdf-bootstrap.css',
-//                'options' => [
-//                    'title' => 'บาร์โต้ดรหัสสินค้า',
-//                    'subject' => ''
-//                ],
+                'options' => [
+                    'title' => 'บาร์โต้ดรหัสสินค้า',
+                    'subject' => ''
+                ],
                 'methods' => [
                   //  'SetHeader' => ['บาร์โค้ดรหัสสินค้า||Generated On: ' . date("r")],
                   //  'SetFooter' => ['|Page {PAGENO}|'],

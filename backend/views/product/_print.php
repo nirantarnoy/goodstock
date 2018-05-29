@@ -8,6 +8,8 @@
 //
 //);
 //echo BarcodeGenerator::widget($optionsArray);
+$this->title = "พิมพ์บาร์โค้ดรหัสสินค้า";
+
 ?>
 
 <!--<div id="showBarcode"></div>-->

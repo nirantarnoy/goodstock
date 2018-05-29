@@ -31,17 +31,17 @@ class RunnoTitle
     ];
 
 	private static $dataobj = [
-        ['id'=>1,'name' => 'ขอซื้อ'],
-        ['id'=>2,'name' => 'สั่งซ์้อ'],
-        ['id'=>3,'name' => 'เสนอราคา'],
-        ['id'=>4,'name' => 'ขาย'],
-        ['id'=>5,'name' => 'ย้าย'],
-        ['id'=>6,'name' => 'เบิก'],
-        ['id'=>7,'name' => 'คืนเบิก'],
-        ['id'=>8,'name' => 'คืนขาย'],
-        ['id'=>9,'name' => 'คืนซ์้อ'],
-        ['id'=>10,'name' => 'นับสต๊อก'],
-        ['id'=>11,'name' => 'ปรับสต๊อก']
+        ['id'=>1,'name' => 'ขอซื้อ','prefix'=>'PR'],
+        ['id'=>2,'name' => 'สั่งซ์้อ','prefix'=>'PO'],
+        ['id'=>3,'name' => 'เสนอราคา','prefix'=>'QUO'],
+        ['id'=>4,'name' => 'ขาย','prefix'=>'SO'],
+        ['id'=>5,'name' => 'ย้าย','prefix'=>'TF'],
+        ['id'=>6,'name' => 'เบิก','prefix'=>'IS'],
+        ['id'=>7,'name' => 'คืนเบิก','prefix'=>'RT'],
+        ['id'=>8,'name' => 'คืนขาย','prefix'=>'SRT'],
+        ['id'=>9,'name' => 'คืนซ์้อ','prefix'=>'PRT'],
+        ['id'=>10,'name' => 'นับสต๊อก','prefix'=>'CT'],
+        ['id'=>11,'name' => 'ปรับสต๊อก','prefix'=>'AD']
     ];
     public static function asArray()
     {
