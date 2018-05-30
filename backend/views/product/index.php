@@ -11,6 +11,9 @@ use yii\helpers\ArrayHelper;
 use kartik\cmenu\ContextMenu;
 use yii\widgets\ActiveForm;
 
+use yii\jui\AutoComplete;
+use yii\web\JsExpression;
+
 ICheckAsset::register($this);
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ProductSearch */
@@ -30,9 +33,28 @@ $this->registerJsFile(
     static::POS_END
 );
 
+$data = \backend\models\Product::find()
+    ->select(['name as value', 'name as  label','id as id'])
+    ->asArray()
+    ->all();
+
+
 ?>
 <div class="product-index">
-
+    <?php echo AutoComplete::widget([
+            'name'=>'test',
+        'id'=>'niran',
+        'options' => ['class'=>'form-control'],
+        'clientOptions' => [
+            'autocomplete'=>true,
+            'source' => ['USA', 'RUS'],
+            'minLength'=>'2',
+            'autoFill'=>true,
+            'select' => new JsExpression("function( event, ui ) {
+                  $('#memberssearch-family_name_id').val(ui.item.id);//#memberssearch-family_name_id is the id of hiddenInput.
+            }")],
+    ]);
+    ?>
 <?php $session = Yii::$app->session;
       if ($session->getFlash('msg')): ?>
        <!-- <div class="alert alert-success alert-dismissible" role="alert">
@@ -85,7 +107,7 @@ $this->registerJsFile(
                           <div class="btn btn-default btn-import"><i class="fa fa-upload"></i> นำเข้า</div>
                           <div class="btn btn-default btn-export"><i class="fa fa-download"></i> นำออก</div>
 
-                           <div class="btn btn-default btn-approve-vendor"><i class="fa fa-thumbs-up"></i> อนุมัติผู้ขาย</div>
+                           <div class="btn btn-default btn-add-vendor"><i class="fa fa-thumbs-up"></i> อนุมัติผู้ขาย</div>
                            <div class="btn btn-default btn-add-component"><i class="fa fa-object-group"></i> จัดชุดสินค้า</div>
                            <div class="btn btn-default btn-bulk-remove"><i class="fa fa-trash"></i><span class="remove_item"></span> ลบ</div>
                           <div class="btn btn-default btn-print-stock"><i class="fa fa-print"></i> พิมพ์สต๊อก</div>
@@ -547,8 +569,8 @@ $this->registerJsFile(
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">พิมพ์สำหรับ
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="hidden" class="product_listid" name="product_listid" value="">
-                        <select name="paper_type" id="paper-type" class="form-control">
+                        <input type="hidden" class="product_stocklist" name="product_stocklist" value="">
+                        <select name="stock_type" id="stock_type" class="form-control">
 
                             <option value="1">จำนวนสต๊อกสินค้าเท่านั้น</option>
                             <option value="2">จำนวนสต๊อกและนับยอด</option>
@@ -562,8 +584,56 @@ $this->registerJsFile(
                 </div>
             </div>
             <div class="modal-footer">
-                <input type="submit" class="btn btn-success btn-print-barcode" value="พิมพ์">
+                <input type="submit" class="btn btn-success btnprint-stock" value="พิมพ์">
                 <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+            </div>
+            <?php ActiveForm::end();?>
+        </div>
+
+    </div>
+</div>
+<div id="vendorModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="fa fa-window-close"></i></button>
+                <h4 class="modal-title"><i class="fa fa-thumbs-up"></i> อนุมัติผู้ขาย <small id="items"> </small></h4>
+            </div>
+            <div class="modal-body">
+                <?php $form_upload = ActiveForm::begin(['action'=>'addvendor','options'=>['enctype' => 'multipart/form-data','class'=>'form-horizontal form-label-left','target'=>'_blank']]); ?>
+
+                 <div class="row">
+                     <div class="col-lg-12">
+                         <div class="btn-group">
+                             <div class="btn btn-success btn-add-vendor-line"><i class="fa fa-plus"></i> เพิ่ม</div>
+                         </div>
+                     </div>
+                 </div>
+                <br>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <table class="table table-vendor">
+                           <thead>
+                             <tr>
+                                 <th>#</th>
+                                 <th>รหัส</th>
+                                 <th>ชื่อ</th>
+                                 <th>วันเริ่ม</th>
+                                 <th>วันสิ้นสุด</th>
+                                 <th></th>
+                             </tr>
+                           </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-success btnprint-stock" value="พิมพ์">
+                <div type="button" class="btn btn-default btn-cancel-vendor">ยกเลิก</div>
             </div>
             <?php ActiveForm::end();?>
         </div>
@@ -578,6 +648,7 @@ $this->registerJsFile(
   $this->registerJs('
 
     $(function(){
+        
     
         if($("#product_group").val()!=""){
             $("#product_group").multiselect({
@@ -638,13 +709,27 @@ $this->registerJsFile(
             $("#barcodeModal").modal("show");
         });
          $(".btn-print-stock").click(function(){
+            if(orderList.length < 1){
+                return false;
+            }
+            $(".product_stocklist").val(orderList);
             $("#stockModal").modal("show");
+        });
+        $(".btn-add-vendor").click(function(){
+            if(orderList.length < 1){
+                return false;
+            }
+            $(".product_stocklist").val(orderList);
+            $("#vendorModal").modal("show");
         });
         $(".btn-print-barcode").click(function(){
            $("#barcodeModal").modal("hide");
         });
         $(".btn-bulk-remove").attr("disabled",true);
-        
+        $(".btn-add-component").attr("disabled",true);
+        $(".btn-print-stock").attr("disabled",true);
+        $(".btn-printbarcode").attr("disabled",true);
+       
        
         var viewtype = "'.$view_type.'";
         if(viewtype == "list"){
@@ -661,7 +746,60 @@ $this->registerJsFile(
 //            $("#form-import").attr("href","'.Url::to(['product/importproduct'],true).'");
 //            $("#form-import").submit();
 //        });
+
+       $(".btn-add-vendor-line").click(function(){
+           $.ajax({
+              type: "post",
+              dataType: "html",
+              url: "'.Url::to(['product/addvendorline'],true).'",
+              data: {},
+              success: function(data){
+                $(".table-vendor tbody").append(data);
+              }
+           });
+           //$(".vendor_id").autocomplete(autocompleteOptions);
+       });
+       
+       
+       
+       $(".btn-cancel-vendor").click(function(){
+            $(".table-vendor tbody>tr").each(function(){$(this).remove();});
+            $("#vendorModal").modal("hide");
+       });
+      
     });
+    
+    function setauto(e){
+
+        var autocompleteOptions = {
+            minLength: 2,
+            source: function(request, response) {
+              $.ajax({
+                type: "GET",
+                url: "'.Url::to(['product/findvendor'],true).'",
+                data: {},
+                success: function(data) {
+                  response(data);
+                }
+              });
+            }
+          };
+       e.autocomplete(
+       {
+            minLength: 2,
+            source: function(request, response) {
+              $.ajax({
+                type: "GET",
+                url: "'.Url::to(['product/findvendor'],true).'",
+                data: {},
+                success: function(data) {
+                  response(data);
+                }
+              });
+            }
+          }
+       );
+    }
 
    function recDelete(e){
         //e.preventDefault();
@@ -679,6 +817,24 @@ $this->registerJsFile(
               e.attr("href",url); 
               e.trigger("click");        
         });
+    }
+    function vendorautocomplete(e){
+       alert(e.val());
+    }
+    function removeline(e){
+      if(confirm("ต้องการลบรายการนี้ใช่หรือไม่")){
+        e.parent().parent().remove();   
+      }
+//      swal({
+//              title: "ต้องการลบรายการนี้ใช่หรือไม่",
+//              text: "",
+//              type: "warning",
+//              showCancelButton: true,
+//              closeOnConfirm: false,
+//              showLoaderOnConfirm: true
+//            }, function () {
+//             e.parent().parent().remove();       
+//        });
     }
 
     ',static::POS_END);

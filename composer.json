@@ -35,7 +35,8 @@
         "liyunfang/yii2-contextmenu": "*",
         "phpoffice/phpexcel": "dev-develop",
         "vilochane/yii2-barcode-generator": "dev-master",
-        "noam148/yii2-image-manager" : "*"
+        "noam148/yii2-image-manager" : "*",
+        "yiisoft/yii2-jui": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

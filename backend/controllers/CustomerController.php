@@ -8,7 +8,7 @@ use backend\models\CustomerSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use \common\models\Addressbook;
+use \backend\models\Addressbook;
 
 /**
  * CustomerController implements the CRUD actions for Customer model.
@@ -69,15 +69,23 @@ class CustomerController extends Controller
     public function actionCreate()
     {
         $model = new Customer();
-         $model_address = new AddressBook();
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $model_address_plant = AddressBook::find()->where(['party_type_id'=>3])->one();
+        $model_address = new AddressBook();
+        if ($model->load(Yii::$app->request->post()) && $model_address->load(Yii::$app->request->post())) {
+            if($model->save()){
+                $model_address->party_type_id = 3; // customer
+                $model_address->party_id = $model->id;
+                $model_address->save(false);
+                $session = Yii::$app->session;
+                $session->setFlash('msg','บันทึกรายการเรียบร้อย');
+                return $this->redirect(['index']);
+            }
         }
 
         return $this->render('create', [
             'model' => $model,
             'model_address' => $model_address,
-            'model_address_plant' => null,
+            'model_address_plant' => $model_address_plant,
         ]);
     }
 
@@ -90,13 +98,24 @@ class CustomerController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model_address_plant = AddressBook::find()->where(['party_type_id'=>3,'party_id'=>$id])->one();
+        $model_address = new AddressBook();
+        if ($model->load(Yii::$app->request->post())&& $model_address->load(Yii::$app->request->post())) {
+            if($model->save()){
+                $model_address->party_type_id = 3; // customer
+                $model_address->party_id = $model->id;
+                $model_address->save(false);
+                $session = Yii::$app->session;
+                $session->setFlash('msg','บันทึกรายการเรียบร้อย');
+                return $this->redirect(['index']);
+            }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'model_address' => $model_address,
+            'model_address_plant' => $model_address_plant,
         ]);
     }
 

@@ -202,12 +202,16 @@ $bank = Bank::find()->all();
                         </div>
                           
 
-                             <div class="ln_solid"></div>
-                        <div class="form-group">
-                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                  <?= Html::submitButton(Yii::t('app', 'บันทึก'), ['class' => 'btn btn-success']) ?>
-                                </div>
-                        </div>
+
+                      <div class="ln_solid"></div>
+
+                      <div class="col-md-8 col-md-offset-4">
+                          <?= Html::submitButton(Yii::t('app', 'บันทึก'), ['class' => 'btn btn-success']) ?>
+                          <?php if(!$model->isNewRecord):?>
+                              <div class="btn btn-default"><a href="<?=Url::to(['customer/view/','id'=>$model->id],true)?>">ดูรายละเอียด</a></div>
+                          <?php endif;?>
+                          <div class="btn btn-danger"><a style="color: #FFF" href="<?=Url::to(['customer/index'],true)?>">ยกเลิก</a></div>
+                      </div>
 
                             <?php ActiveForm::end(); ?>
                         </div>

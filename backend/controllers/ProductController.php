@@ -32,6 +32,7 @@ class ProductController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST','GET'],
+                    'findvendor'=>['GET'],
                 ],
             ],
         ];
@@ -530,10 +531,49 @@ class ProductController extends Controller
         }
     public function actionPrintstock(){
         if(Yii::$app->request->isPost){
-            $prodid = Yii::$app->request->post('prodid');
-            if($prodid!=''){
-                $model = new \backend\models\Journal();
+            $prod_id = Yii::$app->request->post('product_stocklist');
+            $stock_type = Yii::$app->request->post('stock_type');
+            if($prod_id!=''){
+                //$model = new \backend\models\Journal();
+                if($stock_type ==1){
+                    $paper_size =  Pdf::FORMAT_A4;
+                    $orient =  Pdf::ORIENT_PORTRAIT;
+                    $prodid = explode(',',$prod_id);
+
+                    $modellist = \backend\models\Stockbalance::find()->where(['id'=>$prodid])->all();
+
+                    $pdf = new Pdf([
+                        'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
+                        'format' => $paper_size,
+                        // 'format' => [60, 30],//กำหนดขนาด
+                        'orientation' => $orient,
+                        'destination' => Pdf::DEST_BROWSER,
+                        'content' => $this->renderPartial('_printstock',[
+                            'list'=>$modellist,
+                        ]),
+                        //'content' => "nira",
+                        'cssFile' => '@backend/web/css/pdf.css',
+                        // 'cssFile' => '@frontend/web/css/kv-mpdf-bootstrap.css',
+                        'options' => [
+                            'title' => 'รายการจำนวนสินค้า',
+                            'subject' => ''
+                        ],
+                        'methods' => [
+                              'SetHeader' => ['รายการจำนวนสินค้า||Generated On: ' . date("r")],
+                              'SetFooter' => ['|Page {PAGENO}|'],
+                        ]
+                    ]);
+                    return $pdf->render();
+                }else{
+
+                }
             }
         }
+    }
+    public function actionAddvendorline(){
+        return $this->renderPartial('_addvendor');
+    }
+    public function actionFindvendor(){
+       return json::endcode(['AX2012','AX2018']);
     }
 }

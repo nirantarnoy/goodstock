@@ -65,6 +65,8 @@ $(document).on('ready pjax:success', function() {
                         $(".remove_item").html("["+orderList.length+"]");
                           $(".btn-bulk-remove").attr('disabled',false);
                           $(".btn-printbarcode").attr('disabled',false);
+                          $(".btn-print-stock").attr('disabled',false);
+                          $(".btn-add-component").attr('disabled',false);
                           $(".btn-view").attr('disabled',false);
                         $(".btn-update").attr('disabled',false);
                         $(".listid").val(orderList);
@@ -79,6 +81,8 @@ $(document).on('ready pjax:success', function() {
                         $(".remove_item").html("["+orderList.length+"]");
                         $(".btn-bulk-remove").attr('disabled',true);
                         $(".btn-printbarcode").attr('disabled',true);
+                          $(".btn-print-stock").attr('disabled',true);
+                          $(".btn-add-component").attr('disabled',true);
                         $(".btn-view").attr('disabled',true);
                         $(".btn-update").attr('disabled',true);
                         $(".listid").val(orderList);
@@ -159,6 +163,8 @@ $(document).on('ready pjax:success', function() {
                         $(".btn-bulk-remove").addClass("btn-danger");
                         $(".btn-bulk-remove").attr('disabled',false);
                         $(".btn-printbarcode").attr('disabled',false);
+                          $(".btn-print-stock").attr('disabled',false);
+                          $(".btn-add-component").attr('disabled',false);
                           // console.log("niran");
                       }else{
                         $(".btn-trasfer").attr("disabled",true);
@@ -173,6 +179,8 @@ $(document).on('ready pjax:success', function() {
                         $(".btn-bulk-remove").addClass("btn-default");
                         $(".btn-bulk-remove").removeClass("btn-danger");
                         $(".btn-printbarcode").attr('disabled',true);
+                          $(".btn-print-stock").attr('disabled',true);
+                          $(".btn-add-component").attr('disabled',true);
                         //console.log("ddfdfdfd");
                       }
                   });

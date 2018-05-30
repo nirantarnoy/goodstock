@@ -11,7 +11,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\UploadedFile;
 
-use \common\models\Addressbook;
+use \backend\models\Addressbook;
 /**
  * PlantController implements the CRUD actions for Plant model.
  */
