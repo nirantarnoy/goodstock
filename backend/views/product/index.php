@@ -652,9 +652,7 @@ table.table-vendor td{
 
     </div>
 </div>
-<div class="nas">
-    <input type="text" class="form-control na" value="">
-</div>
+
 
 <?php
   $this->registerJsFile( '@web/js/sweetalert.min.js',['depends' => [\yii\web\JqueryAsset::className()]],static::POS_END);
