@@ -10,8 +10,9 @@ use dosamigos\multiselect\MultiSelect;
 use yii\helpers\ArrayHelper;
 use kartik\cmenu\ContextMenu;
 use yii\widgets\ActiveForm;
+use kartik\date\DatePicker;
 
-use yii\jui\AutoComplete;
+//use yii\jui\AutoComplete;
 use yii\web\JsExpression;
 
 ICheckAsset::register($this);
@@ -38,23 +39,20 @@ $data = \backend\models\Product::find()
     ->asArray()
     ->all();
 
-
+$this->registerCss('
+ table.table-vendor{
+    width: 100%;
+ }
+ table.table-vendor thaed tr th{
+   padding: 2px 2px 2px 2px;
+ }
+table.table-vendor td{
+    margin: 0;
+    padding: 0.5px 1px 0.5px 1px;
+}
+');
 ?>
 <div class="product-index">
-    <?php echo AutoComplete::widget([
-            'name'=>'test',
-        'id'=>'niran',
-        'options' => ['class'=>'form-control'],
-        'clientOptions' => [
-            'autocomplete'=>true,
-            'source' => ['USA', 'RUS'],
-            'minLength'=>'2',
-            'autoFill'=>true,
-            'select' => new JsExpression("function( event, ui ) {
-                  $('#memberssearch-family_name_id').val(ui.item.id);//#memberssearch-family_name_id is the id of hiddenInput.
-            }")],
-    ]);
-    ?>
 <?php $session = Yii::$app->session;
       if ($session->getFlash('msg')): ?>
        <!-- <div class="alert alert-success alert-dismissible" role="alert">
@@ -90,13 +88,8 @@ $data = \backend\models\Product::find()
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
      <div class="row">
       <div class="col-lg-12">
-           
-           
       </div>
      </div>
-    
-   
-
     <div class="x_panel">
                   <div class="x_title">
                     
@@ -106,7 +99,6 @@ $data = \backend\models\Product::find()
                        <div class="btn-group">
                           <div class="btn btn-default btn-import"><i class="fa fa-upload"></i> นำเข้า</div>
                           <div class="btn btn-default btn-export"><i class="fa fa-download"></i> นำออก</div>
-
                            <div class="btn btn-default btn-add-vendor"><i class="fa fa-thumbs-up"></i> อนุมัติผู้ขาย</div>
                            <div class="btn btn-default btn-add-component"><i class="fa fa-object-group"></i> จัดชุดสินค้า</div>
                            <div class="btn btn-default btn-bulk-remove"><i class="fa fa-trash"></i><span class="remove_item"></span> ลบ</div>
@@ -603,17 +595,9 @@ $data = \backend\models\Product::find()
             <div class="modal-body">
                 <?php $form_upload = ActiveForm::begin(['action'=>'addvendor','options'=>['enctype' => 'multipart/form-data','class'=>'form-horizontal form-label-left','target'=>'_blank']]); ?>
 
-                 <div class="row">
-                     <div class="col-lg-12">
-                         <div class="btn-group">
-                             <div class="btn btn-success btn-add-vendor-line"><i class="fa fa-plus"></i> เพิ่ม</div>
-                         </div>
-                     </div>
-                 </div>
-                <br>
                 <div class="row">
                     <div class="col-lg-12">
-                        <table class="table table-vendor">
+                        <table class="table-vendor">
                            <thead>
                              <tr>
                                  <th>#</th>
@@ -625,14 +609,42 @@ $data = \backend\models\Product::find()
                              </tr>
                            </thead>
                             <tbody>
+                            <tr id="row-" style="vertical-align: middle">
+                                <td style="padding: 5px 5px 5px 5px;">#</td>
+                                <td>
+                                    <input type="text" name="vendor_id[]" class="form-control vendor_id" placeholder="เลือกผู้ขาย" value="" >
 
+                                </td>
+                                <td>
+                                    <input type="text" name="name[]" class="form-control name" value="" readonly>
+                                </td>
+                                <td>
+                                    <input type="text" id="from_date" name="from_date[]" class="form-control from_date" placeholder="เลือกวันที่" value="">
+
+                                </td>
+                                <td>
+                                    <input type="text" id="to_date" name="to_date[]" class="form-control to_date to_date" placeholder="เลือกกันที่" value="">
+                                </td>
+                                <td style="padding-top: 2px;">
+                                    <div class="btn btn-danger" onclick="removeline($(this))">ลบ</div>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
+                <br>
+                <div class="row">
+
+                    <div class="col-lg-1">
+                        <div class="btn-group">
+                            <div class="btn btn-default btn-add-vendor-line"><i class="fa fa-plus"></i> เพิ่มรายการ</div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
-                <input type="submit" class="btn btn-success btnprint-stock" value="พิมพ์">
+                <input type="submit" class="btn btn-success btnprint-stock" value="ตกลง">
                 <div type="button" class="btn btn-default btn-cancel-vendor">ยกเลิก</div>
             </div>
             <?php ActiveForm::end();?>
@@ -640,15 +652,62 @@ $data = \backend\models\Product::find()
 
     </div>
 </div>
+<div class="nas">
+    <input type="text" class="form-control na" value="">
+</div>
 
-<?php 
+<?php
   $this->registerJsFile( '@web/js/sweetalert.min.js',['depends' => [\yii\web\JqueryAsset::className()]],static::POS_END);
   $this->registerCssFile( '@web/css/sweetalert.css');
-  //$url_to_delete =  Url::to(['product/bulkdelete'],true);
+$this->registerJsFile("https://code.jquery.com/ui/1.12.1/jquery-ui.js",['depends'=> [\yii\web\JqueryAsset::className()]],static::POS_END);
+$this->registerJsFile("https://code.jquery.com/jquery-1.12.4.js",['depends'=> [\yii\web\JqueryAsset::className()]],static::POS_END);
+//$url_to_delete =  Url::to(['product/bulkdelete'],true);
   $this->registerJs('
 
     $(function(){
-        
+     var availableTags = [
+      "ActionScript",
+      "AppleScript",
+      "Asp",
+      "BASIC",
+      "C",
+      "C++",
+      "Clojure",
+      "COBOL",
+      "ColdFusion",
+      "Erlang",
+      "Fortran",
+      "Groovy",
+      "Haskell",
+      "Java",
+      "JavaScript",
+      "Lisp",
+      "Perl",
+      "PHP",
+      "Python",
+      "Ruby",
+      "Scala",
+      "Scheme"
+    ];
+         $(".na").autocomplete({
+                 source: availableTags
+            });
+          
+    
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+      var idInc = 1;
+        var options = {
+          url: "'.Url::to(['product/findvendor'],true).'",
+          getValue: "name",
+          list: {	
+            match: {
+              enabled: true
+            }
+          },  
+          theme: "square"
+        };
+       // $(".na").easyAutocomplete(options);
     
         if($("#product_group").val()!=""){
             $("#product_group").multiselect({
@@ -721,6 +780,19 @@ $data = \backend\models\Product::find()
             }
             $(".product_stocklist").val(orderList);
             $("#vendorModal").modal("show");
+            $(".from_date").datepicker({
+              format: "dd/mm/yyyy",
+              onRender: function(date) {
+                return date.valueOf() < now.valueOf() ? "disabled" : "";
+              }
+            });
+            $(".to_date").datepicker({
+              format: "dd/mm/yyyy",
+              onRender: function(date) {
+                return date.valueOf() < now.valueOf() ? "disabled" : "";
+              }
+            });
+            
         });
         $(".btn-print-barcode").click(function(){
            $("#barcodeModal").modal("hide");
@@ -748,15 +820,62 @@ $data = \backend\models\Product::find()
 //        });
 
        $(".btn-add-vendor-line").click(function(){
-           $.ajax({
-              type: "post",
-              dataType: "html",
-              url: "'.Url::to(['product/addvendorline'],true).'",
-              data: {},
-              success: function(data){
-                $(".table-vendor tbody").append(data);
+            
+            var $tr    = $(".table-vendor tbody tr:last");
+            var $clone = $tr.clone();
+            $clone.find(":text").val("");
+            $clone.find(".from_date").attr("id","st-"+idInc);
+            $clone.find(".from_date").attr("name","st-"+idInc);
+            
+            $clone.find(".to_date").attr("id","st-"+idInc);
+            $clone.find(".to_date").attr("name","st-"+idInc);
+            idInc ++;
+            $tr.after($clone);
+            var f_date = $(".from_date").datepicker({
+              format: "dd/mm/yyyy",
+              onRender: function(date) {
+                return date.valueOf() < now.valueOf() ? "disabled" : "";
               }
-           });
+            }).on("changeDate", function(ev) {
+                  if (ev.date.valueOf() > t_date.date.valueOf()) {
+                    var newDate = new Date(ev.date)
+                    newDate.setDate(newDate.getDate() + 1);
+                    t_date.setValue(newDate);
+                  }
+                }).data("datepicker");
+            
+            var t_date = $(".to_date").datepicker({
+              format: "dd/mm/yyyy",
+              onRender: function(date) {
+                return date.valueOf() <= f_date.date.valueOf() ? "disabled" : "";
+              }
+            }).on("changeDate", function(ev){
+                if (ev.date.valueOf() < f_date.date.valueOf()){
+                  alert();
+                }
+              }).data("datepicker");
+            
+//            var $tr_last = $(".table-vendor tbody tr:last");
+//            var idd = $tr_last.find(".dtp_st").attr("id");
+//            $tr_last.find(".dtp_st").attr("id","xx");
+//            $tr_last.find(".dtp_st").attr("name","xx");
+//            $tr_last.find(".dtp_st").datePicker();
+            
+            $row_num = 0;
+            $(".table-vendor tbody tr").each(function(){
+                $row_num +=1;
+                $(this).find("td:first").text($row_num);
+            });
+       
+//           $.ajax({
+//              type: "post",
+//              dataType: "html",
+//              url: "'.Url::to(['product/addvendorline'],true).'",
+//              data: {},
+//              success: function(data){
+//                $(".table-vendor tbody").append(data);
+//              }
+//           });
            //$(".vendor_id").autocomplete(autocompleteOptions);
        });
        
@@ -766,10 +885,10 @@ $data = \backend\models\Product::find()
             $(".table-vendor tbody>tr").each(function(){$(this).remove();});
             $("#vendorModal").modal("hide");
        });
-      
+       
     });
     
-    function setauto(e){
+    function setautoc(e){
 
         var autocompleteOptions = {
             minLength: 2,
@@ -784,21 +903,6 @@ $data = \backend\models\Product::find()
               });
             }
           };
-       e.autocomplete(
-       {
-            minLength: 2,
-            source: function(request, response) {
-              $.ajax({
-                type: "GET",
-                url: "'.Url::to(['product/findvendor'],true).'",
-                data: {},
-                success: function(data) {
-                  response(data);
-                }
-              });
-            }
-          }
-       );
     }
 
    function recDelete(e){
@@ -818,9 +922,7 @@ $data = \backend\models\Product::find()
               e.trigger("click");        
         });
     }
-    function vendorautocomplete(e){
-       alert(e.val());
-    }
+   
     function removeline(e){
       if(confirm("ต้องการลบรายการนี้ใช่หรือไม่")){
         e.parent().parent().remove();   

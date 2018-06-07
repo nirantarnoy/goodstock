@@ -10,7 +10,7 @@ $data = \backend\models\Product::find()
 <tr id="row-" style="vertical-align: middle">
     <td>#</td>
     <td>
-        <input type="text" name="vendor_id[]" class="form-control vendor_id" value="" onclick="setauto($(this));">
+        <input type="text" name="vendor_id[]" class="form-control vendor_id" value="">
     </td>
     <td>
         <input type="text" name="name[]" class="form-control name" value="">

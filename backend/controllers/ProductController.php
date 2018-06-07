@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\Uploadfile;
+use backend\models\Vendor;
 use Yii;
 use backend\models\Product;
 use backend\models\ProductSearch;
@@ -32,7 +33,7 @@ class ProductController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST','GET'],
-                    'findvendor'=>['GET'],
+                    'findvendor'=>['POST'],
                 ],
             ],
         ];
@@ -574,6 +575,18 @@ class ProductController extends Controller
         return $this->renderPartial('_addvendor');
     }
     public function actionFindvendor(){
-       return json::endcode(['AX2012','AX2018']);
+      // return Json::encode(['AX2012','AX2018']);
+        $term = Yii::$app->request->post('query');
+        $product = Product::find()->where(['LIKE','product_code',$term])->all();
+        $lists = [];
+        foreach($product as $country) {
+            $lists[] =[
+                'id' => $country->id,
+                'name' => $country->name,
+                'code' => $country->product_code,
+            ];
+        }
+        print_r($product);
+       // return Json::encode($lists);
     }
 }

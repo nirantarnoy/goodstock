@@ -32,6 +32,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
     <link rel="stylesheet" href="/resources/demos/style.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <![endif]-->
     <style>
         body{
@@ -79,7 +80,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                 "items" => [
                                     ["label" => "แดซบอร์ด", "url" => ["dashboard/index"], "icon" => "dashboard"],
                                     ["label" => "ตั้งค่าระบบ", "url" => ["sysconfig/index"], "icon" => "cogs"],
-                                    ["label" => "ร้านค้า", "url" => ["plant/index"], "icon" => "institution"],
+                                    ["label" => "บริษัท/องค์กร", "url" => ["plant/index"], "icon" => "institution"],
                                     [
                                         "label" => "ผู้ใช้งาน",
                                         "icon" => "users",

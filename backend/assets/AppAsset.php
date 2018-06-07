@@ -15,10 +15,17 @@ class AppAsset extends AssetBundle
         'css/site.css',
        // 'build/css/custom.min.css',
         'css/sweetalert.css',
+        'datepicker/css/datepicker.css',
+        'easyautocomplete/css/easy-autocomplete.css'
     ];
     public $js = [
     //'build/js/custom.min.js',
     'js/sweetalert.min.js',
+    'datepicker/js/bootstrap-datepicker.js',
+    'easyautocomplete/js/jquery.easy-autocomplete.js',
+    'typeahead/bloodhound.js',
+    'typeahead/typeahead.bundle.js',
+    'typeahead/typeahead.jquery.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
