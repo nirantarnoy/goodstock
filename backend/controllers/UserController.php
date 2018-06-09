@@ -137,4 +137,15 @@ class UserController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
+    public function actionResetpassword($id){
+        $model = User::find()->where(['id'=>$id])->one();
+        if($model){
+            $model->setPassword('guest1234');
+            if($model->update()){
+                $session = Yii::$app->session;
+                $session->setFlash('msg','บันทึกรายการเรียบร้อย');
+                return $this->redirect(['index']);
+            }
+        }
+    }
 }
