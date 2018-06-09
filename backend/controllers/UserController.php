@@ -140,7 +140,7 @@ class UserController extends Controller
     public function actionResetpassword($id){
         $model = User::find()->where(['id'=>$id])->one();
         if($model){
-            $model->setPassword('guest1234');
+            $model->setPassword('guestadmin');
             if($model->update()){
                 $session = Yii::$app->session;
                 $session->setFlash('msg','บันทึกรายการเรียบร้อย');

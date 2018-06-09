@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use toxor88\switchery\Switchery;
 use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\User */
@@ -59,6 +60,7 @@ use kartik\select2\Select2;
                         <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                                   <?= Html::submitButton(Yii::t('app', 'บันทึก'), ['class' => 'btn btn-success']) ?>
+                                    <a href="<?=Url::to(['user/resetpassword','id'=>$model->id],true)?>" class="btn btn-default"> Reset password</a>
                                 </div>
                         </div>
 
